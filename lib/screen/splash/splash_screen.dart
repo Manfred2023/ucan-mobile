@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/navigation/route.dart';
 import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
@@ -26,51 +27,77 @@ class _SplashScreenViewState extends State<SplashScreenView> {
     return Scaffold(
       backgroundColor: ColorsApp.primary,
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 50, left: 15, right: 15),
+        padding:
+            const EdgeInsets.only(bottom: 50, left: 15, right: 15, top: 50),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            InkWell(
-              onTap: (){
-                //AlertService.showLoad(context);
-                Navigator.of(context).pushNamed(Routes.signup);
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: ColorsApp.onSecondary,
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Center(
-                    child: Text(
-                  "Creer mon compte",
-                  style: TextStyle(
-                      color: ColorsApp.primary,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                )),
-              ),
-            ),
-              const SizedBox(
-              height: 10,
-            ),
-              Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              //crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Vous avez deja un compte?"),
-                const SizedBox(width: 10),
+                SvgPicture.asset(
+                  "assets/svg/ucanpurple.svg",
+                  color: ColorsApp.onSecondary,
+                  width: 150,
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                const Text(
+                    "Transformez vos rêves en réalité, étape par étape, avec notre application d'épargne intelligente. Planifiez, économisez et réalisez vos objectifs financiers en toute simplicité.", style: TextStyle(
+                      color: ColorsApp.onSecondary, fontSize: 20
+                    ),),
+                    const SizedBox(height: 20,),
+                Image.asset('assets/png/checklist.png'),
+              ],
+            ),
+            Column(
+              children: [
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.signin);
+                  onTap: () {
+                    //AlertService.showLoad(context);
+                    Navigator.of(context).pushNamed(Routes.signup);
                   },
-                    child: const Text(
-                  'Se connecter',
-                  style: TextStyle(
-                      color: ColorsApp.onSecondary,
-                      decoration: TextDecoration.underline,
-                      decorationColor: ColorsApp.onSecondary),
-                ))
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: ColorsApp.onSecondary,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: const Center(
+                        child: Text(
+                      "Creer mon compte",
+                      style: TextStyle(
+                          color: ColorsApp.primary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    )),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Vous avez deja un compte?"),
+                    const SizedBox(width: 10),
+                    InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.signin);
+                        },
+                        child: const Text(
+                          'Se connecter',
+                          style: TextStyle(
+                              color: ColorsApp.onSecondary,
+                              decoration: TextDecoration.underline,
+                              decorationColor: ColorsApp.onSecondary),
+                        ))
+                  ],
+                )
               ],
             )
           ],

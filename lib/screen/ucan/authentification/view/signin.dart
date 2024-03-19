@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/navigation/route.dart';
 
@@ -27,13 +28,17 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       backgroundColor: ColorsApp.primarySecond,
       body: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+            children: [
+              Column(
+                children: [
+                  Image.asset('assets/png/ucanpurple.png'),
+                ],
+              ),
+              Column(
                 children: [
                   Column(
                     children: [
@@ -53,8 +58,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context)
-                                  .pushNamed(Routes.signup);
+                              Navigator.of(context).pushNamed(Routes.signup);
                             },
                             child: const Text(
                               "Creer",
@@ -67,18 +71,16 @@ class _LoginViewState extends State<LoginView> {
                       )
                     ],
                   ),
-                  const SizedBox(height: 35),
+                  const SizedBox(height: 70),
                   TextFormField(
                     controller: emailController,
                     textInputAction: TextInputAction.next,
                     // textAlign: TextAlign.justify,
                     style: const TextStyle(
                         color: ColorsApp.primary, fontWeight: FontWeight.bold),
-                    decoration:   const InputDecoration(
-                      hintText: "Email ou telephone",
-                      hintStyle: TextStyle(
-                        color: ColorsApp.primary
-                      ),
+                    decoration: const InputDecoration(
+                        hintText: "Email ou telephone",
+                        hintStyle: TextStyle(color: ColorsApp.primary),
                         prefixIcon: Icon(
                           Icons.email,
                           color: ColorsApp.primary,
@@ -103,9 +105,7 @@ class _LoginViewState extends State<LoginView> {
                         color: ColorsApp.primary, fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                       hintText: "Mot de passe",
-                      hintStyle: const TextStyle(
-                        color: ColorsApp.primary
-                      ),
+                      hintStyle: const TextStyle(color: ColorsApp.primary),
                       prefixIcon:
                           const Icon(Icons.password, color: ColorsApp.primary),
                       suffixIcon: IconButton(
@@ -132,41 +132,41 @@ class _LoginViewState extends State<LoginView> {
                           borderSide: BorderSide(color: ColorsApp.primary)),
                     ),
                   ),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pushNamed(Routes.forgot);
                     },
                     child: const Text(
-                      "Mot de passe oublie",
+                      "Mot de passe oublie ?",
                       style: TextStyle(
                           fontSize: 12, decoration: TextDecoration.underline),
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: ColorsApp.primary,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: const Center(
-                            child: Text(
-                          "Connexion",
-                          style: TextStyle(
-                              color: ColorsApp.onSecondary, fontSize: 20),
-                          textAlign: TextAlign.center,
-                        )),
-                      ),
-                      const SizedBox(height: 5),
-                    ],
-                  ),
+                  
                 ],
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            decoration: BoxDecoration(
+                color: ColorsApp.primary,
+                borderRadius: BorderRadius.circular(10)),
+            child: const Center(
+                child: Text(
+              "Connexion",
+              style: TextStyle(color: ColorsApp.onSecondary, fontSize: 20),
+              textAlign: TextAlign.center,
+            )),
           ),
         ),
       ),

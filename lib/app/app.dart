@@ -64,7 +64,7 @@ class _AppState extends State<App> {
                   iconTheme: const IconThemeData(color: ColorsApp.surface),
                   fontFamily: Constants.roboto,
                   useMaterial3: true),
-              initialRoute: Routes.signin,
+              initialRoute: Routes.splashScreen,
               onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
