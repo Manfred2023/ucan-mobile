@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "471608023003",
+    "project_id": "ucan-c283b",
+    "storage_bucket": "ucan-c283b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471608023003:android:c5cfdc55221e3cbe6d79fe",
+        "android_client_info": {
+          "package_name": "com.example.ucan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwF53sXY8ZCVdZFVgNhBlq61FYHWtwBkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

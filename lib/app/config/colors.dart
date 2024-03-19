@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class ColorsApp {
   // Light colors
   static const primary = Color.fromARGB(255, 132, 6, 235);
+  static const primaryDark = Color.fromARGB(255, 46, 0, 83);
   static const primarySecond = Color.fromARGB(255, 233, 226, 240);
   static const primaryLight = Color(0xFFff6892);
   static const accent = Color(0xFFff4200);
@@ -23,7 +24,7 @@ class ColorsApp {
   static const greenColorDark = Color(0xFF005941);
 
   // Dark colors
-  static const primaryDark = Color(0xFFaf003b);
+  //static const primaryDark = Color(0xFFaf003b);
   static const secondaryDark = Color(0xFFaf003b);
   static const onSecondaryDark = Color(0xFF000000);
   static const onPrimaryDark = Color(0xFFFFFFFF);

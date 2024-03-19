@@ -83,7 +83,9 @@ class _SplashScreenViewState extends State<SplashScreenView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Vous avez deja un compte?"),
+                    const Text("Vous avez deja un compte?", style: TextStyle(
+                      color: ColorsApp.primaryDark
+                    ),),
                     const SizedBox(width: 10),
                     InkWell(
                         onTap: () {
