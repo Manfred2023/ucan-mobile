@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart'; 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ucan/app/config/colors.dart'; 
+import 'package:ucan/app/config/colors.dart';
+import 'package:ucan/app/navigation/route.dart';
+import 'package:ucan/data/ucan/service/contact_auth.dart';
+import 'package:ucan/screen/shared/design_system/utils/alert_service.dart'; 
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -19,6 +23,8 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
+  final ContactAuthService _auth = ContactAuthService();
+  
   TextEditingController emailController = TextEditingController();
   TextEditingController passcodeController = TextEditingController();
   TextEditingController passcode1Controller = TextEditingController();
@@ -294,6 +300,8 @@ class _SignupViewState extends State<SignupView> {
               setState(() {
                 error = true;
               });
+            } else {
+              signup();
             }
           },
           child: Padding(
@@ -325,5 +333,16 @@ class _SignupViewState extends State<SignupView> {
       return false;
     }
     return true;
+  }
+  
+  Future<void> signup() async{
+    AlertService.showLoad(context);
+    final user = await _auth.SingupWithEmail(emailController.text, passcodeController.text);
+    if(!context.mounted) return;
+    if(user != null){
+      Navigator.of(context).pushNamed(Routes.signin);
+    } else {
+      print('Lo ndem');
+    }
   }
 }

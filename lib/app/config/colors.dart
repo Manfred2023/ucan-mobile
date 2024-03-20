@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Colors app
 class ColorsApp {
   // Light colors
-  static const primary = Color.fromARGB(255, 132, 6, 235);
+  static const primary = Color.fromARGB(255, 159, 65, 236);
   static const primaryDark = Color.fromARGB(255, 46, 0, 83);
   static const primarySecond = Color.fromARGB(255, 233, 226, 240);
   static const primaryLight = Color(0xFFff6892);

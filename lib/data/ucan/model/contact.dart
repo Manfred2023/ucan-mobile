@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Contact extends Equatable {
   final int? id;
@@ -40,4 +41,6 @@ class Contact extends Equatable {
     return'WaContact{id: $id, username: $username, mobile: $mobile, email: $email, whatsapp: $whatsapp,  }';
  
   }
+
+
 }
