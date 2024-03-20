@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ucan/app/config/colors.dart';
-import 'package:ucan/app/navigation/route.dart';
+import 'package:ucan/app/config/colors.dart'; 
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});

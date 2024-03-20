@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
-import 'package:ucan/app/navigation/route.dart';
-import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
+import 'package:ucan/app/navigation/route.dart'; 
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ucan/app/app.dart';
-import 'package:ucan/app/config/colors.dart';
-import 'package:ucan/app/navigation/route.dart';
+import 'package:ucan/app/config/colors.dart'; 
 
 Future<void> mainShared() async{
 
