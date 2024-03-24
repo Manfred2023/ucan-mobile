@@ -586,7 +586,7 @@ class AlertService {
           ),
           Expanded(
             child: Text(
-              'Chargement',
+              'Veuillez patienter le temps que nous effectuons cette operation',
               style:   TextStyle(color: ColorsApp.onSecondary),
             ),
           ),

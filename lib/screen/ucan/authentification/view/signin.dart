@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart'; 
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/navigation/route.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+    const LoginScreen({super.key, this.user });
+
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
@@ -170,5 +173,14 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+  @override
+  void initState() {
+    init();
+    // TODO: implement initState
+    super.initState();
+  }
+  Future<void> init()async {
+    
   }
 }
