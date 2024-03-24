@@ -11,6 +11,7 @@ abstract class Routes {
   static const signin = 'signin';
   static const signup = 'signup';
   static const forgot = 'forgot';
+  static const code = 'code';
 
  
 }

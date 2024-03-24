@@ -6,7 +6,7 @@ class ColorsApp {
   static const primary = Color.fromARGB(255, 159, 65, 236);
   static const primaryDark = Color.fromARGB(255, 46, 0, 83);
   static const primarySecond = Color.fromARGB(255, 233, 226, 240);
-  static const primaryLight = Color(0xFFff6892);
+  static const primaryLigt =  Color.fromARGB(255, 201, 145, 247);
   static const accent = Color(0xFFff4200);
   static const secondary = Color(0xFF000000);
   static const onSecondary = Color(0xFFFFFFFF);
@@ -20,6 +20,7 @@ class ColorsApp {
   static const onError = Color(0xFFFFFFFF);
   static const textColor = Color(0xFF8d8d8d);
   static const textColorCC = Color(0xFFCCCCCC);
+  static const textColorCcLight = Color.fromARGB(255, 230, 228, 228);
   static const greenColor = Color(0xFF00b382);
   static const greenColorDark = Color(0xFF005941);
 

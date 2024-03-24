@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,259 +38,155 @@ class _SignupViewState extends State<SignupView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsApp.primarySecond,
-      appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false),
+      // appBar: AppBar(
+      //     backgroundColor: Colors.transparent,
+      //     automaticallyImplyLeading: false),
       body: Padding(
         padding: const EdgeInsets.all(14),
         child: Form(
-          child: SingleChildScrollView(
+          child: Center(
             child: Column(
+               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
+                
+                const Column(
                   children: [
-                    SvgPicture.asset(
-                      "assets/svg/ucanpurple.svg",
-                      width: 70,
-                    ),
+                    Text(
+                      "Creer un compte",
+                      style: TextStyle(
+                          fontSize: 35,
+                          color: ColorsApp.primary,
+                          fontWeight: FontWeight.bold),
+                    )
                   ],
                 ),
+                const SizedBox(height: 35),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Column(
-                      children: [
-                        Text(
-                          "Creer un compte",
-                          style: TextStyle(
-                              fontSize: 35,
-                              color: ColorsApp.primary,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 35),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TextFormField(
-                          textCapitalization: TextCapitalization.characters,
-                          controller: usernameController,
-                          textInputAction: TextInputAction.next,
-                          // textAlign: TextAlign.justify,
-                          style: const TextStyle(
-                              color: ColorsApp.primary,
-                              fontWeight: FontWeight.bold),
-                          decoration: const InputDecoration(
-                              //hintText: "PRENOM & NOM ",
-                              hintStyle: TextStyle(color: ColorsApp.primary),
-                              prefixIcon: Icon(
-                                Icons.account_circle_outlined,
-                                color: ColorsApp.primary,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.primary)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.primary)),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.error))),
-                        ),
-                        if (error && usernameController.text.isEmpty)
-                          const Text(
-                            'Nom obligatoire',
-                            style: TextStyle(color: ColorsApp.error),
-                          )
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TextFormField(
-                          controller: phoneController,
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.phone,
-                          style: const TextStyle(
-                              color: ColorsApp.primary,
-                              fontWeight: FontWeight.bold),
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.phone,
-                                color: ColorsApp.primary,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.primary)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.primary)),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.error))),
-                        ),
-                        if (error && phoneController.text.isEmpty)
-                          const Text(
-                            'telephone obligatoire',
-                            style: TextStyle(color: ColorsApp.error),
-                          )
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TextFormField(
-                          controller: emailController,
-                          textInputAction: TextInputAction.next,
-                          // textAlign: TextAlign.justify,
-                          style: const TextStyle(
-                              color: ColorsApp.primary,
-                              fontWeight: FontWeight.bold),
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.email,
-                                color: ColorsApp.primary,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.primary)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.primary)),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: ColorsApp.error))),
-                        ),
-                        if (error && emailController.text.isEmpty)
-                          const Text(
-                            'email obligatoire',
-                            style: TextStyle(color: ColorsApp.error),
-                          )
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TextFormField(
-                          obscureText: seepass,
-                          controller: passcodeController,
-                          textInputAction: TextInputAction.next,
-                          // textAlign: TextAlign.justify,
-                          style: const TextStyle(
-                              color: ColorsApp.primary,
-                              fontWeight: FontWeight.bold),
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.password,
-                                color: ColorsApp.primary),
-                            suffixIcon: IconButton(
-                                onPressed: () {
-                                  if (seepass) {
-                                    setState(() {
-                                      seepass = false;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      seepass = true;
-                                    });
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.remove_red_eye,
-                                  color: ColorsApp.primary,
-                                )),
-                            focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide:
-                                    BorderSide(color: ColorsApp.primary)),
-                            enabledBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide:
-                                    BorderSide(color: ColorsApp.primary)),
+                    TextFormField(
+                      textCapitalization: TextCapitalization.characters,
+                      controller: usernameController,
+                      textInputAction: TextInputAction.next,
+                      // textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                          color: ColorsApp.primary,
+                          fontWeight: FontWeight.bold),
+                      decoration: const InputDecoration(
+                          hintText: "Pseudo",
+                          hintStyle: TextStyle(color: ColorsApp.primaryLigt),
+                          prefixIcon: Icon(
+                            Icons.account_circle_outlined,
+                            color: ColorsApp.primary,
                           ),
-                        ),
-                        if (error && passcodeController.text.isEmpty)
-                          const Text(
-                            'mot de passe obligatoire',
-                            style: TextStyle(color: ColorsApp.error),
-                          )
-                      ],
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: ColorsApp.primary)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: ColorsApp.primary)),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: ColorsApp.error))),
                     ),
-                    const SizedBox(height: 15),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TextFormField(
-                          obscureText: seepass1,
-                          controller: passcode1Controller,
-                          textInputAction: TextInputAction.next,
-                          // textAlign: TextAlign.justify,
-                          style: const TextStyle(
-                              color: ColorsApp.primary,
-                              fontWeight: FontWeight.bold),
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.password,
-                                color: ColorsApp.primary),
-                            suffixIcon: IconButton(
-                                onPressed: () {
-                                  if (seepass1) {
-                                    setState(() {
-                                      seepass1 = false;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      seepass1 = true;
-                                    });
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.remove_red_eye,
-                                  color: ColorsApp.primary,
-                                )),
-                            focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide:
-                                    BorderSide(color: ColorsApp.primary)),
-                            enabledBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide:
-                                    BorderSide(color: ColorsApp.primary)),
-                          ),
-                        ),
-                        if (errorPass)
-                          const Text(
-                            "Mot de passe incorrect",
-                            style: TextStyle(color: ColorsApp.error),
-                          ),
-                      ],
-                    ),
+                    if (error && usernameController.text.isEmpty)
+                      const Text(
+                        'Nom obligatoire',
+                        style: TextStyle(color: ColorsApp.error),
+                      )
                   ],
-                )
+                ),
+                const SizedBox(height: 15),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextFormField(
+                      controller: phoneController,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.phone,
+                      style: const TextStyle(
+                          color: ColorsApp.primary,
+                          fontWeight: FontWeight.bold),
+                      decoration: const InputDecoration(
+                          hintText: "Numero de telephone",
+                          hintStyle: TextStyle(color: ColorsApp.primaryLigt),
+                          prefixIcon: Icon(
+                            Icons.phone,
+                            color: ColorsApp.primary,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: ColorsApp.primary)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: ColorsApp.primary)),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: ColorsApp.error))),
+                    ),
+                    if (error && phoneController.text.isEmpty)
+                      const Text(
+                        'telephone obligatoire',
+                        style: TextStyle(color: ColorsApp.error),
+                      )
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextFormField(
+                      obscureText: seepass,
+                      controller: passcodeController,
+                      textInputAction: TextInputAction.next,
+                      // textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                          color: ColorsApp.primary,
+                          fontWeight: FontWeight.bold),
+                      decoration: InputDecoration(
+                        hintText: "Mot de passe",
+                        hintStyle: TextStyle(color: ColorsApp.primaryLigt),
+                        prefixIcon: const Icon(Icons.fingerprint,
+                            color: ColorsApp.primary),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              if (seepass) {
+                                setState(() {
+                                  seepass = false;
+                                });
+                              } else {
+                                setState(() {
+                                  seepass = true;
+                                });
+                              }
+                            },
+                            icon: Icon(
+                              seepass
+                                  ? Icons.remove_red_eye
+                                  : Icons.remove_red_eye_outlined,
+                              color: ColorsApp.primary,
+                            )),
+                        focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(color: ColorsApp.primary)),
+                        enabledBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(color: ColorsApp.primary)),
+                      ),
+                    ),
+                    if (error && passcodeController.text.isEmpty)
+                      const Text(
+                        'mot de passe obligatoire',
+                        style: TextStyle(color: ColorsApp.error),
+                      )
+                  ],
+                ),
               ],
             ),
           ),
@@ -301,6 +195,7 @@ class _SignupViewState extends State<SignupView> {
       bottomNavigationBar: SafeArea(
         child: InkWell(
           onTap: () {
+            Navigator.of(context).pushNamed(Routes.code);
             if (!checkPasscode()) return;
             if (usernameController.text.isEmpty ||
                 phoneController.text.isEmpty ||
@@ -310,7 +205,7 @@ class _SignupViewState extends State<SignupView> {
                 error = true;
               });
             } else {
-              signup();
+              Navigator.of(context).pushNamed(Routes.code);
             }
           },
           child: Padding(
@@ -345,17 +240,16 @@ class _SignupViewState extends State<SignupView> {
   }
 
   Future<void> signup() async {
-    
     try {
       AlertService.showLoad(context);
-       await _auth.SingupWithEmail(
-          emailController.text.trim() , passcodeController.text);
+      await _auth.singupWithEmail(
+          emailController.text.trim(), passcodeController.text);
       if (!context.mounted) return;
       Navigator.of(context).pushNamed(Routes.signin, arguments: User);
-            
     } catch (e) {
       print(e.toString());
-      AlertService.showSnack(context, message: e.toString(), onPressed: (){}, actionText: "OK");
+      AlertService.showSnack(context,
+          message: e.toString(), onPressed: () {}, actionText: "OK");
       Navigator.of(context).pop();
     }
   }
