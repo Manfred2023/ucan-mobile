@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:ucan/app/config/colors.dart';
+import 'package:ucan/app/config/colors.dart';  
 import 'package:ucan/app/navigation/route.dart';
 import 'package:ucan/data/ucan/service/remote/contact_auth.dart';
 import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
@@ -151,7 +150,7 @@ class _SignupViewState extends State<SignupView> {
                           fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
                         hintText: "Mot de passe",
-                        hintStyle: TextStyle(color: ColorsApp.primaryLigt),
+                        hintStyle: const TextStyle(color: ColorsApp.primaryLigt),
                         prefixIcon: const Icon(Icons.fingerprint,
                             color: ColorsApp.primary),
                         suffixIcon: IconButton(

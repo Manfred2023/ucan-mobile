@@ -23,7 +23,5 @@ class ContactAuthService {
       print(e.toString());
     }
     return null;
-  }
- 
-    
+  }   
 }
