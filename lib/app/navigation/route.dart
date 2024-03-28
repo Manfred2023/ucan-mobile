@@ -12,6 +12,9 @@ abstract class Routes {
   static const signup = 'signup';
   static const forgot = 'forgot';
   static const code = 'code';
+  static const ucan = 'ucan';
+  static const notif = 'notif';
+  static const account = 'account';
 
  
 }

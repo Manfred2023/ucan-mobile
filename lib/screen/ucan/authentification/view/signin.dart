@@ -157,18 +157,23 @@ class _LoginViewState extends State<LoginView> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            decoration: BoxDecoration(
-                color: ColorsApp.primary,
-                borderRadius: BorderRadius.circular(10)),
-            child: const Center(
-                child: Text(
-              "Connexion",
-              style: TextStyle(color: ColorsApp.onSecondary, fontSize: 20),
-              textAlign: TextAlign.center,
-            )),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.ucan);
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              decoration: BoxDecoration(
+                  color: ColorsApp.primary,
+                  borderRadius: BorderRadius.circular(10)),
+              child: const Center(
+                  child: Text(
+                "Connexion",
+                style: TextStyle(color: ColorsApp.onSecondary, fontSize: 20),
+                textAlign: TextAlign.center,
+              )),
+            ),
           ),
         ),
       ),
