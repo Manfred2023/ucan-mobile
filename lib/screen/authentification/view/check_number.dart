@@ -28,7 +28,7 @@ class _CheckNumberViewState extends State<CheckNumberView> {
           fontWeight: FontWeight.bold,
           fontSize: 25),
       decoration: BoxDecoration(
-          color: ColorsApp.primaryLigt,
+          color: ColorsApp.onPrimary,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.transparent)));
 
@@ -62,7 +62,7 @@ class _CheckNumberViewState extends State<CheckNumberView> {
                       defaultPinTheme: defaultPinInput,
                       focusedPinTheme: defaultPinInput.copyWith(
                           textStyle: const TextStyle(
-                              color: ColorsApp.primaryLigt,
+                              color: ColorsApp.onPrimary,
                               fontWeight: FontWeight.bold,
                               fontSize: 25),
                           decoration: BoxDecoration(
@@ -73,7 +73,7 @@ class _CheckNumberViewState extends State<CheckNumberView> {
                       onCompleted: (pin) => debugPrint(pin),
                     ),
                   ],
-                ), 
+                ),
               ],
             ),
           ),

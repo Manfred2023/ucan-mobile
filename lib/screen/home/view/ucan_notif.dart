@@ -52,7 +52,7 @@ class _NotifViewState extends State<NotifView> {
                   child: Text(
                     "DETAILS",
                     style: TextStyle(
-                        color: ColorsApp.primaryLigt,
+                        color: ColorsApp.onPrimary,
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
                   ),
@@ -60,10 +60,12 @@ class _NotifViewState extends State<NotifView> {
                 Divider(
                   color: ColorsApp.textColorCC,
                 ),
-                Expanded(child: Center(
-                  child: Text('Vous n\'avez pas de notification', style: TextStyle(
-                    fontSize: 20
-                  ),),
+                Expanded(
+                    child: Center(
+                  child: Text(
+                    'Vous n\'avez pas de notification',
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ))
               ],
             ),

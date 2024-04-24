@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
-import 'package:ucan/app/navigation/route.dart'; 
+import 'package:ucan/app/navigation/route.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -31,7 +30,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+            /* Row(
               mainAxisAlignment: MainAxisAlignment.start,
               //crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -41,67 +40,76 @@ class _SplashScreenViewState extends State<SplashScreenView> {
                   width: 150,
                 ),
               ],
-            ),
-            Column(
+            ),*/
+            /*   Column(
               children: [
                 const Text(
-                    "Transformez vos rêves en réalité, étape par étape, avec notre application d'épargne intelligente. Planifiez, économisez et réalisez vos objectifs financiers en toute simplicité.", style: TextStyle(
-                      color: ColorsApp.onSecondary, fontSize: 20
-                    ),),
-                    const SizedBox(height: 20,),
-                Image.asset('assets/png/checklist.png'),
-              ],
-            ),
-            Column(
-              children: [
-                InkWell(
-                  onTap: () {
-                    //AlertService.showLoad(context);
-                    Navigator.of(context).pushNamed(Routes.signup);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: ColorsApp.onSecondary,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Center(
-                        child: Text(
-                      "Creer mon compte",
-                      style: TextStyle(
-                          color: ColorsApp.primary,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    )),
-                  ),
+                  "Transformez vos rêves en réalité, étape par étape, avec notre application d'épargne intelligente. Planifiez, économisez et réalisez vos objectifs financiers en toute simplicité.",
+                  style: TextStyle(color: ColorsApp.onSecondary, fontSize: 20),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Vous avez deja un compte?", style: TextStyle(
-                      color: ColorsApp.primaryDark
-                    ),),
-                    const SizedBox(width: 10),
-                    InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(Routes.signin);
-                        },
-                        child: const Text(
-                          'Se connecter',
-                          style: TextStyle(
-                              color: ColorsApp.onSecondary,
-                              decoration: TextDecoration.underline,
-                              decorationColor: ColorsApp.onSecondary),
-                        ))
-                  ],
-                )
+                Image.asset('assets/png/checklist.png'),
               ],
-            )
+            ),*/
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              InkWell(
+                onTap: () {
+                  //AlertService.showLoad(context);
+                  Navigator.of(context).pushNamed(Routes.signup);
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: ColorsApp.onPrimary,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Center(
+                      child: Text(
+                    "Creer mon compte",
+                    style: TextStyle(
+                        color: ColorsApp.onSecondary,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  )),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Vous avez deja un compte?",
+                    style: TextStyle(color: ColorsApp.onPrimary),
+                  ),
+                  const SizedBox(width: 10),
+                  InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(Routes.signin);
+                      },
+                      child: const Text(
+                        'Se connecter',
+                        style: TextStyle(
+                            color: ColorsApp.onSecondary,
+                            decoration: TextDecoration.underline,
+                            decorationColor: ColorsApp.onSecondary),
+                      ))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

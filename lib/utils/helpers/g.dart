@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
- 
+
 class G {
   static MaterialColor createMaterialColor(Color color) {
     List strengths = <double>[.05];
@@ -27,5 +27,9 @@ class G {
     final stringToBase64Url = utf8.fuse(base64Url);
     final encoded = stringToBase64Url.encode(credential);
     return encoded;
-  } 
+  }
+
+  static void loseFocus() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
 }

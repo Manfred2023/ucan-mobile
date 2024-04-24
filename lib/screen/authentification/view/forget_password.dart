@@ -24,7 +24,7 @@ class _ForgotPassViewState extends State<ForgotPassView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsApp.primarySecond,
+      backgroundColor: ColorsApp.onSecondary,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
@@ -55,44 +55,24 @@ class _ForgotPassViewState extends State<ForgotPassView> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    TextFormField(
-                      controller: emailController,
-                      textInputAction: TextInputAction.next,
-                      // textAlign: TextAlign.justify,
-                      style: const TextStyle(
-                          color: ColorsApp.primary,
-                          fontWeight: FontWeight.bold),
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.email,
-                            color: ColorsApp.primary,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(color: ColorsApp.primary)),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(color: ColorsApp.primary)),
-                          focusedErrorBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(color: ColorsApp.error))),
+                    const Column(
+                      children: [
+                        Text(
+                          "Creer un compte",
+                          style: TextStyle(
+                              fontSize: 35,
+                              color: ColorsApp.onPrimary,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
-                    if (error && emailController.text.isEmpty)
-                      const Text(
-                        'email obligatoire',
-                        style: TextStyle(color: ColorsApp.error),
-                      )
+                    const SizedBox(height: 15),
                   ],
                 ),
               ],
             ),
             InkWell(
-              onTap: (){
-                
-              },
+              onTap: () {},
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 50,
@@ -107,7 +87,6 @@ class _ForgotPassViewState extends State<ForgotPassView> {
                 )),
               ),
             ),
-           
           ],
         ),
       ),

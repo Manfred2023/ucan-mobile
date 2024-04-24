@@ -3,13 +3,14 @@ import 'package:ucan/app/navigation/route.dart';
 import 'package:ucan/screen/error/error_page.dart';
 import 'package:ucan/screen/shared/animate/smart_animate_page_transitions_builder.dart';
 import 'package:ucan/screen/splash/splash_screen.dart';
-import 'package:ucan/screen/ucan/account/view/ucan_account.dart';
-import 'package:ucan/screen/ucan/account/view/ucan_notif.dart';
-import 'package:ucan/screen/ucan/account/view/ucan_view.dart';
-import 'package:ucan/screen/ucan/authentification/view/checkNumber.dart';
-import 'package:ucan/screen/ucan/authentification/view/forgotpass.dart';
-import 'package:ucan/screen/ucan/authentification/view/signin.dart';
-import 'package:ucan/screen/ucan/authentification/view/signup.dart';
+
+import '../../../screen/authentification/view/check_number.dart';
+import '../../../screen/authentification/view/create_account.dart';
+import '../../../screen/authentification/view/forget_password.dart';
+import '../../../screen/authentification/view/login.dart';
+import '../../../screen/home/view/ucan_account.dart';
+import '../../../screen/home/view/ucan_notif.dart';
+import '../../../screen/home/view/ucan_view.dart';
 
 class AppRouter {
   /// To generate route
@@ -96,7 +97,7 @@ class AppRouter {
             );
           },
         );
-        case Routes.account:
+      case Routes.account:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const AccountScreen(),

@@ -44,11 +44,11 @@ class _UcanViewState extends State<UcanView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                    Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.of(context).pushNamed(Routes.account);
                         },
                         child: const CircleAvatar(
@@ -56,15 +56,17 @@ class _UcanViewState extends State<UcanView> {
                         ),
                       ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.of(context).pushNamed(Routes.notif);
                         },
                         child: const CircleAvatar(
-                          backgroundColor: ColorsApp.primaryLigt,
-                          child:  Icon(Icons.notifications, color: ColorsApp.onSecondary,),
+                          backgroundColor: ColorsApp.onPrimary,
+                          child: Icon(
+                            Icons.notifications,
+                            color: ColorsApp.onSecondary,
+                          ),
                         ),
                       ),
-                      
                     ],
                   ),
                   Column(
@@ -141,7 +143,7 @@ class _UcanViewState extends State<UcanView> {
                                 height: 55,
                                 width: 55,
                                 decoration: BoxDecoration(
-                                    color: ColorsApp.primaryLigt,
+                                    color: ColorsApp.onPrimary,
                                     borderRadius: BorderRadius.circular(200)),
                                 child: const Icon(
                                   Icons.upload,
@@ -162,7 +164,7 @@ class _UcanViewState extends State<UcanView> {
                                 height: 55,
                                 width: 55,
                                 decoration: BoxDecoration(
-                                    color: ColorsApp.primaryLigt,
+                                    color: ColorsApp.onPrimary,
                                     borderRadius: BorderRadius.circular(200)),
                                 child: const Icon(
                                   Icons.download,
@@ -210,7 +212,7 @@ class _UcanViewState extends State<UcanView> {
                     children: [
                       Icon(
                         Icons.signal_cellular_alt,
-                        color:Color.fromARGB(255, 105, 102, 102),
+                        color: Color.fromARGB(255, 105, 102, 102),
                       ),
                       Text(
                         "Activite",
@@ -224,12 +226,12 @@ class _UcanViewState extends State<UcanView> {
                     children: [
                       Icon(
                         Icons.account_box_rounded,
-                        color:Color.fromARGB(255, 105, 102, 102),
+                        color: Color.fromARGB(255, 105, 102, 102),
                       ),
                       Text(
                         "Compte",
                         style: TextStyle(
-                          color:Color.fromARGB(255, 105, 102, 102),
+                          color: Color.fromARGB(255, 105, 102, 102),
                         ),
                       ),
                     ],
