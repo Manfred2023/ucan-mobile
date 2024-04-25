@@ -24,36 +24,11 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsApp.primary,
-      body: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 50, left: 15, right: 15, top: 50),
+      body: const Padding(
+        padding: EdgeInsets.only(bottom: 50, left: 15, right: 15, top: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            /* Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SvgPicture.asset(
-                  "assets/svg/ucanpurple.svg",
-                  color: ColorsApp.onSecondary,
-                  width: 150,
-                ),
-              ],
-            ),*/
-            /*   Column(
-              children: [
-                const Text(
-                  "Transformez vos rêves en réalité, étape par étape, avec notre application d'épargne intelligente. Planifiez, économisez et réalisez vos objectifs financiers en toute simplicité.",
-                  style: TextStyle(color: ColorsApp.onSecondary, fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Image.asset('assets/png/checklist.png'),
-              ],
-            ),*/
-          ],
+          children: [],
         ),
       ),
       bottomNavigationBar: SafeArea(

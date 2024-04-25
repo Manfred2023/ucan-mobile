@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ucan/app/config/colors.dart';
-import 'package:ucan/app/navigation/route.dart';
-import 'package:ucan/data/ucan/service/remote/contact_auth.dart';
-import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
 import 'package:ucan/utils/helpers/g.dart';
+
+import '../../../app/config/colors.dart';
+import '../../shared/design_system/utils/alert_service.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -23,7 +22,6 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
-  final ContactAuthService _auth = ContactAuthService();
   TextEditingController emailController = TextEditingController();
   TextEditingController passcodeController = TextEditingController();
   TextEditingController passcode1Controller = TextEditingController();
@@ -71,13 +69,13 @@ class _SignupViewState extends State<SignupView> {
                     ),
                     InkWell(
                       onTap: () {
-                        final TabController controller =
+                        signup();
+                        /* final TabController controller =
                             DefaultTabController.of(context);
+
                         if (!controller.indexIsChanging) {
-                          print(steps.length);
                           controller.animateTo(steps.length - 1);
-                          for (int i = 3; i <= 3; i--) {}
-                        }
+                        }*/
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -117,15 +115,22 @@ class _SignupViewState extends State<SignupView> {
   Future<void> signup() async {
     try {
       AlertService.showLoad(context);
-      await _auth.singupWithEmail(
-          emailController.text.trim(), passcodeController.text);
-      if (!context.mounted) return;
-      Navigator.of(context).pushNamed(Routes.signin, arguments: User);
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: "moukatemanfred@gmail.com",
+        password: "Manfred500",
+      );
+      print('Result');
+      print(credential);
+      print('Result');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
     } catch (e) {
-      if (!context.mounted) return;
-      AlertService.showSnack(context,
-          message: e.toString(), onPressed: () {}, actionText: "OK");
-      Navigator.of(context).pop();
+      print(e);
     }
   }
 
