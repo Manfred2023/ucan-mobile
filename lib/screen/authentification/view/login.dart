@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/navigation/route.dart';
 
+import '../../../data/authentication/repository/authenticate_repository.dart';
+import '../../../utils/dependancies.dart';
 import '../../../utils/helpers/g.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -152,7 +154,11 @@ class _LoginViewState extends State<LoginView> {
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: InkWell(
-              onTap: () {
+              onTap: () async {
+                await getIt<AuthenticateRepository>().signin(
+                    emailAddress: emailController.text.trim(),
+                    password: passcodeController.text);
+                if (!context.mounted) return;
                 Navigator.of(context).pushNamed(Routes.ucan);
               },
               child: Container(
@@ -183,18 +189,4 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Future<void> init() async {}
-
-/*  Future<void> signin() async {
-    try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailAddress, password: password);
-      await FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-  }*/
 }

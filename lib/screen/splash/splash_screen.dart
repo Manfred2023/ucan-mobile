@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
-import 'package:ucan/app/navigation/route.dart';
+
+import '../../app/navigation/route.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -19,74 +23,69 @@ class SplashScreenView extends StatefulWidget {
 }
 
 class _SplashScreenViewState extends State<SplashScreenView> {
+  Timer? timer;
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    final sizeWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      backgroundColor: ColorsApp.primary,
-      body: const Padding(
-        padding: EdgeInsets.only(bottom: 50, left: 15, right: 15, top: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [],
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              InkWell(
-                onTap: () {
-                  //AlertService.showLoad(context);
-                  Navigator.of(context).pushNamed(Routes.signup);
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: ColorsApp.onPrimary,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Center(
-                      child: Text(
-                    "Creer mon compte",
-                    style: TextStyle(
-                        color: ColorsApp.onSecondary,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  )),
-                ),
+        backgroundColor: ColorsApp.primary,
+        body: Stack(
+          children: [
+            Positioned(
+              child: SvgPicture.asset(
+                'assets/svg/saves.svg',
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            Center(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: sizeWidth * 0.2),
+                  child: Text('')),
+            ),
+            const Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    "Vous avez deja un compte?",
-                    style: TextStyle(color: ColorsApp.onPrimary),
+                  Text(
+                    "Chargement des données, veuillez patienter",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: ColorsApp.onSecondary,
+                    ),
                   ),
-                  const SizedBox(width: 10),
-                  InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(Routes.signin);
-                      },
-                      child: const Text(
-                        'Se connecter',
-                        style: TextStyle(
-                            color: ColorsApp.onSecondary,
-                            decoration: TextDecoration.underline,
-                            decorationColor: ColorsApp.onSecondary),
-                      ))
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CircularProgressIndicator(
+                    color: ColorsApp.onSecondary,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                 ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+              ),
+            ),
+          ],
+        ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.welcome, (route) => false);
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 }

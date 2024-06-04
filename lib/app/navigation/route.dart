@@ -6,7 +6,8 @@ abstract class Routes {
   static const home = '/dashboard';
 
   /// Splash Screen
-  static const splashScreen = '/splashScreen'; 
+  static const splashScreen = '/splashScreen';
+
   /// authentication
   static const signin = 'signin';
   static const signup = 'signup';
@@ -15,6 +16,5 @@ abstract class Routes {
   static const ucan = 'ucan';
   static const notif = 'notif';
   static const account = 'account';
-
- 
+  static const welcome = 'welcome';
 }

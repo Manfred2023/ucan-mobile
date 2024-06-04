@@ -8,6 +8,7 @@ import '../../../screen/authentification/view/check_number.dart';
 import '../../../screen/authentification/view/create_account.dart';
 import '../../../screen/authentification/view/forget_password.dart';
 import '../../../screen/authentification/view/login.dart';
+import '../../../screen/authentification/view/welcome.dart';
 import '../../../screen/home/view/ucan_account.dart';
 import '../../../screen/home/view/ucan_notif.dart';
 import '../../../screen/home/view/ucan_view.dart';
@@ -101,6 +102,18 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const AccountScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SmartAnimateTransition(
+              animation: animation,
+              curve: Curves.easeOut, // Courbe ease-out
+              child: child,
+            );
+          },
+        );
+      case Routes.welcome:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const Welcome(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(
               animation: animation,

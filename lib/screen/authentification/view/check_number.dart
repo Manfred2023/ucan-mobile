@@ -24,9 +24,7 @@ class _CheckNumberViewState extends State<CheckNumberView> {
       width: 56,
       height: 60,
       textStyle: const TextStyle(
-          color: ColorsApp.onSecondary,
-          fontWeight: FontWeight.bold,
-          fontSize: 25),
+          color: ColorsApp.primary, fontWeight: FontWeight.bold, fontSize: 25),
       decoration: BoxDecoration(
           color: ColorsApp.onPrimary,
           borderRadius: BorderRadius.circular(10),

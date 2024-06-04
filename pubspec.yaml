@@ -26,7 +26,16 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   flutter_bloc: ^8.1.5
   bloc: ^8.1.4
-  
+  get_it: ^7.7.0
+  json_serializable: ^6.8.0
+  json_annotation: ^4.9.0
+  build_runner: ^2.4.9
+  shimmer: ^3.0.0
+  im_stepper: ^1.0.1+1
+  flutter_tabler_icons: ^1.29.0
+  firebase_database: ^10.5.7
+
+
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +46,7 @@ dev_dependencies:
 
 flutter_icons:
   android: true
+  ios: true
   image_path: "assets/png/logo.png" 
   
  

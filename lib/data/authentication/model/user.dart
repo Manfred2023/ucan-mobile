@@ -1,24 +1,23 @@
 import 'package:equatable/equatable.dart';
-import 'package:ucan/data/authentication/model/contact.dart';
 
 class User extends Equatable {
-  final int id;
-  final Contact contact;
+  //final Contact contact;
   final String email;
-  final String mobile;
-  final String passcode;
+  final String? mobile;
 
-  const User(this.id,
-      {required this.contact,
-      required this.email,
-      required this.mobile,
-      required this.passcode});
+  const User({
+    //required this.contact,
+    required this.email,
+    this.mobile,
+  });
 
   @override
   String toString() {
-    return 'User{contact: $contact, email: $email, mobile: $mobile, passcode: $passcode}';
+    return 'User{ email: $email, mobile: $mobile, }';
   }
 
   @override
-  List<Object?> get props => [mobile, contact];
+  List<Object?> get props => [
+        mobile,
+      ];
 }

@@ -1,7 +1,8 @@
- import 'package:another_flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:ucan/app/config/constant.dart'; 
-import '../../../../app/config/colors.dart'; 
+import 'package:ucan/app/config/constant.dart';
+
+import '../../../../app/config/colors.dart';
 
 class AlertService {
   AlertService._();
@@ -49,18 +50,10 @@ class AlertService {
               : Text(
                   title,
                   textAlign: textAlign ?? TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4!
-                      .copyWith(color: Theme.of(context).colorScheme.onPrimary),
                 ),
           messageText: Text(
             message,
             textAlign: textAlign ?? TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2!
-                .copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
           backgroundColor:
               backgroundColor ?? Theme.of(context).colorScheme.primary,
@@ -71,13 +64,6 @@ class AlertService {
                   onPressed: onAction,
                   child: Text(
                     actionText,
-                    style: Theme.of(context).textTheme.button!.apply(
-                          color: actionTextColor ??
-                              Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary
-                                  .withOpacity(0.5),
-                        ),
                   ),
                 )
               : null,
@@ -176,7 +162,7 @@ class AlertService {
                       },
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:   [
+                        children: [
                           Text(
                             'OK',
                             style: TextStyle(
@@ -570,24 +556,24 @@ class AlertService {
   static void showLoad(BuildContext context) {
     AlertDialog alert = const AlertDialog(
       backgroundColor: ColorsApp.secondary,
-      titlePadding:   EdgeInsets.all(0.0),
-      buttonPadding:   EdgeInsets.all(0.0),
-      contentPadding:   EdgeInsets.only(
-          left: 15.0, top: 11.0, right: 15.0, bottom: 15.0),
-      actionsPadding:   EdgeInsets.only(right: 15, left: 15),
+      titlePadding: EdgeInsets.all(0.0),
+      buttonPadding: EdgeInsets.all(0.0),
+      contentPadding:
+          EdgeInsets.only(left: 15.0, top: 11.0, right: 15.0, bottom: 15.0),
+      actionsPadding: EdgeInsets.only(right: 15, left: 15),
       content: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-            CircularProgressIndicator(
+          CircularProgressIndicator(
             color: ColorsApp.primary,
           ),
-            SizedBox(
+          SizedBox(
             width: 20,
           ),
           Expanded(
             child: Text(
               'Veuillez patienter le temps que nous effectuons cette operation',
-              style:   TextStyle(color: ColorsApp.onSecondary),
+              style: TextStyle(color: ColorsApp.onSecondary),
             ),
           ),
         ],
