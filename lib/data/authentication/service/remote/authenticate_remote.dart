@@ -1,77 +1,84 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dio/dio.dart';
+
+import '../../../../app/config/constant.dart';
+import '../../../shared/service/remote/endpoints.dart';
+import '../../../shared/service/remote/network.dart';
+import 'model/auth_api_model.dart';
+import 'model/contact_api_model.dart';
 
 class AuthenticateRemote {
   AuthenticateRemote();
-  static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  //
-  static User? get currentUser => _firebaseAuth.currentUser;
-  static Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
-  static String verifyId = '';
 
-  Future<User> signup({
-    required String userName,
+  Future<Dio> _getDio() async {
+    return Network.createHttpClient(
+      baseUrl: Constants.apiBaseUrlDev,
+      debugMode: true,
+    );
+  }
+
+  Future<ContactApiResponse> createContact({
+    int? token,
+    String? firstname,
+    required String lastname,
+    required String mobile,
+    required bool gender,
     required String email,
-    required String password,
+    required String city,
+    required String? location,
   }) async {
     try {
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      if (userCredential.user != null) {
-        await currentUser!.updateDisplayName(userName);
+      final response =
+          await (await _getDio()).post(Endpoints.createContact, data: {
+        "token": token,
+        "firstname": firstname,
+        "lastname": lastname,
+        "mobile": mobile,
+        "gender": gender,
+        "email": email,
+        "city": city,
+        "location": location,
+      });
+      if (response.data['status'] == 1) {
+        return ContactApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
       }
-      return currentUser!;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.toString());
+    } catch (ex) {
+      throw Exception(ex);
     }
   }
 
-  Future<User> phoneAuthentication({
-    required String phone,
-    // required Function next,
+  Future<AuthApiResponse> createUser({
+    int? token,
+    required int pin,
+    required int code,
+    required int contact,
   }) async {
     try {
-      await _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: phone,
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await currentUser!.updatePhoneNumber(credential);
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          throw Exception(e.toString());
-        },
-        codeSent: (String verificationId, int? resendToken) async {
-          verifyId = verificationId;
-        },
-        codeAutoRetrievalTimeout: (String verificationId) async {
-          // Handle auto-retrieval timeout
-          verificationId = verificationId;
-        },
-      );
-      return currentUser!;
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
-  Future<void> signin(
-      {required String emailAddress, required String password}) async {
-    try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailAddress, password: password);
-      print(credential);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      final response =
+          await (await _getDio()).post(Endpoints.createUser, data: {
+        "token": token,
+        "pin": pin,
+        "code": code,
+        "contact": contact,
+      });
+      if (response.data['status'] == 1) {
+        return AuthApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
       }
+    } catch (ex) {
+      throw Exception(ex);
     }
-  }
-
-  Future<void> signout() async {
-    await FirebaseAuth.instance.signOut();
   }
 }

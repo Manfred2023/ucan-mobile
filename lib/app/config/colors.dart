@@ -34,4 +34,6 @@ class ColorsApp {
   static const errorDark = Color(0xFFaf003b);
   static const onErrorDark = Color(0xFFFFFFFF);
   static const textColorDark = Color(0xFF8F959E);
+
+  static const formField = Color(0xFFDDDDDD);
 }

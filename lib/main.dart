@@ -10,7 +10,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await Dependencies.register();
+  await Dependencies.register(
+    useMocks: false,
+  );
   final firebaseApp = Firebase.app();
   FirebaseDatabase.instanceFor(
       app: firebaseApp,

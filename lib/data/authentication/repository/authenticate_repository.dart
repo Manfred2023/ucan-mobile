@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ucan/data/authentication/model/authentication.dart';
 
 import '../service/remote/authenticate_remote.dart';
 
@@ -7,24 +7,38 @@ class AuthenticateRepository {
 
   AuthenticateRepository(this._authenticate);
 
-  Future<User?> signup(
-      {required String emailAddress,
-      required String userName,
-      required String password}) async {
-    final response = await _authenticate.signup(
-        email: emailAddress, password: password, userName: userName);
-
-    return response;
+  Future<Contact> createContact({
+    int? token,
+    String? firstname,
+    required String lastname,
+    required String mobile,
+    required bool gender,
+    required String email,
+    required String city,
+    required String? location,
+  }) async {
+    final response = await _authenticate.createContact(
+        lastname: lastname,
+        mobile: mobile,
+        gender: gender,
+        email: email,
+        city: city,
+        location: location);
+    return response.response!.toContact();
   }
 
-  Future<void> signin(
-      {required String emailAddress, required String password}) async {
-    await _authenticate.signin(emailAddress: emailAddress, password: password);
-  }
-
-  Future<User> phoneAuthentication({required String phone}) async {
-    final response = await _authenticate.phoneAuthentication(phone: phone);
-
-    return response;
+  Future<Authentication> createUser({
+    int? token,
+    required int pin,
+    required int code,
+    required int contact,
+  }) async {
+    final response = await _authenticate.createUser(
+      token: token,
+      pin: pin,
+      code: code,
+      contact: contact,
+    );
+    return response.response!.toAuth();
   }
 }

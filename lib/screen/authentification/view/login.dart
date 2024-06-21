@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/navigation/route.dart';
 
-import '../../../data/authentication/repository/authenticate_repository.dart';
-import '../../../utils/dependancies.dart';
 import '../../../utils/helpers/g.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -154,13 +152,7 @@ class _LoginViewState extends State<LoginView> {
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: InkWell(
-              onTap: () async {
-                await getIt<AuthenticateRepository>().signin(
-                    emailAddress: emailController.text.trim(),
-                    password: passcodeController.text);
-                if (!context.mounted) return;
-                Navigator.of(context).pushNamed(Routes.ucan);
-              },
+              onTap: () async {},
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 50,

@@ -17,4 +17,7 @@ abstract class Routes {
   static const notif = 'notif';
   static const account = 'account';
   static const welcome = 'welcome';
+  static const checkConnection = 'checkConnection';
+  static const selectCountry = 'selectCountry';
+  static const selectCity = 'selectCity';
 }
