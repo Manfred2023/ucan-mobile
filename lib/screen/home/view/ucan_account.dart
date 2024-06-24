@@ -22,7 +22,7 @@ class _AccountViewState extends State<AccountView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsApp.onSecondary,
+      backgroundColor: ColorsApp.primary,
       appBar: AppBar(
         backgroundColor: ColorsApp.primary,
         actions: [

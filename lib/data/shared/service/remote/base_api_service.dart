@@ -21,6 +21,8 @@ abstract class BaseApiService {
           return const DataError.error404();
         case 400:
           return const DataError.error404();
+        case 500:
+          return const DataError.error404();
         default:
           try {
             final apiError =

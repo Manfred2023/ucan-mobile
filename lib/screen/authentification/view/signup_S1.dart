@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
 import 'package:ucan/utils/helpers/g.dart';
@@ -11,25 +12,24 @@ import '../../../data/authentication/repository/authenticate_repository.dart';
 import '../../../data/requirement/repository/requirement_repository.dart';
 import '../../../utils/dependancies.dart';
 import '../../../utils/helpers/h_phonenumber.dart';
-import '../../shared/design_system/view/ds_button.dart';
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+class SignupOneScreen extends StatelessWidget {
+  const SignupOneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SignupView();
+    return const SignupOneView();
   }
 }
 
-class SignupView extends StatefulWidget {
-  const SignupView({super.key});
+class SignupOneView extends StatefulWidget {
+  const SignupOneView({super.key});
 
   @override
-  State<SignupView> createState() => _SignupViewState();
+  State<SignupOneView> createState() => _SignupOneViewState();
 }
 
-class _SignupViewState extends State<SignupView> {
+class _SignupOneViewState extends State<SignupOneView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController firstnameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
@@ -66,12 +66,21 @@ class _SignupViewState extends State<SignupView> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SvgPicture.asset(
+                              'assets/svg/ucanpurple.svg',
+                              width: 40,
+                              height: 40,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
                             const Text(
                               'Créer un compte',
                               style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(
                               height: 15,
@@ -451,34 +460,28 @@ class _SignupViewState extends State<SignupView> {
           bottomNavigationBar: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DSPrimaryButton(
-                    borderRadius: 100,
-                    backgroundColor: ColorsApp.primary,
-                    forceUpperCase: false,
-                    text: 'Créer mon compte',
-                    height: 54,
-                    textStyle: const TextStyle(
-                        color: ColorsApp.onSecondary, fontSize: 20),
-                    onPressed: () async {
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
                           AlertService.showLoad(context);
                           contact = await getIt<AuthenticateRepository>()
                               .createContact(
-                                  firstname: firstnameController.text,
-                                  lastname: lastnameController.text,
+                                  firstname: firstnameController.text.trim(),
+                                  lastname: lastnameController.text.trim(),
                                   mobile: phoneController.text,
                                   gender: _isMen,
-                                  email: emailController.text,
+                                  email: emailController.text.trim(),
                                   city: hidecityController.text,
                                   location: locationController.text);
                           if (!context.mounted) return;
                           Navigator.of(context).pop();
                           if (contact is Contact) {
                             Navigator.pushNamedAndRemoveUntil(
-                                context, Routes.code, (route) => false,
+                                context, Routes.signup2, (route) => false,
                                 arguments: contact);
                           }
                         } catch (e) {
@@ -489,7 +492,49 @@ class _SignupViewState extends State<SignupView> {
                               actionText: 'Okay');
                         }
                       }
-                    }),
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: ColorsApp.primary,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: const Center(
+                          child: Text(
+                        "Créer mon compte",
+                        style: TextStyle(
+                            color: ColorsApp.onSecondary,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      )),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Vous avez déjà compte ?",
+                        style: TextStyle(color: ColorsApp.textColorCC),
+                      ),
+                      const SizedBox(width: 10),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.loginStep1);
+                        },
+                        child: const Text(
+                          "Se connecter",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: ColorsApp.primary),
+                        ),
+                      )
+                    ],
+                  )
+                ],
               ),
             ),
           ),

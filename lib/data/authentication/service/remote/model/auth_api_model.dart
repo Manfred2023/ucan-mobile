@@ -18,8 +18,11 @@ class AuthApiResponse {
   final String? type;
   @JsonKey(name: "response")
   final AuthApiModel? response;
+  @JsonKey(name: "message")
+  final String? message;
 
-  AuthApiResponse({
+  AuthApiResponse(
+    this.message, {
     this.status,
     this.type,
     this.response,
@@ -36,16 +39,13 @@ class AuthApiModel {
   @JsonKey(name: "token")
   final int? token;
   @JsonKey(name: "pin")
-  final String? pin;
-  @JsonKey(name: "code")
-  final String? code;
+  final int? pin;
   @JsonKey(name: "contact")
   final ContactApiModel? contact;
 
   AuthApiModel({
     this.token,
     this.pin,
-    this.code,
     this.contact,
   });
 
@@ -53,8 +53,17 @@ class AuthApiModel {
       _$AuthApiModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthApiModelToJson(this);
+
+  @override
+  String toString() {
+    return 'AuthApiModel{token: $token, pin: $pin, contact: $contact}';
+  }
+
   Authentication toAuth() {
     return Authentication(
-        token: token.toString(), code: code, contact: contact!.toContact());
+      token: token.toString(),
+      pin: pin.toString(),
+      contact: contact!.toContact(),
+    );
   }
 }

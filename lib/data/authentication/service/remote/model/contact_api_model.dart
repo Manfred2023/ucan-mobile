@@ -15,12 +15,20 @@ class ContactApiResponse {
   final String? type;
   @JsonKey(name: "response")
   final ContactApiModel? response;
+  @JsonKey(name: "message")
+  final String? message;
 
   ContactApiResponse({
     this.status,
     this.type,
     this.response,
+    this.message,
   });
+
+  @override
+  String toString() {
+    return 'ContactApiResponse{status: $status, type: $type, response: $response, message: $message}';
+  }
 
   factory ContactApiResponse.fromJson(Map<String, dynamic> json) =>
       _$ContactApiResponseFromJson(json);
@@ -37,7 +45,7 @@ class ContactApiModel {
   @JsonKey(name: "lastname")
   final String? lastname;
   @JsonKey(name: "gender")
-  final String? gender;
+  final bool? gender;
   @JsonKey(name: "mobile")
   final String? mobile;
   @JsonKey(name: "email")
@@ -62,11 +70,12 @@ class ContactApiModel {
       _$ContactApiModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ContactApiModelToJson(this);
+
   Contact toContact() {
     return Contact(
         location: location,
         code: token,
-        gender: gender,
+        gender: gender.toString(),
         lastname: lastname,
         firstname: firstname,
         mobile: mobile,

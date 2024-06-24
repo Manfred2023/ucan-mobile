@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 /// Colors app
 class ColorsApp {
   // Light colors
-  static const primary = Color(0xFFFF9F41);
-  static const onPrimary = Color(0xFF022B3A);
+  static const primary = Color(0xFF7b4ab8);
+  static const onPrimary = Color(0xFFff9f41);
   static const accent = Color(0xFFff4200);
   static const secondary = Color(0xFF000000);
   static const onSecondary = Color(0xFFFFFFFF);

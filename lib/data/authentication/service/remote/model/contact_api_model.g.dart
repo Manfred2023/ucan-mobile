@@ -13,6 +13,7 @@ ContactApiResponse _$ContactApiResponseFromJson(Map<String, dynamic> json) =>
       response: json['response'] == null
           ? null
           : ContactApiModel.fromJson(json['response'] as Map<String, dynamic>),
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$ContactApiResponseToJson(ContactApiResponse instance) =>
@@ -20,6 +21,7 @@ Map<String, dynamic> _$ContactApiResponseToJson(ContactApiResponse instance) =>
       'status': instance.status,
       'type': instance.type,
       'response': instance.response,
+      'message': instance.message,
     };
 
 ContactApiModel _$ContactApiModelFromJson(Map<String, dynamic> json) =>
@@ -27,7 +29,7 @@ ContactApiModel _$ContactApiModelFromJson(Map<String, dynamic> json) =>
       token: (json['token'] as num?)?.toInt(),
       firstname: json['firstname'] as String?,
       lastname: json['lastname'] as String?,
-      gender: json['gender'] as String?,
+      gender: json['gender'] as bool?,
       mobile: json['mobile'] as String?,
       email: json['email'] as String?,
       location: json['location'] as String?,

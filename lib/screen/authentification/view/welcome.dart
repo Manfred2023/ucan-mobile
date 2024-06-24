@@ -40,7 +40,7 @@ class _WelcomeViewState extends State<WelcomeView> {
               InkWell(
                 onTap: () {
                   //AlertService.showLoad(context);
-                  Navigator.of(context).pushNamed(Routes.signup);
+                  Navigator.of(context).pushNamed(Routes.signup1);
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -67,19 +67,19 @@ class _WelcomeViewState extends State<WelcomeView> {
                 children: [
                   const Text(
                     "Vous avez deja un compte?",
-                    style: TextStyle(color: ColorsApp.onPrimary),
+                    style: TextStyle(color: ColorsApp.onSecondary),
                   ),
                   const SizedBox(width: 10),
                   InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed(Routes.signin);
+                        Navigator.of(context).pushNamed(Routes.loginStep1);
                       },
                       child: const Text(
                         'Se connecter',
                         style: TextStyle(
-                            color: ColorsApp.onSecondary,
+                            color: ColorsApp.onPrimary,
                             decoration: TextDecoration.underline,
-                            decorationColor: ColorsApp.onSecondary),
+                            decorationColor: ColorsApp.onPrimary),
                       ))
                 ],
               )

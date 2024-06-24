@@ -18,6 +18,7 @@ class AuthenticateRepository {
     required String? location,
   }) async {
     final response = await _authenticate.createContact(
+        firstname: firstname,
         lastname: lastname,
         mobile: mobile,
         gender: gender,
@@ -27,17 +28,44 @@ class AuthenticateRepository {
     return response.response!.toContact();
   }
 
+  Future<Contact> getContact({
+    required int mobile,
+  }) async {
+    final response = await _authenticate.getContact(
+      mobile: mobile,
+    );
+    return response.response!.toContact();
+  }
+
+  Future<Authentication> getUser({
+    required int token,
+  }) async {
+    final response = await _authenticate.getUser(
+      token: token,
+    );
+    return response.response!.toAuth();
+  }
+
   Future<Authentication> createUser({
     int? token,
     required int pin,
-    required int code,
     required int contact,
   }) async {
     final response = await _authenticate.createUser(
       token: token,
       pin: pin,
-      code: code,
       contact: contact,
+    );
+    return response.response!.toAuth();
+  }
+
+  Future<Authentication> auth({
+    required int pin,
+    required int code,
+  }) async {
+    final response = await _authenticate.auth(
+      pin: pin,
+      code: code,
     );
     return response.response!.toAuth();
   }

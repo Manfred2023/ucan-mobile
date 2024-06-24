@@ -7,6 +7,13 @@ abstract class Endpoints {
   /// requirement
   static const String city = '/city';
   static const String country = '/country';
+
+  ///auth
   static const String createContact = '/contact/create/';
   static const String createUser = '/user/create/';
+  static const String getContact = '/contact/get/';
+  static const String getUser = '/user/check/';
+
+  ///login
+  static const String auth = '/user/auth/';
 }

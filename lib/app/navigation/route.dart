@@ -9,10 +9,11 @@ abstract class Routes {
   static const splashScreen = '/splashScreen';
 
   /// authentication
-  static const signin = 'signin';
-  static const signup = 'signup';
+  static const loginStep1 = 'loginStep1';
+  static const loginStep2 = 'loginStep2';
+  static const signup1 = 'signup';
   static const forgot = 'forgot';
-  static const code = 'code';
+  static const signup2 = 'code';
   static const ucan = 'ucan';
   static const notif = 'notif';
   static const account = 'account';

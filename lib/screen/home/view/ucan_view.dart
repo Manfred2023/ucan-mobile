@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/navigation/route.dart';
 
@@ -23,53 +22,68 @@ class _UcanViewState extends State<UcanView> {
   bool amount = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //backgroundColor: ColorsApp.acce,
-
-      body: SafeArea(
-        child: SizedBox(
+    return SafeArea(
+      child: Scaffold(
+        //backgroundColor: ColorsApp.acce,
+        drawer: Drawer(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, Routes.welcome, (route) => false);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: ColorsApp.primary,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: const Center(
+                        child: Text(
+                      "Se deconnecter",
+                      style: TextStyle(
+                          color: ColorsApp.onSecondary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        appBar: AppBar(
+          backgroundColor: ColorsApp.primary,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.notif);
+                },
+                icon: Icon(Icons.notifications))
+          ],
+        ),
+        body: SizedBox(
             child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height / 3.5,
               decoration: const BoxDecoration(
-                color: ColorsApp.onPrimary,
+                color: ColorsApp.primary,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(Routes.account);
-                          },
-                          child: const CircleAvatar(
-                            backgroundColor: ColorsApp.onPrimary,
-                            child: Icon(
-                              Icons.account_circle_outlined,
-                              color: ColorsApp.onSecondary,
-                              size: 35,
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(Routes.notif);
-                          },
-                          child: const CircleAvatar(
-                            backgroundColor: ColorsApp.onPrimary,
-                            child: Icon(
-                              Icons.notifications,
-                              color: ColorsApp.onSecondary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                     Column(
                       children: [
                         Column(
@@ -78,7 +92,7 @@ class _UcanViewState extends State<UcanView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'Votre solde courant',
+                                  'Solde de votre compte',
                                   style: TextStyle(
                                       color: ColorsApp.onSecondary,
                                       fontSize: 20,
@@ -135,7 +149,7 @@ class _UcanViewState extends State<UcanView> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Row(
+                        /*  Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Column(
@@ -144,14 +158,14 @@ class _UcanViewState extends State<UcanView> {
                                   height: 55,
                                   width: 55,
                                   decoration: BoxDecoration(
-                                      color: ColorsApp.onPrimary,
+                                      color: ColorsApp.primary,
                                       borderRadius: BorderRadius.circular(200)),
                                   child: const Icon(
                                     Icons.upload,
                                   ),
                                 ),
                                 const Text(
-                                  "Envoyer",
+                                  "Crediter",
                                   style:
                                       TextStyle(color: ColorsApp.onSecondary),
                                 )
@@ -166,152 +180,98 @@ class _UcanViewState extends State<UcanView> {
                                   height: 55,
                                   width: 55,
                                   decoration: BoxDecoration(
-                                      color: ColorsApp.onPrimary,
+                                      color: ColorsApp.primary.withOpacity(0.8),
                                       borderRadius: BorderRadius.circular(200)),
                                   child: const Icon(
                                     Icons.download,
                                   ),
                                 ),
                                 const Text(
-                                  "Retirer",
+                                  "Debiter",
                                   style:
                                       TextStyle(color: ColorsApp.onSecondary),
                                 )
                               ],
                             )
                           ],
-                        ),
+                        ),*/
                       ],
                     )
                   ],
                 ),
               ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[200]!,
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey[200],
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[200]!,
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey[200],
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[200]!,
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          height: 15,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey[200],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )
           ],
         )),
-      ),
-      /* bottomNavigationBar: const SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: SizedBox(
-            height: 50,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Icon(
-                        Icons.wallet,
-                        color: ColorsApp.primary,
-                      ),
-                      Text(
-                        "Wallet",
-                        style: TextStyle(
+        /* bottomNavigationBar: const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: SizedBox(
+              height: 50,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Icon(
+                          Icons.wallet,
                           color: ColorsApp.primary,
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Icon(
-                        Icons.signal_cellular_alt,
-                        color: Color.fromARGB(255, 105, 102, 102),
-                      ),
-                      Text(
-                        "Activite",
-                        style: TextStyle(
+                        Text(
+                          "Wallet",
+                          style: TextStyle(
+                            color: ColorsApp.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Icon(
+                          Icons.signal_cellular_alt,
                           color: Color.fromARGB(255, 105, 102, 102),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Icon(
-                        Icons.account_box_rounded,
-                        color: Color.fromARGB(255, 105, 102, 102),
-                      ),
-                      Text(
-                        "Compte",
-                        style: TextStyle(
+                        Text(
+                          "Activite",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 105, 102, 102),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Icon(
+                          Icons.account_box_rounded,
                           color: Color.fromARGB(255, 105, 102, 102),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Icon(
-                        Icons.details,
-                        color: Color.fromARGB(255, 105, 102, 102),
-                      ),
-                      Text(
-                        "Autre",
-                        style: TextStyle(
+                        Text(
+                          "Compte",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 105, 102, 102),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Icon(
+                          Icons.details,
                           color: Color.fromARGB(255, 105, 102, 102),
                         ),
-                      ),
-                    ],
-                  )
-                ]),
+                        Text(
+                          "Autre",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 105, 102, 102),
+                          ),
+                        ),
+                      ],
+                    )
+                  ]),
+            ),
           ),
-        ),
-      ),*/
+        ),*/
+      ),
     );
   }
 }

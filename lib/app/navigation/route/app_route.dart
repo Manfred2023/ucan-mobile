@@ -5,10 +5,11 @@ import 'package:ucan/screen/error/error_page.dart';
 import 'package:ucan/screen/shared/animate/smart_animate_page_transitions_builder.dart';
 import 'package:ucan/screen/splash/splash_screen.dart';
 
-import '../../../screen/authentification/view/check_number.dart';
-import '../../../screen/authentification/view/create_account.dart';
 import '../../../screen/authentification/view/forget_password.dart';
-import '../../../screen/authentification/view/login.dart';
+import '../../../screen/authentification/view/login_S1.dart';
+import '../../../screen/authentification/view/login_S2.dart';
+import '../../../screen/authentification/view/signup_S1.dart';
+import '../../../screen/authentification/view/signup_S2.dart';
 import '../../../screen/authentification/view/welcome.dart';
 import '../../../screen/authentification/widget/select_city.dart';
 import '../../../screen/authentification/widget/select_country.dart';
@@ -27,10 +28,26 @@ class AppRouter {
           },
         );
 
-      case Routes.signin:
+      case Routes.loginStep1:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const LoginScreen(),
+              const LoginStepOneScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SmartAnimateTransition(
+              animation: animation,
+              curve: Curves.easeOut, // Courbe ease-out
+              child: child,
+            );
+          },
+        );
+
+      case Routes.loginStep2:
+        final user = routeSettings.arguments! as Authentication;
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              LoginStepTwoScreen(
+            user: user,
+          ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(
               animation: animation,
@@ -52,10 +69,28 @@ class AppRouter {
         return MaterialPageRoute<void>(
           builder: (_) => SelectCity(),
         );
-      case Routes.signup:
+      case Routes.signup1:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const SignupScreen(),
+              const SignupOneScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SmartAnimateTransition(
+              animation: animation,
+              curve: Curves.easeOut, // Courbe ease-out
+              child: child,
+            );
+          },
+        );
+      case Routes.signup2:
+        if (routeSettings.arguments == null) {
+          return MaterialPageRoute<void>(builder: (_) => const ErrorPage());
+        }
+        final contact = routeSettings.arguments! as Contact;
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              SignupTwoScreen(
+            contact: contact,
+          ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(
               animation: animation,
@@ -77,24 +112,6 @@ class AppRouter {
           },
         );
 
-      case Routes.code:
-        if (routeSettings.arguments == null) {
-          return MaterialPageRoute<void>(builder: (_) => const ErrorPage());
-        }
-        final contact = routeSettings.arguments! as Contact;
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              CheckNumberScreen(
-            contact: contact,
-          ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return SmartAnimateTransition(
-              animation: animation,
-              curve: Curves.easeOut, // Courbe ease-out
-              child: child,
-            );
-          },
-        );
       case Routes.ucan:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>

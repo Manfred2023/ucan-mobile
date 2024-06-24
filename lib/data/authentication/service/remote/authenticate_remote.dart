@@ -56,7 +56,6 @@ class AuthenticateRemote {
   Future<AuthApiResponse> createUser({
     int? token,
     required int pin,
-    required int code,
     required int contact,
   }) async {
     try {
@@ -64,8 +63,75 @@ class AuthenticateRemote {
           await (await _getDio()).post(Endpoints.createUser, data: {
         "token": token,
         "pin": pin,
-        "code": code,
         "contact": contact,
+      });
+      if (response.data['status'] == 1) {
+        return AuthApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw Exception(ex);
+    }
+  }
+
+  Future<ContactApiResponse> getContact({
+    required int mobile,
+  }) async {
+    try {
+      final response = await (await _getDio()).put(Endpoints.getContact, data: {
+        "mobile": mobile,
+      });
+      if (response.data['status'] == 1) {
+        return ContactApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw Exception(ex);
+    }
+  }
+
+  Future<AuthApiResponse> getUser({
+    required int token,
+  }) async {
+    try {
+      final response = await (await _getDio()).put(Endpoints.getUser, data: {
+        "token": token,
+      });
+      if (response.data['status'] == 1) {
+        return AuthApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw Exception(ex);
+    }
+  }
+
+  Future<AuthApiResponse> auth({
+    required int pin,
+    required int code,
+  }) async {
+    try {
+      final response = await (await _getDio()).put(Endpoints.auth, data: {
+        "pin": pin,
+        "code": code,
       });
       if (response.data['status'] == 1) {
         return AuthApiResponse.fromJson(response.data);

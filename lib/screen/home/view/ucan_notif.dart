@@ -21,7 +21,7 @@ class _NotifViewState extends State<NotifView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsApp.onPrimary,
+      backgroundColor: ColorsApp.primary,
       appBar: AppBar(backgroundColor: Colors.transparent, actions: [
         Padding(
           padding: const EdgeInsets.only(right: 15),
@@ -52,7 +52,7 @@ class _NotifViewState extends State<NotifView> {
                   child: Text(
                     "DETAILS",
                     style: TextStyle(
-                        color: ColorsApp.onPrimary,
+                        color: ColorsApp.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
                   ),
