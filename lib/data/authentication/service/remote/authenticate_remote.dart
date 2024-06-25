@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 
 import '../../../../app/config/constant.dart';
+import '../../../requirement/service/remote/model/city_api_model.dart';
+import "../../../shared/service/remote/base_api_service.dart";
 import '../../../shared/service/remote/endpoints.dart';
 import '../../../shared/service/remote/network.dart';
 import 'model/auth_api_model.dart';
 import 'model/contact_api_model.dart';
 
-class AuthenticateRemote {
+class AuthenticateRemote extends BaseApiService {
   AuthenticateRemote();
 
   Future<Dio> _getDio() async {
@@ -49,7 +51,7 @@ class AuthenticateRemote {
                 data: response.data));
       }
     } catch (ex) {
-      throw Exception(ex);
+      throw mapToError(ex);
     }
   }
 
@@ -76,7 +78,7 @@ class AuthenticateRemote {
                 data: response.data));
       }
     } catch (ex) {
-      throw Exception(ex);
+      throw mapToError(ex);
     }
   }
 
@@ -89,6 +91,10 @@ class AuthenticateRemote {
       });
       if (response.data['status'] == 1) {
         return ContactApiResponse.fromJson(response.data);
+      } else if (response.data?['status'] == 0 &&
+          response.data?['message'] == "no_data_available") {
+        return ContactApiResponse.fromJson(
+            {"status": 0, "type": "reference", "response": []});
       } else {
         throw DioError(
             requestOptions: RequestOptions(path: ''),
@@ -98,7 +104,25 @@ class AuthenticateRemote {
                 data: response.data));
       }
     } catch (ex) {
-      throw Exception(ex);
+      throw mapToError(ex);
+    }
+  }
+
+  Future<CityApiResponse> getCities() async {
+    try {
+      final response = await (await _getDio()).get(Endpoints.city);
+      if (response.data['status'] == 1) {
+        return CityApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw mapToError(ex);
     }
   }
 
@@ -120,7 +144,7 @@ class AuthenticateRemote {
                 data: response.data));
       }
     } catch (ex) {
-      throw Exception(ex);
+      throw mapToError(ex);
     }
   }
 
@@ -144,7 +168,7 @@ class AuthenticateRemote {
                 data: response.data));
       }
     } catch (ex) {
-      throw Exception(ex);
+      throw mapToError(ex);
     }
   }
 }

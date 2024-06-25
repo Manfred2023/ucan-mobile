@@ -1,7 +1,7 @@
-// Created by Jospin MAMBOU on 15/12/2022, 10:15
-// Email websafe21@gmail.com
-// Copyright (c) 2022. All rights reserved.
-// Last modified 02/12/2022, 08:43
+// Created by Manfred MOUKATE on 6/25/24, 8:34 PM
+// Email moukatemanfred@gmail.com
+// Copyright (c) 2024. All rights reserved.
+// Last modified 6/25/24, 8:34 PM
 
 import '../../../model/authentication.dart';
 import '../dba/authentication_dba.dart';
@@ -11,8 +11,8 @@ class AuthenticationDb {
   /// {@macro AuthenticationDbModel}
   const AuthenticationDb({
     required this.id,
-    required this.token,
-    required this.device,
+    required this.pin,
+    this.device,
     required this.code,
     required this.contact,
   });
@@ -20,17 +20,17 @@ class AuthenticationDb {
   /// empty AuthenticationDbModel
   AuthenticationDb.empty({
     this.id,
-    this.token,
+    this.pin,
     this.device,
     this.code,
     this.contact,
   });
 
   final int? id;
-
-  final String? token;
+  final int? code;
+  final int? pin;
   final String? device;
-  final String? code;
+
   final ContactDb? contact;
 
   /// Returns a copy of this Account with the given values updated.
@@ -38,9 +38,9 @@ class AuthenticationDb {
   /// {@macro AuthenticationDbModel}
   AuthenticationDb copyWith({
     int? id,
-    String? token,
+    int? pin,
     String? device,
-    String? code,
+    int? code,
     ContactDb? contact,
   }) =>
       AuthenticationDb(
@@ -48,7 +48,7 @@ class AuthenticationDb {
         code: code ?? this.code,
         contact: contact ?? this.contact,
         device: device ?? this.device,
-        token: token ?? this.token,
+        pin: pin ?? this.pin,
       );
 
   Authentication toAuthentication() {
@@ -56,7 +56,7 @@ class AuthenticationDb {
       contact: contact?.toContact(),
       code: code,
       device: device,
-      token: token,
+      pin: pin,
     );
   }
 
@@ -67,7 +67,7 @@ class AuthenticationDb {
       id: authenticationDb?.id,
       device: authentication.device,
       code: authentication.code,
-      token: authentication.token,
+      pin: authentication.pin,
       contact: authentication.contact != null
           ? await ContactDb.fromContact(authentication.contact!)
           : null,
@@ -76,7 +76,7 @@ class AuthenticationDb {
 
   @override
   String toString() {
-    return 'AuthenticationDb{id: $id, token: $token, device: $device, code: $code, contact: $contact}';
+    return 'AuthenticationDb{id: $id,  device: $device, code: $code, contact: $contact}';
   }
 
   /// save instance of AuthenticationDbModel

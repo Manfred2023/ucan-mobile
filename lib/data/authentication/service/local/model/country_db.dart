@@ -1,7 +1,7 @@
-// Created by Jospin MAMBOU on 15/12/2022, 10:15
-// Email websafe21@gmail.com
-// Copyright (c) 2022. All rights reserved.
-// Last modified 09/11/2022, 10:40
+// Created by Manfred MOUKATE on 6/25/24, 8:34 PM
+// Email moukatemanfred@gmail.com
+// Copyright (c) 2024. All rights reserved.
+// Last modified 6/25/24, 8:34 PM
 
 import 'package:equatable/equatable.dart';
 
@@ -40,8 +40,8 @@ class CountryDb extends Equatable {
     int? code,
     String? nameen,
     String? namefr,
+    String? alpha1,
     String? alpha2,
-    String? alpha3,
     int? dialcode,
   }) =>
       CountryDb(
@@ -49,9 +49,9 @@ class CountryDb extends Equatable {
         code: code ?? this.code,
         nameen: nameen ?? this.nameen,
         namefr: namefr ?? this.namefr,
-        alpha1: alpha2 ?? this.alpha1,
         dialcode: dialcode ?? this.dialcode,
-        alpha2: alpha3 ?? this.alpha2,
+        alpha1: alpha1 ?? this.alpha1,
+        alpha2: alpha2 ?? this.alpha2,
       );
 
   Country toCountry() {
@@ -60,21 +60,21 @@ class CountryDb extends Equatable {
       nameen: nameen,
       namefr: namefr,
       alpha1: alpha1,
-      dialcode: dialcode,
       alpha2: alpha2,
+      dialcode: dialcode,
     );
   }
 
   static Future<CountryDb> fromCountry(Country country) async {
-    final countryDb = await CountryDb.searchByAlpha2(country.code.toString());
+    final countryDb = await CountryDb.searchByAlpha1(country.alpha1);
     return CountryDb(
       id: countryDb?.id,
       code: country.code,
-      nameen: country.nameen,
       namefr: country.namefr,
+      nameen: country.nameen,
       alpha1: country.alpha1,
+      alpha2: country.alpha2,
       dialcode: country.dialcode,
-      alpha2: country.alpha1,
     );
   }
 
@@ -96,8 +96,8 @@ class CountryDb extends Equatable {
     return CountryDBA(country: const CountryDb.empty()).get(id);
   }
 
-  static Future<CountryDb?> searchByAlpha2(String alpha2) {
-    return CountryDBA(country: const CountryDb.empty()).search(alpha2);
+  static Future<CountryDb?> searchByAlpha1(String alpha1) {
+    return CountryDBA(country: const CountryDb.empty()).search(alpha1);
   }
 
   static Future<int> delete() {

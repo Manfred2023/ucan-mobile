@@ -16,7 +16,7 @@ class AuthenticationDBA {
   static const data = 'authentication';
 
   static const id = 'id';
-  static const token = 'token';
+  static const pin = 'pin';
   static const device = 'device';
   static const code = 'code';
   static const contact = 'contact';
@@ -24,10 +24,10 @@ class AuthenticationDBA {
   static const tableSql = '''
       CREATE TABLE IF NOT EXISTS $data (
         $id	INTEGER,
-        $token	TEXT, 
-        $code	TEXT, 
+        $pin	INTEGER, 
+        $code	INTEGER, 
         $device	TEXT, 
-        $contact	TEXT, 
+        $contact	INTEGER NOT NULL,
         PRIMARY KEY($id AUTOINCREMENT)
       );
   ''';
@@ -68,7 +68,7 @@ class AuthenticationDBA {
       code: authenticationDb.code,
       contact: authenticationDb.contact?.id,
       device: authenticationDb.device,
-      token: authenticationDb.token,
+      pin: authenticationDb.pin,
     };
   }
 
@@ -77,8 +77,8 @@ class AuthenticationDBA {
     return AuthenticationDb(
       id: json[id] as int?,
       device: json[device] as String?,
-      token: json[token] as String?,
-      code: json[code] as String?,
+      pin: json[pin] as int?,
+      code: json[code] as int?,
       contact: json[contact] != null
           ? await ContactDb.search(json[contact] as int)
           : null,

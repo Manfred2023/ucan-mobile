@@ -125,21 +125,51 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
                 ),
                 const SizedBox(height: 25),
                 Pinput(
-                  controller: codeController,
-                  length: 6,
-                  defaultPinTheme: defaultPinInput,
-                  focusedPinTheme: defaultPinInput.copyWith(
-                      textStyle: const TextStyle(
-                          color: ColorsApp.onPrimary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25),
-                      decoration: BoxDecoration(
-                          color: ColorsApp.textColorCcLight,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.transparent))),
-                  //controller: codeController,
-                  onCompleted: (pin) => debugPrint(pin),
-                ),
+                    controller: codeController,
+                    length: 6,
+                    defaultPinTheme: defaultPinInput,
+                    focusedPinTheme: defaultPinInput.copyWith(
+                        textStyle: const TextStyle(
+                            color: ColorsApp.onPrimary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25),
+                        decoration: BoxDecoration(
+                            color: ColorsApp.textColorCcLight,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.transparent))),
+                    //controller: codeController,
+                    //onCompleted: (pin) => debugPrint(pin),
+                    onCompleted: (String pin) {
+                      print(pin.length);
+                      setState(() async {
+                        if (pin.length == 6) {
+                          AlertService.showLoad(context);
+                          try {
+                            user = await getIt<AuthenticateRepository>().auth(
+                                pin: int.parse(codeController.text),
+                                code: widget.user.code!);
+
+                            if (!context.mounted) return;
+                            Navigator.of(context).pop();
+                            if (user is Authentication) {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                Routes.ucan,
+                                (route) => false,
+                              );
+                            }
+                          } catch (e) {
+                            Navigator.of(context).pop();
+                            codeController.clear();
+                            setState(() {});
+                            AlertService.showSnack(context,
+                                message: e.toString(),
+                                onPressed: () {},
+                                actionText: 'OK');
+                          }
+                        }
+                      });
+                    }),
                 const SizedBox(height: 25),
                 RichText(
                   text: const TextSpan(
@@ -171,32 +201,32 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                InkWell(
+                /*  InkWell(
                   onTap: () async {
-                    if (codeController.length == 6) {
-                      print(
-                        int.parse(codeController.text),
-                      );
-                      print(int.parse(widget.user.token!));
-                      AlertService.showLoad(context);
-                      try {
-                        user = await getIt<AuthenticateRepository>().auth(
-                            pin: int.parse(codeController.text),
-                            code: int.parse(widget.user.token!));
+                    setState(() async {
+                      if (codeController.length == 6) {
+                        AlertService.showLoad(context);
+                        try {
+                          user = await getIt<AuthenticateRepository>().auth(
+                              pin: int.parse(codeController.text),
+                              code: widget.user.code!);
 
-                        if (!context.mounted) return;
-                        Navigator.of(context).pop();
-                        if (user is Authentication) {
-                          Navigator.of(context).pushNamed(Routes.ucan);
+                          if (!context.mounted) return;
+                          Navigator.of(context).pop();
+                          if (user is Authentication) {
+                            Navigator.of(context).pushNamed(Routes.ucan);
+                          }
+                        } catch (e) {
+                          Navigator.of(context).pop();
+                          codeController.clear();
+                          setState(() {});
+                          AlertService.showSnack(context,
+                              message: e.toString(),
+                              onPressed: () {},
+                              actionText: 'OK');
                         }
-                      } catch (e) {
-                        Navigator.of(context).pop();
-                        AlertService.showSnack(context,
-                            message: e.toString(),
-                            onPressed: () {},
-                            actionText: 'OK');
                       }
-                    }
+                    });
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -214,7 +244,7 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
                       textAlign: TextAlign.center,
                     )),
                   ),
-                ),
+                ),*/
                 const SizedBox(
                   height: 10,
                 ),
@@ -227,7 +257,7 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
                             context, Routes.loginStep1, (route) => false);
                       },
                       child: const Text(
-                        "Ce n'est pas vous",
+                        "Ce n'est pas vous ??",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: ColorsApp.primary),

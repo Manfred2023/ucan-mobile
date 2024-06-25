@@ -1,7 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:ucan/data/requirement/repository/requirement_repository.dart';
 
+import '../data/account/repository/account_repository.dart';
+import '../data/account/service/remote/account_remote.dart';
 import '../data/authentication/repository/authenticate_repository.dart';
+import '../data/authentication/service/local/authentication_db_service.dart';
 import '../data/authentication/service/remote/authenticate_remote.dart';
 import '../data/requirement/repository/requiremen_data_repository.dart';
 import '../data/requirement/repository/requiremen_mock_repository.dart';
@@ -14,7 +17,17 @@ abstract class Dependencies {
     required bool useMocks,
   }) async {
     getIt.registerSingleton<AuthenticateRepository>(
-        AuthenticateRepository(AuthenticateRemote()));
+      AuthenticateRepository(
+        AuthenticateRemote(),
+        AuthenticationDbService(),
+      ),
+    );
+
+    getIt.registerSingleton<AccountRepository>(
+      AccountRepository(
+        AccountRemote(),
+      ),
+    );
 
     getIt.registerSingleton<RequirementRepository>(
       useMocks

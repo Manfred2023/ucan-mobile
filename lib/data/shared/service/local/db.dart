@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlbrite/sqlbrite.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:ucan/data/account/service/local/dba/motif_dba.dart';
 
 import '../../../authentication/service/local/dba/authentication_dba.dart';
 import '../../../authentication/service/local/dba/city_dba.dart';
@@ -28,7 +29,7 @@ class Db {
   static const _databaseName = 'ucan.db';
 
   /// database version
-  static const _databaseVersion = 15;
+  static const _databaseVersion = 16;
 
   ///
   static Lock lock = Lock();
@@ -63,6 +64,7 @@ class Db {
     await db.execute(CityDBA.tableSql);
     await db.execute(ContactDBA.tableSql);
     await db.execute(AuthenticationDBA.tableSql);
+    await db.execute(MotifDBA.tableSql);
   }
 
   Future _dropTable(Database db) async {

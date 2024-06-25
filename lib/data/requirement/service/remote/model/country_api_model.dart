@@ -15,11 +15,14 @@ class CountryApiResponse {
   final String? type;
   @JsonKey(name: "response")
   final List<CountryApiModel>? response;
+  @JsonKey(name: "message")
+  final String? message;
 
   CountryApiResponse({
     this.status,
     this.type,
     this.response,
+    this.message,
   });
 
   factory CountryApiResponse.fromJson(Map<String, dynamic> json) =>

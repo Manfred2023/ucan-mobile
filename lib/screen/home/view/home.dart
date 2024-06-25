@@ -33,10 +33,10 @@ class _HomeViewState extends State<HomeView> {
             child: IndexedStack(
               index: selectedTab.index,
               children: const [
-                UcanScreen(),
-                UcanScreen(),
-                UcanScreen(),
-                UcanScreen()
+                UcanHomeScreen(),
+                UcanHomeScreen(),
+                UcanHomeScreen(),
+                UcanHomeScreen()
               ],
             ),
           ),

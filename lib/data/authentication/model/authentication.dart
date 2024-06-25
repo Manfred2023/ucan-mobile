@@ -1,21 +1,20 @@
 import 'package:equatable/equatable.dart';
 
 class Authentication extends Equatable {
-  final String? token;
+  final int? code;
+  final int? pin;
   final String? device;
-  final String? pin;
-  final String? code;
   final Contact? contact;
 
-  Authentication({this.token, this.device, this.pin, this.code, this.contact});
+  Authentication({this.device, this.pin, this.code, this.contact});
 
   @override
   String toString() {
-    return 'Authentication{token: $token, device: $device, pin: $pin, code: $code, contact: $contact}';
+    return 'Authentication{  device: $device, pin: $pin, code: $code, contact: $contact}';
   }
 
   @override
-  List<Object?> get props => [token, device, code, contact];
+  List<Object?> get props => [device, code, contact];
 }
 
 class Contact extends Equatable {

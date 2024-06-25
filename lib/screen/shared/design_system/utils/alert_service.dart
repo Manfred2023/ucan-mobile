@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:ucan/app/config/constant.dart';
 
 import '../../../../app/config/colors.dart';
@@ -408,8 +409,8 @@ class AlertService {
                     children: [
                       TextButton(
                         onPressed: () {},
-                        child: Row(
-                          children: const [
+                        child: const Row(
+                          children: [
                             Text(
                               'OK',
                               style: TextStyle(
@@ -503,8 +504,8 @@ class AlertService {
                     children: [
                       TextButton(
                         onPressed: () {},
-                        child: Row(
-                          children: const [
+                        child: const Row(
+                          children: [
                             Text(
                               'OK',
                               style: TextStyle(
@@ -554,23 +555,21 @@ class AlertService {
   }
 
   static void showLoad(BuildContext context) {
-    AlertDialog alert = const AlertDialog(
-      backgroundColor: ColorsApp.secondary,
-      titlePadding: EdgeInsets.all(0.0),
-      buttonPadding: EdgeInsets.all(0.0),
-      contentPadding:
-          EdgeInsets.only(left: 15.0, top: 11.0, right: 15.0, bottom: 15.0),
-      actionsPadding: EdgeInsets.only(right: 15, left: 15),
+    AlertDialog alert = AlertDialog(
+      backgroundColor: ColorsApp.onPrimary,
+      titlePadding: const EdgeInsets.all(0.0),
+      buttonPadding: const EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.only(
+          left: 15.0, top: 11.0, right: 15.0, bottom: 15.0),
+      actionsPadding: const EdgeInsets.only(right: 15, left: 15),
       content: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircularProgressIndicator(
-            color: ColorsApp.primary,
-          ),
-          SizedBox(
+          Lottie.asset('assets/animations/loading.json'),
+          const SizedBox(
             width: 20,
           ),
-          Expanded(
+          const Expanded(
             child: Text(
               'Veuillez patienter le temps que nous effectuons cette operation',
               style: TextStyle(color: ColorsApp.onSecondary),

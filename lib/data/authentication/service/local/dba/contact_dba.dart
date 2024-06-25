@@ -120,26 +120,29 @@ class ContactDBA {
 
   ///
   Future<ContactDb?> get(int? idL) async {
-    final subscriberDbModels =
+    final contactDbModels =
         await (await init()).query(data, where: '$id =  ?', whereArgs: [idL]);
-    return subscriberDbModels.isEmpty
-        ? null
-        : toObject(subscriberDbModels.first);
+    return contactDbModels.isEmpty ? null : toObject(contactDbModels.first);
   }
 
   ///
-  Future<ContactDb?> search(String code) async {
-    final subscriberDbModels = await (await init()).query(
+  Future<ContactDb?> search(int code) async {
+    final contactDbModels = await (await init()).query(
       data,
       where: '$token LIKE ?',
       whereArgs: [code],
     );
-    return subscriberDbModels.isEmpty
-        ? null
-        : toObject(subscriberDbModels.first);
+    return contactDbModels.isEmpty ? null : toObject(contactDbModels.first);
   }
 
   Future<int> deleteAll() async {
     return await (await init()).delete(data);
+  }
+
+  Future<ContactDb?> getFirst() async {
+    final authenticationDbModels = await (await init()).query(data);
+    return authenticationDbModels.isEmpty
+        ? null
+        : toObject(authenticationDbModels.first);
   }
 }

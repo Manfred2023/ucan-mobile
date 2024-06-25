@@ -1,7 +1,7 @@
-// Created by Jospin MAMBOU on 15/12/2022, 10:15
-// Email websafe21@gmail.com
-// Copyright (c) 2022. All rights reserved.
-// Last modified 10/11/2022, 09:09
+// Created by Manfred MOUKATE on 6/25/24, 8:34 PM
+// Email moukatemanfred@gmail.com
+// Copyright (c) 2024. All rights reserved.
+// Last modified 6/25/24, 8:34 PM
 
 import 'package:equatable/equatable.dart';
 

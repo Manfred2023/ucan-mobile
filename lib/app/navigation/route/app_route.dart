@@ -13,6 +13,7 @@ import '../../../screen/authentification/view/signup_S2.dart';
 import '../../../screen/authentification/view/welcome.dart';
 import '../../../screen/authentification/widget/select_city.dart';
 import '../../../screen/authentification/widget/select_country.dart';
+import '../../../screen/home/view/paiement.dart';
 import '../../../screen/home/view/ucan_account.dart';
 import '../../../screen/home/view/ucan_notif.dart';
 import '../../../screen/home/view/ucan_view.dart';
@@ -32,6 +33,18 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const LoginStepOneScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SmartAnimateTransition(
+              animation: animation,
+              curve: Curves.easeOut, // Courbe ease-out
+              child: child,
+            );
+          },
+        );
+      case Routes.paiement:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const PaiementSreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(
               animation: animation,
@@ -115,7 +128,7 @@ class AppRouter {
       case Routes.ucan:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const UcanScreen(),
+              const UcanHomeScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(
               animation: animation,

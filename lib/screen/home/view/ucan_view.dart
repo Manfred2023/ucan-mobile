@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/navigation/route.dart';
+import 'package:ucan/data/account/model/account.dart';
+import 'package:ucan/data/authentication/model/authentication.dart';
 
-class UcanScreen extends StatelessWidget {
-  const UcanScreen({super.key});
+import '../../../data/account/repository/account_repository.dart';
+import '../../../data/authentication/repository/authenticate_repository.dart';
+import '../../../utils/dependancies.dart';
+import '../../../utils/helpers/regex_format.dart';
+import '../../shared/widget/card_shimmer.dart';
+
+class UcanHomeScreen extends StatelessWidget {
+  const UcanHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +27,16 @@ class UcanView extends StatefulWidget {
 }
 
 class _UcanViewState extends State<UcanView> {
+  Authentication? currentUser;
+  Account? account;
   bool amount = false;
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
+    print(account);
     return SafeArea(
       child: Scaffold(
-        //backgroundColor: ColorsApp.acce,
+        //backgroundColor: Col  orsApp.acce,
         drawer: Drawer(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -68,210 +80,212 @@ class _UcanViewState extends State<UcanView> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.notif);
                 },
-                icon: Icon(Icons.notifications))
+                icon: const Icon(Icons.notifications)),
+            IconButton(
+                onPressed: () {
+                  isLoading = true;
+                  reload();
+                },
+                icon: const Icon(Icons.refresh)),
           ],
         ),
-        body: SizedBox(
-            child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 3.5,
-              decoration: const BoxDecoration(
-                color: ColorsApp.primary,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+        body: RefreshIndicator(
+          onRefresh: () async {
+            reload();
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (currentUser != null)
+                    Row(
                       children: [
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  'Solde de votre compte',
-                                  style: TextStyle(
-                                      color: ColorsApp.onSecondary,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w200),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      if (amount == false) {
-                                        setState(() {
-                                          amount = true;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          amount = false;
-                                        });
-                                      }
-                                    },
-                                    child: const Icon(Icons.remove_red_eye))
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                amount
-                                    ? const Text(
-                                        "****",
-                                        style: TextStyle(
-                                            color: ColorsApp.onSecondary,
-                                            fontSize: 30),
-                                      )
-                                    : const Text(
-                                        "10 000",
-                                        style: TextStyle(
-                                            color: ColorsApp.onSecondary,
-                                            fontSize: 20),
-                                      ),
-                                const SizedBox(
-                                  width: 3,
-                                ),
-                                const Text(
-                                  "FCFA",
-                                  style: TextStyle(
-                                      color: ColorsApp.onSecondary,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            )
-                          ],
+                        const Text(
+                          "Bienvenue, ",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
+                        if (currentUser!.contact?.firstname != null)
+                          Text(
+                            currentUser!.contact!.firstname ?? '',
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w300),
+                          ),
                         const SizedBox(
-                          height: 20,
+                          width: 3,
                         ),
-                        /*  Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  height: 55,
-                                  width: 55,
-                                  decoration: BoxDecoration(
-                                      color: ColorsApp.primary,
-                                      borderRadius: BorderRadius.circular(200)),
-                                  child: const Icon(
-                                    Icons.upload,
-                                  ),
-                                ),
-                                const Text(
-                                  "Crediter",
-                                  style:
-                                      TextStyle(color: ColorsApp.onSecondary),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 25,
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  height: 55,
-                                  width: 55,
-                                  decoration: BoxDecoration(
-                                      color: ColorsApp.primary.withOpacity(0.8),
-                                      borderRadius: BorderRadius.circular(200)),
-                                  child: const Icon(
-                                    Icons.download,
-                                  ),
-                                ),
-                                const Text(
-                                  "Debiter",
-                                  style:
-                                      TextStyle(color: ColorsApp.onSecondary),
-                                )
-                              ],
-                            )
-                          ],
-                        ),*/
+                        Text(
+                          currentUser!.contact!.lastname ?? '',
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w300),
+                        ),
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    color: ColorsApp.onSecondary,
+                    // height: MediaQuery.of(context).size.height / 6,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(''),
+                              isLoading
+                                  ? const SizedBox(
+                                      width: 250,
+                                      child: CardShimmer(
+                                        color: ColorsApp.textColor,
+                                        height: 20,
+                                      ),
+                                    )
+                                  : Text(
+                                      RegexFormat.contentDoubleMoneyFormat(
+                                          account!.amount!.toStringAsFixed(2),
+                                          'fr'),
+                                      style: const TextStyle(
+                                          color: ColorsApp.secondary,
+                                          fontSize: 60,
+                                          fontWeight: FontWeight.w100),
+                                    ),
+                              const Text(''),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Votre derniere opération',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
+                                TextButton(
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'VOIR PLUS',
+                                      style: TextStyle(
+                                          color: ColorsApp.onPrimary,
+                                          fontWeight: FontWeight.bold),
+                                    ))
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Container(
+                              color: ColorsApp.error.withOpacity(0.1),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Transport",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w300),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "300",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "22h 30",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w300),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Routes.paiement);
+                            },
+                            child: Text('Crediter')),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Debiter'),
+                          style: ButtonStyle(
+                              animationDuration: Duration(seconds: 5)),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-            ),
-          ],
-        )),
-        /* bottomNavigationBar: const SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(15),
-            child: SizedBox(
-              height: 50,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.wallet,
-                          color: ColorsApp.primary,
-                        ),
-                        Text(
-                          "Wallet",
-                          style: TextStyle(
-                            color: ColorsApp.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.signal_cellular_alt,
-                          color: Color.fromARGB(255, 105, 102, 102),
-                        ),
-                        Text(
-                          "Activite",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 105, 102, 102),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.account_box_rounded,
-                          color: Color.fromARGB(255, 105, 102, 102),
-                        ),
-                        Text(
-                          "Compte",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 105, 102, 102),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.details,
-                          color: Color.fromARGB(255, 105, 102, 102),
-                        ),
-                        Text(
-                          "Autre",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 105, 102, 102),
-                          ),
-                        ),
-                      ],
-                    )
-                  ]),
             ),
           ),
-        ),*/
+        ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    init();
+    reload();
+    super.initState();
+  }
+
+  Future<void> init() async {
+    currentUser = await getIt<AuthenticateRepository>().getAuth();
+
+    if (currentUser == null) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.loginStep1, (route) => false);
+    } else {
+      reload();
+    }
+  }
+
+  reload() async {
+    if (currentUser != null) {
+      account =
+          await getIt<AccountRepository>().account(token: currentUser!.code!);
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }

@@ -1,7 +1,7 @@
-// Created by Jospin MAMBOU on 15/12/2022, 10:15
-// Email websafe21@gmail.com
-// Copyright (c) 2022. All rights reserved.
-// Last modified 02/12/2022, 08:43
+// Created by Manfred MOUKATE on 6/25/24, 8:34 PM
+// Email moukatemanfred@gmail.com
+// Copyright (c) 2024. All rights reserved.
+// Last modified 6/25/24, 8:34 PM
 
 import '../../../model/authentication.dart';
 import '../dba/contact_dba.dart';
@@ -124,7 +124,7 @@ class ContactDb {
   }
 
   static Future<ContactDb> fromContact(Contact contact) async {
-    final contactDb = await ContactDb.searchByCode(contact.code.toString());
+    final contactDb = await ContactDb.searchByCode(contact.code!);
     return ContactDb(
       id: contactDb?.id,
       token: contact.code,
@@ -143,13 +143,17 @@ class ContactDb {
     return ContactDBA(contact: ContactDb.empty()).get(id);
   }
 
-  static Future<ContactDb?> searchByCode(String code) {
+  static Future<ContactDb?> searchByCode(int code) {
     return ContactDBA(contact: ContactDb.empty()).search(code);
   }
 
   static Future<int> delete() async {
     await ContactDBA(contact: ContactDb.empty()).deleteAll();
     return CityDb.delete();
+  }
+
+  static Future<ContactDb?> get() async {
+    return await ContactDBA(contact: ContactDb.empty()).getFirst();
   }
 
   static Future<bool> exist(int id) async {

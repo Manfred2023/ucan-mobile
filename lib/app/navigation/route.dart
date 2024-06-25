@@ -21,4 +21,5 @@ abstract class Routes {
   static const checkConnection = 'checkConnection';
   static const selectCountry = 'selectCountry';
   static const selectCity = 'selectCity';
+  static const paiement = 'paiement';
 }

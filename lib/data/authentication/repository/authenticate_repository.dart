@@ -1,11 +1,13 @@
 import 'package:ucan/data/authentication/model/authentication.dart';
 
+import '../service/local/authentication_db_service.dart';
 import '../service/remote/authenticate_remote.dart';
 
 class AuthenticateRepository {
   final AuthenticateRemote _authenticate;
+  final AuthenticationDbService _authenticationDbService;
 
-  AuthenticateRepository(this._authenticate);
+  AuthenticateRepository(this._authenticate, this._authenticationDbService);
 
   Future<Contact> createContact({
     int? token,
@@ -34,7 +36,9 @@ class AuthenticateRepository {
     final response = await _authenticate.getContact(
       mobile: mobile,
     );
-    return response.response!.toContact();
+    final contact = response.response?.toContact();
+    if (contact != null) await _authenticationDbService.save(contact);
+    return contact!;
   }
 
   Future<Authentication> getUser({
@@ -43,6 +47,8 @@ class AuthenticateRepository {
     final response = await _authenticate.getUser(
       token: token,
     );
+    final auth = response.response?.toAuth();
+    if (auth != null) await _authenticationDbService.saveAuth(auth);
     return response.response!.toAuth();
   }
 
@@ -68,5 +74,10 @@ class AuthenticateRepository {
       code: code,
     );
     return response.response!.toAuth();
+  }
+
+  Future<Authentication?> getAuth() async {
+    final response = await _authenticationDbService.getAuth();
+    return response?.toAuthentication();
   }
 }

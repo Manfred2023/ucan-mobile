@@ -367,7 +367,7 @@ class _SignupOneViewState extends State<SignupOneView> {
                                     setState(() {
                                       cityController.text = citySelect.name;
                                       hidecityController.text =
-                                          citySelect.code!;
+                                          citySelect.code!.toString();
                                     });
                                   }
                                 }

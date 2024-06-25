@@ -78,7 +78,7 @@ class _LoginStepOneViewState extends State<LoginStepOneView> {
                   key: _formKey,
                   child: TextFormField(
                     controller: emailController,
-                    textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.phone,
                     // textAlign: TextAlign.justify,
                     style: const TextStyle(

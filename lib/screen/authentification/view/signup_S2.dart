@@ -136,7 +136,35 @@ class _SignupTwoViewState extends State<SignupTwoView> {
                                   border:
                                       Border.all(color: Colors.transparent))),
                           //controller: codeController,
-                          onCompleted: (pin) => debugPrint(pin),
+                          onCompleted: (String pin) {
+                            print(pin.length);
+                            setState(() async {
+                              if (pin.length == 6) {
+                                AlertService.showLoad(context);
+                                try {
+                                  auth = await getIt<AuthenticateRepository>()
+                                      .createUser(
+                                          pin: int.parse(codeController.text),
+                                          contact: widget.contact.code!);
+                                  if (!context.mounted) return;
+                                  if (auth is Authentication) {
+                                    Navigator.of(context).pop();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      Routes.ucan,
+                                      (route) => false,
+                                    );
+                                  }
+                                } catch (e) {
+                                  Navigator.of(context).pop();
+                                  AlertService.showSnack(context,
+                                      message: e.toString(),
+                                      onPressed: () {},
+                                      actionText: 'Okay');
+                                }
+                              }
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -146,7 +174,7 @@ class _SignupTwoViewState extends State<SignupTwoView> {
             ],
           ),
         ),
-        bottomNavigationBar: SafeArea(
+        /*bottomNavigationBar: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -203,7 +231,7 @@ class _SignupTwoViewState extends State<SignupTwoView> {
               ],
             ),
           ),
-        ),
+        ),*/
       ),
     );
   }

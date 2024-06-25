@@ -5,6 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
 
 import '../../app/navigation/route.dart';
+import '../../data/account/repository/account_repository.dart';
+import '../../data/authentication/repository/authenticate_repository.dart';
+import '../../data/requirement/repository/requirement_repository.dart';
+import '../../data/shared/service/local/db.dart';
+import '../../utils/dependancies.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -64,7 +69,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
                     color: ColorsApp.onSecondary,
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 30,
                   ),
                 ],
               ),
@@ -76,11 +81,30 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   @override
   void initState() {
     super.initState();
+    init();
 
-    timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+    /* timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
       Navigator.pushNamedAndRemoveUntil(
           context, Routes.welcome, (route) => false);
-    });
+    });*/
+  }
+
+  init() async {
+    await Db.instance.database;
+    final cities = await getIt<RequirementRepository>().getCities();
+    final country = await getIt<RequirementRepository>().getCountry();
+    final auth = await getIt<AuthenticateRepository>().getAuth();
+    final motif = await getIt<AccountRepository>().getMotif();
+    print(motif);
+
+    if (auth != null) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.loginStep2, (route) => false,
+          arguments: auth);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.welcome, (route) => false);
+    }
   }
 
   @override

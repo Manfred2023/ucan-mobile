@@ -1,0 +1,82 @@
+// Created by Manfred MOUKATE on 6/25/24, 8:33 PM
+// Email moukatemanfred@gmail.com
+// Copyright (c) 2024. All rights reserved.
+// Last modified 6/25/24, 8:33 PM
+
+import 'package:equatable/equatable.dart';
+import 'package:ucan/data/account/model/motif.dart';
+
+import '../dba/motif_dba.dart';
+
+class MotifDb extends Equatable {
+  ///
+  const MotifDb({
+    this.id,
+    required this.code,
+    required this.name,
+  });
+
+  /// empty Country
+  const MotifDb.empty()
+      : this(
+          code: 0,
+          name: '',
+        );
+
+  final int? id;
+  final int code;
+  final String name;
+
+  /// Returns a copy of this Contact with the given values updated.
+  ///
+  /// {@macro ContactPhoneTable}
+  MotifDb copyWith({int? id, int? code, String? name}) => MotifDb(
+      id: id ?? this.id, code: code ?? this.code, name: name ?? this.name);
+
+  Motif toMotif() {
+    return Motif(code: code, name: name);
+  }
+
+  static Future<MotifDb> fromCountry(Motif motif) async {
+    final motifDb = await MotifDb.searchByName(motif.name!);
+    return MotifDb(
+      id: motifDb?.id,
+      code: motifDb!.code,
+      name: motifDb.name,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'MotifDb{id: $id, code: $code, name: $name}';
+  }
+
+  @override
+  List<Object?> get props => [code, name];
+
+  /// save instance of country
+  Future<MotifDb?> save() {
+    return MotifDBA(motif: this).save();
+  }
+
+  /// save instance of country
+  static Future<MotifDb?> search(int id) {
+    return MotifDBA(motif: const MotifDb.empty()).get(id);
+  }
+
+  static Future<MotifDb?> searchByName(String name) {
+    return MotifDBA(motif: const MotifDb.empty()).search(name);
+  }
+
+  static Future<int> delete() {
+    return MotifDBA(motif: const MotifDb.empty()).deleteAll();
+  }
+
+  static Future<bool> exist(int id) async {
+    if ((await search(id)) != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}

@@ -16,4 +16,9 @@ abstract class Endpoints {
 
   ///login
   static const String auth = '/user/auth/';
+
+  ///
+  static const String account = '/account/';
+  static const String motif = '/motif/';
+  static const String saveMotif = '/motif/create/';
 }

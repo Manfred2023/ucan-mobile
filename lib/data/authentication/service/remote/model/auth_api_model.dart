@@ -61,8 +61,8 @@ class AuthApiModel {
 
   Authentication toAuth() {
     return Authentication(
-      token: token.toString(),
-      pin: pin.toString(),
+      code: token,
+      pin: pin,
       contact: contact!.toContact(),
     );
   }

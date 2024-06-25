@@ -13,6 +13,7 @@ CountryApiResponse _$CountryApiResponseFromJson(Map<String, dynamic> json) =>
       response: (json['response'] as List<dynamic>?)
           ?.map((e) => CountryApiModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$CountryApiResponseToJson(CountryApiResponse instance) =>
@@ -20,6 +21,7 @@ Map<String, dynamic> _$CountryApiResponseToJson(CountryApiResponse instance) =>
       'status': instance.status,
       'type': instance.type,
       'response': instance.response,
+      'message': instance.message,
     };
 
 CountryApiModel _$CountryApiModelFromJson(Map<String, dynamic> json) =>
