@@ -7,7 +7,6 @@ import 'package:ucan/app/config/colors.dart';
 import '../../app/navigation/route.dart';
 import '../../data/account/repository/account_repository.dart';
 import '../../data/authentication/repository/authenticate_repository.dart';
-import '../../data/requirement/repository/requirement_repository.dart';
 import '../../data/shared/service/local/db.dart';
 import '../../utils/dependancies.dart';
 
@@ -91,11 +90,11 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
   init() async {
     await Db.instance.database;
-    final cities = await getIt<RequirementRepository>().getCities();
-    final country = await getIt<RequirementRepository>().getCountry();
+    await getIt<AccountRepository>().getMotif();
+    //await getIt<RequirementRepository>().getCities();
+    //await getIt<RequirementRepository>().getCountry();
+
     final auth = await getIt<AuthenticateRepository>().getAuth();
-    final motif = await getIt<AccountRepository>().getMotif();
-    print(motif);
 
     if (auth != null) {
       Navigator.pushNamedAndRemoveUntil(

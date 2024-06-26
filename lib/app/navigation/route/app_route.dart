@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ucan/app/navigation/route.dart';
+import 'package:ucan/data/account/model/account.dart';
 import 'package:ucan/data/authentication/model/authentication.dart';
 import 'package:ucan/screen/error/error_page.dart';
 import 'package:ucan/screen/shared/animate/smart_animate_page_transitions_builder.dart';
@@ -42,9 +43,10 @@ class AppRouter {
           },
         );
       case Routes.paiement:
+        final account = routeSettings.arguments! as Account;
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const PaiementSreen(),
+              PaiementSreen(account: account),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(
               animation: animation,

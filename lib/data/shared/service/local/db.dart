@@ -29,7 +29,7 @@ class Db {
   static const _databaseName = 'ucan.db';
 
   /// database version
-  static const _databaseVersion = 16;
+  static const _databaseVersion = 4;
 
   ///
   static Lock lock = Lock();

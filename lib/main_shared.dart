@@ -2,15 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:ucan/app/app.dart';
-import 'package:ucan/app/config/colors.dart'; 
+import 'package:ucan/app/config/colors.dart';
 
-Future<void> mainShared() async{
-
+Future<void> mainShared() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       systemStatusBarContrastEnforced: true,
@@ -18,9 +19,13 @@ Future<void> mainShared() async{
       systemNavigationBarColor: ColorsApp.secondary,
     ),
   );
-   runApp(MyApp(
-    //connectivity: Connectivity(),
-  ));
-  
-  
+
+  final myMessage = Intl.message(
+    'Hello, world!',
+    name: 'myMessage',
+  );
+
+  runApp(MyApp(
+      //connectivity: Connectivity(),
+      ));
 }

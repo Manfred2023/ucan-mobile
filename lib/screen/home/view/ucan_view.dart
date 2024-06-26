@@ -36,7 +36,7 @@ class _UcanViewState extends State<UcanView> {
     print(account);
     return SafeArea(
       child: Scaffold(
-        //backgroundColor: Col  orsApp.acce,
+        backgroundColor: ColorsApp.onSecondary,
         drawer: Drawer(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -129,17 +129,20 @@ class _UcanViewState extends State<UcanView> {
                     height: 10,
                   ),
                   Container(
-                    color: ColorsApp.onSecondary,
-                    // height: MediaQuery.of(context).size.height / 6,
-                    width: MediaQuery.of(context).size.width,
+                    color: ColorsApp.primary.withOpacity(0.1),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(''),
+                              const Text(
+                                'Portefeuille',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w100),
+                              ),
                               isLoading
                                   ? const SizedBox(
                                       width: 250,
@@ -154,73 +157,30 @@ class _UcanViewState extends State<UcanView> {
                                           'fr'),
                                       style: const TextStyle(
                                           color: ColorsApp.secondary,
-                                          fontSize: 60,
-                                          fontWeight: FontWeight.w100),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
                                     ),
-                              const Text(''),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Votre derniere opération',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                ),
-                                TextButton(
-                                    onPressed: () {},
-                                    child: const Text(
-                                      'VOIR PLUS',
-                                      style: TextStyle(
-                                          color: ColorsApp.onPrimary,
-                                          fontWeight: FontWeight.bold),
-                                    ))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(Routes.paiement,
+                                  arguments: account);
+                            },
                             child: Container(
-                              color: ColorsApp.error.withOpacity(0.1),
+                              decoration: const BoxDecoration(
+                                  color: ColorsApp.onSecondary,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
                               child: const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Transport",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
+                                    Text(
+                                      'Recap',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w300),
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "300",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          "22h 30",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
-                                    )
                                   ],
                                 ),
                               ),
@@ -233,25 +193,6 @@ class _UcanViewState extends State<UcanView> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(Routes.paiement);
-                            },
-                            child: Text('Crediter')),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Debiter'),
-                          style: ButtonStyle(
-                              animationDuration: Duration(seconds: 5)),
-                        )
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),

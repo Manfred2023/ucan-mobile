@@ -37,12 +37,10 @@ class MotifDb extends Equatable {
     return Motif(code: code, name: name);
   }
 
-  static Future<MotifDb> fromCountry(Motif motif) async {
-    final motifDb = await MotifDb.searchByName(motif.name!);
+  static Future<MotifDb> fromMotif(Motif motif) async {
     return MotifDb(
-      id: motifDb?.id,
-      code: motifDb!.code,
-      name: motifDb.name,
+      code: motif.code!,
+      name: motif.name!,
     );
   }
 
@@ -62,6 +60,10 @@ class MotifDb extends Equatable {
   /// save instance of country
   static Future<MotifDb?> search(int id) {
     return MotifDBA(motif: const MotifDb.empty()).get(id);
+  }
+
+  static Future<MotifDb?> searchCode(int code) {
+    return MotifDBA(motif: const MotifDb.empty()).searchCode(code);
   }
 
   static Future<MotifDb?> searchByName(String name) {

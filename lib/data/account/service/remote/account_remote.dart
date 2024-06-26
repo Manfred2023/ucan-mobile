@@ -11,6 +11,7 @@ import '../../../shared/service/remote/endpoints.dart';
 import '../../../shared/service/remote/network.dart';
 import 'model/account_api_model.dart';
 import 'model/motif_api_model.dart';
+import 'model/paiement_api_model.dart';
 
 class AccountRemote extends BaseApiService {
   AccountRemote();
@@ -67,12 +68,66 @@ class AccountRemote extends BaseApiService {
     required String name,
   }) async {
     try {
-      final response = await (await _getDio()).get(Endpoints.saveMotif, data: {
+      final response = await (await _getDio()).post(Endpoints.saveMotif, data: {
         'token': token,
         'name': name,
       });
       if (response.data['status'] == 1) {
         return MotifApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw mapToError(ex);
+    }
+  }
+
+  Future<PaiementApiResponse> createPaiement({
+    int? token,
+    required bool type,
+    required String date,
+    required int amount,
+    required int motif,
+    required int account,
+  }) async {
+    try {
+      final response = await (await _getDio()).get(Endpoints.paiement, data: {
+        'token': token,
+        'date': date,
+        'amount': amount,
+        'motif': motif,
+        'account': account,
+        'type': type,
+      });
+      if (response.data['status'] == 1) {
+        return PaiementApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw mapToError(ex);
+    }
+  }
+
+  Future<PaiementApiListResponse> getPaiement({
+    required int? token,
+  }) async {
+    try {
+      final response = await (await _getDio()).put(Endpoints.myPaiement, data: {
+        "token": token,
+      });
+      if (response.data['status'] == 1) {
+        return PaiementApiListResponse.fromJson(response.data);
       } else {
         throw DioError(
             requestOptions: RequestOptions(path: ''),

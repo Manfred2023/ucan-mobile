@@ -15,7 +15,7 @@ class MotifDBA {
 
   static const id = 'id';
   static const code = 'code';
-  static const name = 'name ';
+  static const name = 'name';
 
   static const tableSql = '''
         CREATE TABLE IF NOT EXISTS $data (
@@ -48,7 +48,7 @@ class MotifDBA {
   /// Check if country is not duplicate
   Future<bool> _isDuplication() async {
     return (await (await _init())
-            .query(data, where: '$code =  ?', whereArgs: [motif.code]))
+            .query(data, where: '$name =  ?', whereArgs: [motif.name]))
         .isNotEmpty;
   }
 
@@ -62,11 +62,14 @@ class MotifDBA {
   }
 
   ///
-  MotifDb toObject(Map<String, dynamic> json) => MotifDb(
-        id: json[id] as int?,
-        code: json[code] as int,
-        name: json[name] as String,
-      );
+  MotifDb toObject(Map<String, dynamic> json) {
+    print(json);
+    return MotifDb(
+      id: json[id] as int?,
+      code: json[code] as int,
+      name: json[name] as String,
+    );
+  }
 
   ///
   Future<MotifDb?> save() async {
@@ -93,13 +96,19 @@ class MotifDBA {
 
   ///
   Future<MotifDb?> get(int? idL) async {
-    final countries =
+    final motifs =
         await (await _init()).query(data, where: '$id =  ?', whereArgs: [idL]);
-    return countries.isEmpty ? null : toObject(countries.first);
+    return motifs.isEmpty ? null : toObject(motifs.first);
+  }
+
+  Future<MotifDb?> searchCode(int? codeL) async {
+    final motifs = await (await _init())
+        .query(data, where: '$code =  ?', whereArgs: [codeL]);
+    return motifs.isEmpty ? null : toObject(motifs.first);
   }
 
   ///
-  Future<MotifDb?> search(String? name) async {
+  Future<MotifDb?> search(String? nameL) async {
     final countries = await (await _init()).query(
       data,
       where: '$name LIKE ?   ',

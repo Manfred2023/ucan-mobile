@@ -104,4 +104,14 @@ class Country extends Equatable {
 
   @override
   List<Object?> get props => [code, alpha1, alpha2];
+
+  Country toCountry() {
+    return Country(
+        code: code,
+        nameen: nameen,
+        namefr: namefr,
+        alpha1: alpha1,
+        alpha2: alpha2,
+        dialcode: dialcode);
+  }
 }

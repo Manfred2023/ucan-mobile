@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return const App();
   }
 }
+
 class App extends StatefulWidget {
   const App({super.key});
 
@@ -24,48 +25,47 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return   MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-     theme: ThemeData(
-                  primarySwatch: G.createMaterialColor(ColorsApp.primary),
-                  primaryColor: ColorsApp.primary,
-                  pageTransitionsTheme: PageTransitionsTheme(
-                    builders: {
-                      TargetPlatform.android:
-                          SmartAnimatePageTransitionsBuilder(),
-                      TargetPlatform.iOS: SmartAnimatePageTransitionsBuilder(),
-                    },
-                  ),
-                  textSelectionTheme: const TextSelectionThemeData(
-                    cursorColor: ColorsApp.primary,
-                    selectionHandleColor: ColorsApp.primary,
-                  ),
-                  inputDecorationTheme: const InputDecorationTheme(
-                    focusColor: Colors.grey,
-                    hoverColor: ColorsApp.primary,
-                    labelStyle: TextStyle(fontSize: 14, color: Colors.black45),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ColorsApp.primary,
-                      ),
-                    ),
-                  ),
-                  checkboxTheme: const CheckboxThemeData(
-                      side: BorderSide(color: ColorsApp.secondary)),
-                  appBarTheme: const AppBarTheme(
-                    titleTextStyle: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        color: ColorsApp.onSecondary),
-                    iconTheme: IconThemeData(color: ColorsApp.onSecondary),
-                    backgroundColor: ColorsApp.secondary,
-                    elevation: 0.0,
-                  ),
-                  iconTheme: const IconThemeData(color: ColorsApp.surface),
-                  fontFamily: Constants.roboto,
-                  useMaterial3: true),
-              initialRoute: Routes.splashScreen,
-              onGenerateRoute: AppRouter.onGenerateRoute,
+      theme: ThemeData(
+          primarySwatch: G.createMaterialColor(ColorsApp.primary),
+          primaryColor: ColorsApp.primary,
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: {
+              TargetPlatform.android: SmartAnimatePageTransitionsBuilder(),
+              TargetPlatform.iOS: SmartAnimatePageTransitionsBuilder(),
+            },
+          ),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: ColorsApp.primary,
+            selectionHandleColor: ColorsApp.primary,
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            focusColor: Colors.grey,
+            hoverColor: ColorsApp.primary,
+            labelStyle: TextStyle(fontSize: 14, color: Colors.black45),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: ColorsApp.primary,
+              ),
+            ),
+          ),
+          checkboxTheme: const CheckboxThemeData(
+              side: BorderSide(color: ColorsApp.secondary)),
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+                color: ColorsApp.onSecondary),
+            iconTheme: IconThemeData(color: ColorsApp.onSecondary),
+            backgroundColor: ColorsApp.secondary,
+            elevation: 0.0,
+          ),
+          iconTheme: const IconThemeData(color: ColorsApp.surface),
+          fontFamily: Constants.roboto,
+          useMaterial3: true),
+      initialRoute: Routes.splashScreen,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
