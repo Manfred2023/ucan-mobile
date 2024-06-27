@@ -1,0 +1,555 @@
+{ "language": "Français",
+  "@language": {
+    "description": "La langue courante"
+  },
+  "chargement": "Veuillez patienter le temps que nous effectuons cette opération",
+  "accessContactDataDenied": "Accès aux données de contact refusé",
+  "contactDataNotAvailable": "Les données de contact ne sont pas disponibles",
+  "errorInternet": "Une erreur s'est produit. Verifiez votre connexion internet",
+  "userAuthenticationFailedMessage": "Authentification incorrecte",
+  "onYourMarks": "A vos marques !",
+  "@onYourMarks": {
+    "description": "A vos marques !"
+  },
+  "subMsgPhone": "Nous avons besoin de votre numéro de téléphone portable pour commencer",
+  "@subMsgPhone": {
+    "description": "Nous avons besoin de votre numéro de téléphone portable pour commencer"
+  },
+  "enterPhoneNumber": "Nº de téléphone ici ...",
+  "@enterPhoneNumber": {
+    "description": "Votre nº de téléphone portable *"
+  },
+  "errorEmptyNumber": "Veuillez entrer votre numéro de téléphone mobile",
+  "@errorEmptyNumber": {
+    "description": "Veuillez entrer votre numéro de téléphone mobile"
+  },
+  "errorNumberIncorrect": "Votre numéro de téléphone est incorrecte",
+  "@errorNumberIncorrect": {
+    "description": "Votre numéro de téléphone est incorrecte"
+  },
+  "next": "Suivant",
+  "@next": {
+    "description": "Suivant"
+  },
+  "ready": "Prêt !",
+  "msgSend": "Nous avons envoyé un code de vérification par SMS. Copiez et collez ci-dessous pour vérifier votre compte",
+  "codeSend": "Votre code reçu par SMS *",
+  "@codeSend":{
+    "description": "Votre code reçu par SMS *"
+  },
+  "codeShort": "Votre code est trop court",
+  "back": "Retour",
+  "check": "Verifier",
+  "unauthorisedDistributorMessage": "Impossible d'associer votre compte à un distributeur non autorisé à effectuer des opérations",
+  "noDistributorMatchesMessage": "Aucun distributeur ne correspond au code saisi",
+  "errorPreventsUpdateMessage": "Une erreur empêche la mise à jour des éléments",
+  "lastnameOfSubscribeIsRequiredMessage": "Le nom de famille de l'abonné(e) est obligatoire",
+  "rejectedForInvalidPhonenumberMessage": "Rejeté pour numéro de téléphone portable invalide",
+  "cityOfSubscriberIsRequiredMessage": "La ville de résidence de l'abonné(e) est obligatoire",
+  "rejectedForInvalidWhatsappnumberMessage": "Rejeté pour numéro WhatsApp invalide",
+  "incompleteDataToIdentifySubscriberMessage": "Données manquantes pour identifier l'abonné(e)",
+  "errorPreventsSubscriberIdentificationMessage": "Une erreur empêche l'identification de l'abonné",
+  "linkAssocie": "Voulez-vous associer votre compte à:",
+  "no": "Non",
+  "yes": "Oui",
+  "loadingData": "Chargement des données, veuillez patienter",
+  "serviceContinuity": "Continuité du service",
+  "noInternet": "Pas d'Internet",
+  "tryAgain": "Réessayer",
+   "veoCode": "*054#",
+   "ifYouExperienceAnInternetOutageDial": "En cas de panne d'Internet, composez le",
+  "forAllYourResubscriptionOperations": "pour toutes vos opérations de réabonnement",
+  "distributor": "Distributeur !",
+  "internetConnection": "Connexion internet",
+  "mainServer": "Serveur principal",
+  "operationsServer": "Serveur des opérations",
+  "recheck": "Revérifier",
+  "detectedErrorConnection": "Nous avons détecté une erreur lors de la connexion",
+  "paymentServer": "Serveur de payement",
+  "entrerCodeDistributor": "Code de votre distributeur *",
+  "enterLogin": "Entrez votre identifiant ...",
+  "@enterLogin": {
+    "description": "Entrez votre identifiant ..."
+  },
+  "errorLogin": "Entrez votre identifiant Svp!",
+  "@errorLogin": {
+    "description": "Entrez votre identifiant"
+  },
+  "errorLoginIncorrect": "Entrez votre identifiant correcte",
+  "@errorLoginIncorrect": {
+    "description": "Entrez votre identifiant correcte"
+  },
+  "password": "Entrez votre mot de passe ...",
+  "@password": {
+    "description": "Entrez votre mot de passe ..."
+  },
+  "passwordEnter": "Mot de passe",
+  "@passwordEnter": {
+    "description": "Mot de passe"
+  },
+  "errorPassword": "Entrez votre mot de passe Svp!",
+  "@errorPassword": {
+    "description": "Entrez votre mot de passe"
+  },
+  "errorPasswordShort": "Mot de passe trop court",
+  "@errorPasswordShort": {
+    "description": "Password is too short"
+  },
+  "remember": "Restez connecter",
+  "@remember": {
+    "description": "Restez connecter"
+  },
+  "forgetPw": "Mot de passe oublié?",
+  "@forgetPw": {
+    "description": "Mot de passe oublié?"
+  },
+  "connect": "Connexion",
+  "@connect": {
+    "description": "Connexion"
+  },
+  "numberIncorrect": "Le format du numéro est incorrect",
+  "@numberIncorrect": {
+    "description": "Le format du numéro est incorrect"
+  },
+  "userAuthenticationFailed": "L'authentification de l'utilisateur a échoué! Veuillez réessayer",
+  "@userAuthenticationFailed": {
+    "description": "L'authentification de l'utilisateur a échoué! Veuillez réessayer"
+  },
+  "yourAccountIsBlocked": "Votre compte est bloqué! Veuillez contacter votre gestionnaire de compte",
+  "@yourAccountIsBlocked": {
+    "description": "Votre compte est bloqué! Veuillez contacter votre gestionnaire de compte"
+  },
+  "noDistributorAssociated": "Authentification refusée! Aucun distributeur n'est associé à votre compte",
+  "@noDistributorAssociated": {
+    "description": "Authentification refusée! Aucun distributeur n'est associé à votre compte"
+  },
+  "hourNotAllowed": "Authentification refusée! L'heure n'est pas autorisée pour les opérations",
+  "@hourNotAllowed": {
+    "description": "Authentification refusée! L'heure n'est pas autorisée pour les opérations"
+  },
+  "profileIsBlocked": "Authentification refusée! Le profil associé à votre compte est bloqué",
+  "@profileIsBlocked": {
+    "description": "Authentification refusée! Le profil associé à votre compte est bloqué"
+  },
+  "noProfileAssociated": "Authentification refusée! Aucun profil n'est associé à votre compte",
+  "@noProfileAssociated": {
+    "description": "Authentification refusée! Aucun profil n'est associé à votre compte"
+  },
+  "distributorIsBlocked": "Authentification refusée! Le distributeur associé à votre compte est bloqué",
+  "@distributorIsBlocked": {
+    "description": "Authentification refusée! Le distributeur associé à votre compte est bloqué"
+  },
+  "msgHeaderSearch": "Rechercher un abonné soit par son nom et/ou prénom, son numéro de téléphone mobile ou son numéro de décodeur",
+  "@msgHeaderSearch": {
+    "description": "Rechercher un abonné soit par son nom et/ou prénom, son numéro de téléphone mobile ou son numéro de décodeur"
+  },
+  "typeNameSubscriber": "Saisir nom et/ou prénom de l'abonné",
+  "@typeNameSubscriber": {
+    "description": "Saisir nom et/ou prénom de l'abonné"
+  },
+  "typePhoneSearch": "Saisir le n° de téléphone à rechercher",
+  "@typePhoneSearch": {
+    "description": "Saisir le n° de téléphone à rechercher"
+  },
+  "typePhoneError": "Entrez un numéro de téléphone portable valide",
+  "@typePhoneError": {
+    "description": "Entrez un numéro de téléphone portable valide"
+  },
+  "typeDeviceNumber": "Saisir le numéro du décodeur à rechercher",
+  "@typeDeviceNumber": {
+    "description": "Saisir le numéro du décodeur à rechercher"
+  },
+  "typeDeviceNumberError": "Entrer un numéro de décodeur valide",
+  "@typeDeviceNumberError": {
+    "description": "Entrer un numéro de décodeur valide"
+  },
+  "search": "RECHERCHER",
+  "@search": {
+    "description": "RECHERCHER"
+  },
+  "subscriberFound": "Abonné(es) trouvé(es)",
+  "@subscriberFound": {
+    "description": "Abonné(es) trouvé(es)"
+  },
+  "subscriber": "ABONNÉ(E)",
+  "@subscriber_found_subscriber": {
+    "description": "ABONNÉ(E)"
+  },
+  "contact": "CONTACT",
+  "@contact": {
+    "description": "CONTACT"
+  },
+  "city": "VILLE",
+  "@city": {
+    "description": "VILLE"
+  },
+  "addressDistrict": "ADRESSE / QUARTIER",
+  "@addressDistrict": {
+    "description": "ADRESSE / QUARTIER"
+  },
+  "action": "ACTION(S)",
+  "@action": {
+    "description": "ACTION(S)"
+  },
+  "select": "CHOISIR",
+  "@select": {
+    "description": "CHOISIR"
+  },
+  "subscriberCard": "Carte d'abonné",
+  "@subscriberCard": {
+    "description": "Carte d'abonné"
+  },
+  "importDecoder": "IMPORTER DECODEUR",
+  "@importDecoder": {
+    "description": "IMPORTER DECODEUR"
+  },
+  "recruitDecoder": "RECRUTER DECODEUR",
+  "@recruitDecoder": {
+    "description": "RECRUTER DECODEUR"
+  },
+  "editDecoder": "EDITER DECODEUR",
+  "@editDecoder": {
+    "description": "EDITER DECODEUR"
+  },
+  "importTheDecoder": "Importer un décodeur",
+  "@importTheDecoder": {
+    "description": "Importer un décodeur"
+  },
+  "decoderInformation": "Informations sur le décodeur",
+  "@decoderInformation": {
+    "description": "Informations sur le décodeur"
+  },
+  "serialNumber": "Numéro de série",
+  "@serialNumber": {
+    "description": "Numéro de série"
+  },
+  "decoderLocation": "Emplacement du décodeur (ex. MAISON / SALON)",
+  "@decoderLocation": {
+    "description": "Emplacement du décodeur (ex. MAISON / SALON)"
+  },
+  "cgaSubscriberId": "Numéro d'abonné CGA",
+  "@cgaSubscriberId": {
+    "description": "Numéro d'abonné CGA"
+  },
+  "chooseFormula": "Choisir une formule",
+  "@chooseFormula": {
+    "description": "Choisir une formule"
+  },
+  "endOfSubscription": "Fin d'abonnement *",
+  "@endOfSubscription": {
+    "description": "Fin d'abonnement *"
+  },
+  "remarkInCga": "Remarque dans le CGA (nom différent, n° téléphone différent, ...)",
+  "@remarkInCga": {
+    "description": "Remarque dans le CGA (nom différent, n° téléphone différent, ...)"
+  },
+  "import": "IMPORTER",
+  "@import": {
+    "description": "IMPORTER"
+  },
+  "importSuccess": "Opération terminée avec succès",
+  "@importSuccess": {
+    "description": "Opération terminée avec succès"
+  },
+  "requirementMsg": "Vérifiez les champs obligatoires",
+  "@requirementMsg": {
+    "description": "Vérifiez les champs obligatoires"
+  },
+  "indispoForRecruitment": "Ce décodeur n'est pas disponible pour le recrutement",
+  "@indispoForRecruitment": {
+    "description": "Ce décodeur n'est pas disponible pour le recrutement"
+  },
+  "decoderNoFound": "N° décodeur introuvable",
+  "@decoderNoFound": {
+    "description": "N° décodeur introuvable"
+  },
+  "searchDevice": "Rechercher un décodeur",
+  "@searchDevice": {
+    "description": "Rechercher un décodeur"
+  },
+  "decoderOverview": "Aperçu du décodeur",
+  "@decoderOverview": {
+    "description": "Aperçu du décodeur"
+  },
+  "resubscriptionNumber": "N° de réabonnement",
+  "@resubscriptionNumber": {
+    "description": "N° de réabonnement"
+  },
+  "location": "Emplacement",
+  "@location": {
+    "description": "Emplacement"
+  },
+  "formulaOption": "Formule / Option(s)",
+  "@formulaOption": {
+    "description": "Formule / Option(s)"
+  },
+  "cgaRemark": "Remarque CGA",
+  "@cgaRemark": {
+    "description": "Remarque CGA"
+  },
+  "resubscription": "REABONNEMENT",
+  "@resubscription": {
+    "description": "REABONNEMENT"
+  },
+  "upgrade": "UPGRADE",
+  "@upgrade": {
+    "description": "upgrade"
+  },
+  "addOption": "AJOUT D'OPTION(S)",
+  "@addOption": {
+    "description": "AJOUT D'OPTION(S)"
+  },
+  "chadec": "CHADEC",
+  "@chadec": {
+    "description": "CHADEC"
+  },
+  "edit": "MODIFIER",
+  "@edit": {
+    "description": "MODIFIER"
+  },
+  "sms": "SMS",
+  "@sms": {
+    "description": "SMS"
+  },
+  "deadlineNotice": "Avis d'échéance",
+  "@deadlineNotice": {
+    "description": "Avis d'échéance"
+  },
+  "toBeSendTo": "A envoyer à",
+  "@toBeSendTo": {
+    "description": "A envoyer à"
+  },
+  "submit": "SUBMIT",
+  "@submit": {
+    "description": "SUBMIT"
+  },
+  "smsSuccess": "Votre message a été envoyé avec succès",
+  "@smsSuccess": {
+    "description": "Votre message a été envoyé avec succès"
+  },
+  "changeDecoder": "Changer de decodeur",
+  "@changeDecoder": {
+    "description": "Changer de decodeur"
+  },
+  "dateOfOperation": "Date de l'operation",
+  "@dateOfOperation": {
+    "description": "Date de l'operation"
+  },
+  "evaluate": "EVALUER",
+  "@evaluate": {
+    "description": "EVALUER"
+  },
+  "genreMan": "M.",
+  "@genreMan": {
+    "description": "Monsieur"
+  },
+  "genreWoman": "Mme",
+  "@genreWoman": {
+    "description": "Madame"
+  },
+  "changeDecoderNotFound": "Une erreur empêche l'opération de se dérouler correctement (DECODEUR INTROUVABLE)",
+  "@changeDecoderNotFound": {
+    "description": "Une erreur empêche l'opération de se dérouler correctement (DECODEUR INTROUVABLE)"
+  },
+  "changeDecoderNotChange": "Le décodeur {numDecoder} n'est pas disponible pour le changement",
+  "@changeDecoderNotChange": {
+    "description": "Le décodeur 87788774474455 n'est pas disponible pour le changement",
+    "placeholders": {
+      "numDecoder": {
+        "type": "String",
+        "example": "87788774474455"
+      }
+    }
+  },
+  "decoderNoExist": "Le décodeur {numDecoder} n'existe pas dans cette plate-forme, vous pouvez l'importer",
+  "@decoderNoExist": {
+    "description": "Le décodeur 87788774474455 n'existe pas dans cette plate-forme, vous pouvez l'importer",
+    "placeholders": {
+      "numDecoder": {
+        "type": "String",
+        "example": "87788774474455"
+      }
+    }
+  },
+  "expiredSince": "ECHU DEPUIS {numDecoder} JOUR(S)",
+  "@expiredSince": {
+    "description": "Decoder 87788774474455 is not available for change",
+    "placeholders": {
+      "numDecoder": {
+        "type": "String",
+        "example": "87788774474455"
+      }
+    }
+  },
+  "operationAnnuler": "Vous avez annulé votre opération sur le décodeur {numDecoder}. {solde} CFA et {equipement} ont été reversés respectivement sur votre compte principal et équipements",
+  "@operationAnnuler": {
+    "description": "Decoder 87788774474455 is not available for change",
+    "placeholders": {
+      "numDecoder": {
+        "type": "String",
+        "example": "87788774474455"
+      },
+      "solde": {
+        "type": "String",
+        "example": "87788774474455"
+      },
+      "equipement": {
+        "type": "String",
+        "example": "87788774474455"
+      }
+    }
+  },
+  "numberSubcriberCGA": "Numéro d'abonné CGA",
+  "@numberSubcriberCGA": {
+    "description": "Numéro d'abonné CGA"
+  },
+  "parameterWrongSearch": "Quelque chose ne marche pas avec les paramètres de ce formulaire",
+  "@parameterWrongSearch": {
+    "description": "Quelque chose ne marche pas avec les paramètres de ce formulaire"
+  },
+  "subscriberNotFound": "Aucun abonné ne correspond aux données fournies, veuillez réessayer",
+  "@subscriberNotFound": {
+    "description": "Aucun abonné ne correspond aux données fournies, veuillez réessayer"
+  },
+  "emptyParameter": "Veuillez entrez les parametres de rechercher",
+  "@emptyParameter": {
+    "description": "Veuillez entrez les parametres de rechercher"
+  },
+  "waitEndOperation": "Veuillez patientez le temps que nous effectuons cette opération ",
+  "@waitEndOperation": {
+    "description": "Veuillez patientez le temps que nous effectuons cette opération "
+  },
+  "dateOfOperation": "Date de l'opération",
+  "@dateOfOperation": {
+    "description": "Date of operation "
+  },
+  "subscriptionInformation": "Informations sur l'abonnement",
+  "@subscriptionInformation": {
+    "description": "Informations sur l'abonnement"
+  },
+  "includeOption": "Inclure option(s)",
+  "@includeOption": {
+    "description": "Inclure option(s)"
+  },
+  "subscriberInformation": "Informations sur l'abonné",
+  "@subscriberInformation": {
+    "description": "Informations sur l'abonné"
+  },
+  "noDecoderForthisSubcriber": "Cet abonné n'a pas de décodeur",
+  "@noDecoderForthisSubcriber": {
+    "description": "Cet abonné n'a pas de décodeur"
+  },
+  "noOperationForthisDecoder": "Pas l'opération pour ce decodeur",
+  "@noOperationForthisDecoder": {
+    "description": "Pas l'opération pour ce decodeur"
+  },
+  "options": "Option(s)",
+  "@options": {
+    "description": "Option(s)"
+  },
+  "formula": "Formule",
+  "@formula": {
+    "description": "Formule"
+  },
+  "connexionError": "Une erreur s'est produit. Verifiez votre connexion internet ",
+  "@connexionError": {
+    "description": "Une erreur s'est produit. Verifiez votre connexion internet "
+  },
+  "informationResubscription": "Informations sur le réabonnement",
+  "@informationResubscription": {
+    "description": "Informations sur le réabonnement "
+  },
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "welcome": "Welcome {firstName}",
+  "@welcome": {
+    "description": "Initial welcome message",
+    "placeholders": {
+      "firstName": {}
+    }
+  },
+  "newMessages": "{newMessages, plural, =0 {No new messages} =1 {One new message} other {{newMessages} new messages}}",
+  "@newMessages": {
+    "type": "text",
+    "description": "Number of new messages in inbox.",
+    "placeholders": {
+      "newMessages": {}
+    }
+  },
+  "articlesTitle": "Your content digest",
+  "@articlesTitle": {
+    "description": "Articles screen title"
+  },
+  "articleThumbnailAlt": "Article Thumbnail",
+  "@articleThumbnailAlt": {
+    "description": "Alt text for the articles thumbnails"
+  },
+  "noArticlesFound": "No articles found",
+  "@noArticlesFound": {
+    "description": "No articles found alert text"
+  },
+  "contentCardOrganizationsLabel": "{count, plural, =0{Unknown organizations} =1{Organization: {organizations}} other{Organizations: {organizations}}}",
+  "@contentCardOrganizationsLabel": {
+    "description": "Comma-separated list of organization names.",
+    "placeholders": {
+      "count": {},
+      "organizations": {
+        "type": "String",
+        "example": "AmeriCares, Ford Foundation"
+      }
+    }
+  },
+  "savedNewsArticlesPageTitle": "All saved news articles ({count})",
+  "@savedNewsArticlesPageTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "dialogAppUpdateTitle": "Update Available",
+  "@dialogAppUpdateTitle": {},
+  "dialogAppUpdateDescription": "A new version of fluttertemplate is available. Please update now.",
+  "@dialogAppUpdateDescription": {},
+  "dialogAppUpdateConfirmationButton": "Update",
+  "@dialogAppUpdateConfirmationButton": {},
+  "dialogAppUpdateDismissButton": "Not Now",
+  "@dialogAppUpdateDismissButton": {},
+  "error": "Error",
+  "defaultErrorPageTitle": "It seems something has broken!",
+  "@defaultErrorPageTitle": {
+    "description": "Text for an unexpected error"
+  },
+  "defaultErrorPageDescription": "Let's help get you back",
+  "@defaultErrorPageDescription": {
+    "description": "Text for an unexpected error"
+  },
+  "defaultEmptyPageTitle": "Nothing to see here",
+  "@defaultEmptyPageTitle": {
+    "description": "Text for an unexpected empty page"
+  },
+  "defaultEmptyPageDescription": "It seems this page has no content...",
+  "@defaultEmptyPageDescription": {
+    "description": "Text for an unexpected empty page"
+  },
+  "defaultNoInternetPageTitle": "Whoops!",
+  "@defaultNoInternetPageTitle": {
+    "description": "Text for a page that failed to load due to no internet connection"
+  },
+  "defaultNoInternetPageDescription": "Slow or no internet connection.\nPlease check your internet settings.",
+  "@defaultNoInternetPageDescription": {
+    "description": "Text for a page that failed to load due to no internet connection"
+  },
+  "refreshAction": "Refresh",
+  "@refreshAction": {
+    "description": "Text for a button that refreshes the page"
+  },
+  "backAction": "Go Back",
+  "@backAction": {
+    "description": "Text for a button that takes the user back to the previous page"
+  }
+
+}

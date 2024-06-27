@@ -546,7 +546,34 @@ class AlertService {
           ),
           action: SnackBarAction(
             label: actionText,
-            textColor: ColorsApp.onPrimary,
+            textColor: ColorsApp.onSecondary,
+            onPressed: onPressed,
+          ),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+  }
+
+  static void success(BuildContext context,
+      {required String message,
+      bool isSuccess = false,
+      required VoidCallback onPressed,
+      required String actionText}) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          backgroundColor: isSuccess ? ColorsApp.greenColor : Colors.red,
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(30),
+          content: Text(
+            message,
+            style: const TextStyle(
+                fontSize: 18, fontFamily: Constants.patrickHand),
+          ),
+          action: SnackBarAction(
+            label: actionText,
+            textColor: ColorsApp.onSecondary,
             onPressed: onPressed,
           ),
           duration: const Duration(days: 2),

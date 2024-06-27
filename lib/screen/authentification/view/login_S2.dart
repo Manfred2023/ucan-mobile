@@ -44,11 +44,9 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
       width: 56,
       height: 60,
       textStyle: const TextStyle(
-          color: ColorsApp.onSecondary,
-          fontWeight: FontWeight.bold,
-          fontSize: 25),
+          color: ColorsApp.primary, fontWeight: FontWeight.bold, fontSize: 25),
       decoration: BoxDecoration(
-          color: ColorsApp.primary,
+          color: ColorsApp.textColorCcLight.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.transparent)));
   @override
@@ -125,18 +123,32 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
                 ),
                 const SizedBox(height: 25),
                 Pinput(
+                    autofocus: true,
                     controller: codeController,
                     length: 6,
+                    submittedPinTheme: defaultPinInput.copyWith(
+                      textStyle: const TextStyle(
+                          color: ColorsApp.primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25),
+                      decoration: BoxDecoration(
+                        color: ColorsApp.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.transparent),
+                      ),
+                    ),
                     defaultPinTheme: defaultPinInput,
                     focusedPinTheme: defaultPinInput.copyWith(
-                        textStyle: const TextStyle(
-                            color: ColorsApp.onPrimary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25),
-                        decoration: BoxDecoration(
-                            color: ColorsApp.textColorCcLight,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.transparent))),
+                      textStyle: const TextStyle(
+                          color: ColorsApp.primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25),
+                      decoration: BoxDecoration(
+                        color: ColorsApp.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.transparent),
+                      ),
+                    ),
                     //controller: codeController,
                     //onCompleted: (pin) => debugPrint(pin),
                     onCompleted: (String pin) {

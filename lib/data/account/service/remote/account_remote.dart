@@ -4,6 +4,7 @@
 // Last modified 6/25/24, 3:50 PM
 
 import 'package:dio/dio.dart';
+import 'package:ucan/data/authentication/service/remote/model/pin_api_response.dart';
 
 import '../../../../app/config/constant.dart';
 import '../../../shared/service/remote/base_api_service.dart';
@@ -96,9 +97,9 @@ class AccountRemote extends BaseApiService {
     required int account,
   }) async {
     try {
-      final response = await (await _getDio()).get(Endpoints.paiement, data: {
+      final response = await (await _getDio()).post(Endpoints.paiement, data: {
         'token': token,
-        'date': date,
+        'datetime': date,
         'amount': amount,
         'motif': motif,
         'account': account,
@@ -128,6 +129,29 @@ class AccountRemote extends BaseApiService {
       });
       if (response.data['status'] == 1) {
         return PaiementApiListResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw mapToError(ex);
+    }
+  }
+
+  Future<PinApiResponse> deleteHistory({
+    required int? token,
+  }) async {
+    try {
+      final response =
+          await (await _getDio()).post(Endpoints.deletePayment, data: {
+        "token": token,
+      });
+      if (response.data['status'] == 1) {
+        return PinApiResponse.fromJson(response.data);
       } else {
         throw DioError(
             requestOptions: RequestOptions(path: ''),

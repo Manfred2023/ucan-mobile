@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ucan/app/navigation/route.dart';
-import 'package:ucan/data/account/model/account.dart';
 import 'package:ucan/data/authentication/model/authentication.dart';
 import 'package:ucan/screen/error/error_page.dart';
 import 'package:ucan/screen/shared/animate/smart_animate_page_transitions_builder.dart';
@@ -18,6 +17,7 @@ import '../../../screen/home/view/paiement.dart';
 import '../../../screen/home/view/ucan_account.dart';
 import '../../../screen/home/view/ucan_notif.dart';
 import '../../../screen/home/view/ucan_view.dart';
+import '../../../screen/home/view/widget/select_motif.dart';
 
 class AppRouter {
   /// To generate route
@@ -43,10 +43,12 @@ class AppRouter {
           },
         );
       case Routes.paiement:
-        final account = routeSettings.arguments! as Account;
+        final object = routeSettings.arguments! as List<dynamic>;
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              PaiementSreen(account: account),
+              PaiementSreen(
+            object: object,
+          ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(
               animation: animation,
@@ -74,6 +76,11 @@ class AppRouter {
       case Routes.selectCountry:
         return MaterialPageRoute<void>(
           builder: (_) => const SelectCountry(),
+        );
+
+      case Routes.selectMotif:
+        return MaterialPageRoute<void>(
+          builder: (_) => const SelectMotif(),
         );
 
       case Routes.selectCity:

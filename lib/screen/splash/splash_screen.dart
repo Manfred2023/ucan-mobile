@@ -90,7 +90,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
   init() async {
     await Db.instance.database;
-    await getIt<AccountRepository>().getMotif();
+    await getIt<AccountRepository>().getMotifRemote();
     //await getIt<RequirementRepository>().getCities();
     //await getIt<RequirementRepository>().getCountry();
 

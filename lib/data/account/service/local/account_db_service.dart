@@ -15,4 +15,15 @@ class AccountDbService {
       await MotifDb(id: null, code: motif.code!, name: motif.name!).save();
     }
   }
+
+  Future<List<Motif>> getMotif() async {
+    final motifsDb = await MotifDb.getAll();
+    List<Motif> motifs = [];
+    if (motifsDb.isNotEmpty) {
+      for (final motif in motifsDb) {
+        motifs.add(motif.toMotif());
+      }
+    }
+    return motifs;
+  }
 }

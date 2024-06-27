@@ -82,11 +82,13 @@ class _UcanViewState extends State<UcanView> {
                 },
                 icon: const Icon(Icons.notifications)),
             IconButton(
-                onPressed: () {
-                  isLoading = true;
-                  reload();
-                },
-                icon: const Icon(Icons.refresh)),
+              onPressed: () {
+                isLoading = true;
+                reload();
+                setState(() {});
+              },
+              icon: const Icon(Icons.refresh),
+            ),
           ],
         ),
         body: RefreshIndicator(
@@ -162,30 +164,67 @@ class _UcanViewState extends State<UcanView> {
                                     ),
                             ],
                           ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(Routes.paiement,
-                                  arguments: account);
-                            },
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  color: ColorsApp.onSecondary,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Row(
+                          isLoading
+                              ? Container()
+                              : Row(
                                   children: [
-                                    Text(
-                                      'Recap',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w300),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                            Routes.paiement,
+                                            arguments: [account, true]);
+                                      },
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            color: ColorsApp.onSecondary,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20))),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Créditer',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                            Routes.paiement,
+                                            arguments: [account, false]);
+                                      },
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            color: ColorsApp.onSecondary,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20))),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Débiter',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
-                          )
+                                )
                         ],
                       ),
                     ),

@@ -22,4 +22,5 @@ abstract class Routes {
   static const selectCountry = 'selectCountry';
   static const selectCity = 'selectCity';
   static const paiement = 'paiement';
+  static const selectMotif = 'selectMotif';
 }

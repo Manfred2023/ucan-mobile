@@ -8,8 +8,8 @@ import '../../../../shared/service/local/db.dart';
 import '../model/motif_db.dart';
 
 class MotifDBA {
-  /// [motif]
-  MotifDBA({required this.motif});
+  /// [motifDb]
+  MotifDBA({required this.motifDb});
 
   static const data = 'motif';
 
@@ -43,21 +43,21 @@ class MotifDBA {
   }
 
   /// instance de [MotifDb]
-  MotifDb motif;
+  MotifDb motifDb;
 
   /// Check if country is not duplicate
   Future<bool> _isDuplication() async {
     return (await (await _init())
-            .query(data, where: '$name =  ?', whereArgs: [motif.name]))
+            .query(data, where: '$name =  ?', whereArgs: [motifDb.name]))
         .isNotEmpty;
   }
 
   ///
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      id: motif.id,
-      code: motif.code,
-      name: motif.name,
+      id: motifDb.id,
+      code: motifDb.code,
+      name: motifDb.name,
     };
   }
 
@@ -73,10 +73,10 @@ class MotifDBA {
 
   ///
   Future<MotifDb?> save() async {
-    if (motif.id == null) {
+    if (motifDb.id == null) {
       if (await _isDuplication()) {
         final countryL = (await (await _init())
-                .query(data, where: '$code =  ?', whereArgs: [motif.code]))
+                .query(data, where: '$code =  ?', whereArgs: [motifDb.code]))
             .first;
         return toObject(countryL);
       }
@@ -86,10 +86,10 @@ class MotifDBA {
           data,
           toJson(),
           where: '$id = ?',
-          whereArgs: [motif.id],
+          whereArgs: [motifDb.id],
         ) >=
         0) {
-      return get(motif.id);
+      return get(motifDb.id);
     }
     return null;
   }
@@ -105,6 +105,20 @@ class MotifDBA {
     final motifs = await (await _init())
         .query(data, where: '$code =  ?', whereArgs: [codeL]);
     return motifs.isEmpty ? null : toObject(motifs.first);
+  }
+
+  Future<List<MotifDb>> getAll() async {
+    final motifs = await (await _init()).query(data);
+
+    if (motifs.isNotEmpty) {
+      final motifsTab = <MotifDb>[];
+      for (final i in motifs) {
+        motifsTab.add(await toObject(i));
+      }
+
+      return motifsTab;
+    }
+    return [];
   }
 
   ///

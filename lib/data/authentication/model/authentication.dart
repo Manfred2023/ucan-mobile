@@ -115,3 +115,11 @@ class Country extends Equatable {
         dialcode: dialcode);
   }
 }
+
+class Pin {
+  final int status;
+  final String type;
+  final String response;
+
+  const Pin({required this.status, required this.type, required this.response});
+}

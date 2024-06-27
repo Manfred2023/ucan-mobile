@@ -54,24 +54,28 @@ class MotifDb extends Equatable {
 
   /// save instance of country
   Future<MotifDb?> save() {
-    return MotifDBA(motif: this).save();
+    return MotifDBA(motifDb: this).save();
   }
 
   /// save instance of country
   static Future<MotifDb?> search(int id) {
-    return MotifDBA(motif: const MotifDb.empty()).get(id);
+    return MotifDBA(motifDb: const MotifDb.empty()).get(id);
   }
 
   static Future<MotifDb?> searchCode(int code) {
-    return MotifDBA(motif: const MotifDb.empty()).searchCode(code);
+    return MotifDBA(motifDb: const MotifDb.empty()).searchCode(code);
   }
 
   static Future<MotifDb?> searchByName(String name) {
-    return MotifDBA(motif: const MotifDb.empty()).search(name);
+    return MotifDBA(motifDb: const MotifDb.empty()).search(name);
   }
 
   static Future<int> delete() {
-    return MotifDBA(motif: const MotifDb.empty()).deleteAll();
+    return MotifDBA(motifDb: const MotifDb.empty()).deleteAll();
+  }
+
+  static Future<List<MotifDb>> getAll() {
+    return MotifDBA(motifDb: MotifDb.empty()).getAll();
   }
 
   static Future<bool> exist(int id) async {

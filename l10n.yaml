@@ -1,0 +1,7 @@
+arb-dir: lib/app/l10n #le repertoire de traduction
+template-arb-file: app_fr.arb #le modele de traduction
+output-localization-file: app_localizations.dart #file génerer
+preferred-supported-locales:
+  - fr
+use-deferred-loading: true
+output-class: AppLocalizations
