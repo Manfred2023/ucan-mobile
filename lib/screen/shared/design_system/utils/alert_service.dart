@@ -248,10 +248,11 @@ class AlertService {
                   titlePadding: EdgeInsets.zero,
                   buttonPadding: EdgeInsets.zero,
                   contentPadding: EdgeInsets.zero,
+                  actionsPadding: EdgeInsets.zero,
                   title: title != null
                       ? Container(
                           decoration: const BoxDecoration(
-                              color: ColorsApp.secondary,
+                              color: ColorsApp.primary,
                               //shape: BoxShape.circle,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(8.0),
@@ -260,10 +261,11 @@ class AlertService {
                           child: Padding(
                             padding: const EdgeInsets.all(15),
                             child: Text(
+                              textAlign: TextAlign.center,
                               title,
                               style: const TextStyle(
                                 color: ColorsApp.surface,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w300,
                                 fontSize: 18,
                               ),
                             ),
@@ -281,9 +283,9 @@ class AlertService {
                       children: [
                         Expanded(
                           child: Container(
-                            decoration: const BoxDecoration(
-                              color: ColorsApp.textColor,
-                              borderRadius: BorderRadius.only(
+                            decoration: BoxDecoration(
+                              color: ColorsApp.onPrimary.withOpacity(0.1),
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(8),
                               ),
                             ),
@@ -292,8 +294,8 @@ class AlertService {
                               child: Text(
                                 actionLeftText ?? '',
                                 style: const TextStyle(
-                                  color: Color(0xff464646),
-                                  fontWeight: FontWeight.w700,
+                                  color: ColorsApp.secondary,
+                                  fontWeight: FontWeight.w300,
                                 ),
                               ),
                             ),
@@ -308,7 +310,7 @@ class AlertService {
                         Expanded(
                           child: Container(
                             decoration: const BoxDecoration(
-                              color: ColorsApp.secondary,
+                              color: ColorsApp.primary,
                               borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(8),
                               ),
@@ -318,8 +320,8 @@ class AlertService {
                               child: Text(
                                 actionRightText ?? '',
                                 style: const TextStyle(
-                                  color: ColorsApp.onPrimary,
-                                  fontWeight: FontWeight.w700,
+                                  color: ColorsApp.onSecondary,
+                                  fontWeight: FontWeight.w300,
                                 ),
                               ),
                             ),

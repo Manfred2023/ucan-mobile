@@ -11,13 +11,14 @@ import '../../../shared/service/remote/base_api_service.dart';
 import '../../../shared/service/remote/endpoints.dart';
 import '../../../shared/service/remote/network.dart';
 import 'model/account_api_model.dart';
+import 'model/convert_api_model.dart';
 import 'model/motif_api_model.dart';
 import 'model/paiement_api_model.dart';
 
 class AccountRemote extends BaseApiService {
   AccountRemote();
 
-  Future<Dio> _getDio() async {
+  Dio _getDio() {
     return Network.createHttpClient(
       baseUrl: Constants.apiBaseUrlDev,
       debugMode: true,
@@ -28,7 +29,7 @@ class AccountRemote extends BaseApiService {
     required int? token,
   }) async {
     try {
-      final response = await (await _getDio()).put(Endpoints.account, data: {
+      final response = await _getDio().put(Endpoints.account, data: {
         "token": token,
       });
       if (response.data['status'] == 1) {
@@ -48,7 +49,8 @@ class AccountRemote extends BaseApiService {
 
   Future<MotifApiListResponse> getMotif() async {
     try {
-      final response = await (await _getDio()).get(Endpoints.motif);
+      final response = await (_getDio()).get(Endpoints.motif);
+
       if (response.data['status'] == 1) {
         return MotifApiListResponse.fromJson(response.data);
       } else {
@@ -69,7 +71,7 @@ class AccountRemote extends BaseApiService {
     required String name,
   }) async {
     try {
-      final response = await (await _getDio()).post(Endpoints.saveMotif, data: {
+      final response = await (_getDio()).post(Endpoints.saveMotif, data: {
         'token': token,
         'name': name,
       });
@@ -97,7 +99,7 @@ class AccountRemote extends BaseApiService {
     required int account,
   }) async {
     try {
-      final response = await (await _getDio()).post(Endpoints.paiement, data: {
+      final response = await (_getDio()).post(Endpoints.paiement, data: {
         'token': token,
         'datetime': date,
         'amount': amount,
@@ -105,8 +107,32 @@ class AccountRemote extends BaseApiService {
         'account': account,
         'type': type,
       });
+
       if (response.data['status'] == 1) {
         return PaiementApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      print(ex);
+      throw mapToError(ex);
+    }
+  }
+
+  Future<PaiementApiListResponse> getPaiement({
+    required int? token,
+  }) async {
+    try {
+      final response = await (_getDio()).put(Endpoints.myPaiement, data: {
+        "token": token,
+      });
+      if (response.data['status'] == 1) {
+        return PaiementApiListResponse.fromJson(response.data);
       } else {
         throw DioError(
             requestOptions: RequestOptions(path: ''),
@@ -120,12 +146,16 @@ class AccountRemote extends BaseApiService {
     }
   }
 
-  Future<PaiementApiListResponse> getPaiement({
+  Future<PaiementApiListResponse> getPaiementByDate({
     required int? token,
+    required String? start,
+    required String? end,
   }) async {
     try {
-      final response = await (await _getDio()).put(Endpoints.myPaiement, data: {
+      final response = await (_getDio()).put(Endpoints.myPaiementByDate, data: {
         "token": token,
+        "start": start,
+        "end": end,
       });
       if (response.data['status'] == 1) {
         return PaiementApiListResponse.fromJson(response.data);
@@ -146,8 +176,7 @@ class AccountRemote extends BaseApiService {
     required int? token,
   }) async {
     try {
-      final response =
-          await (await _getDio()).post(Endpoints.deletePayment, data: {
+      final response = await (_getDio()).post(Endpoints.deletePayment, data: {
         "token": token,
       });
       if (response.data['status'] == 1) {
@@ -161,6 +190,32 @@ class AccountRemote extends BaseApiService {
                 data: response.data));
       }
     } catch (ex) {
+      throw mapToError(ex);
+    }
+  }
+
+  Future<ConvertApiResponse> convert({
+    required int? number,
+  }) async {
+    try {
+      final response = await (_getDio()).put(
+        Endpoints.convert,
+        data: {
+          "number": number,
+        },
+      );
+      if (response.data['status'] == 1) {
+        return ConvertApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      print(ex);
       throw mapToError(ex);
     }
   }

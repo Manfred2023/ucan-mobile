@@ -243,12 +243,13 @@ class _SignupOneViewState extends State<SignupOneView> {
                                                 .pushNamed(
                                           Routes.selectCountry,
                                         ) as Country?;
-                                        if (countrySelect != null)
+                                        if (countrySelect != null) {
                                           setState(() {
                                             countryController.text =
                                                 countrySelect.dialcode
                                                     .toString();
                                           });
+                                        }
                                       },
                                       decoration: InputDecoration(
                                         labelText: 'Pays',

@@ -1,16 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:logging_flutter/logging_flutter.dart';
 
-import 'interceptors/api_key_interceptor.dart';
-import 'interceptors/auth_basic_interceptor.dart';
-import 'interceptors/auth_token_interceptor.dart';
 import 'interceptors/curl_intercerptor.dart';
-import 'interceptors/firebase_performance_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
 
 abstract class Network {
   static Dio createHttpClient({
-    required final String baseUrl,
+    required String baseUrl,
     final String? apiKey,
     final String? base64Credentials,
     Future<String?> Function()? getBearerToken,
@@ -25,14 +21,14 @@ abstract class Network {
     )..interceptors.addAll(
         [
           // Add Bearer Token
-          if (getBearerToken != null) AuthTokenInterceptor(getBearerToken()),
+          //  if (getBearerToken != null) AuthTokenInterceptor(getBearerToken()),
           // Add Basic Auth
-          if (base64Credentials != null)
-            AuthBasicInterceptor(base64Credentials),
+          //if (base64Credentials != null)
+          //   AuthBasicInterceptor(base64Credentials),
           // Add API Key
-          if (apiKey != null) ApiKeyInterceptor(apiKey),
+          // if (apiKey != null) ApiKeyInterceptor(apiKey),
           // Firebase Performance Monitoring
-          if (!debugMode) FirebasePerformanceInterceptor(),
+          // if (!debugMode) FirebasePerformanceInterceptor(),
           // Curl
           CurlInterceptor(
             logPrint: (message) => Flogger.d(message, loggerName: "Curl"),

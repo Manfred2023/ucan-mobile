@@ -151,36 +151,33 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
                     ),
                     //controller: codeController,
                     //onCompleted: (pin) => debugPrint(pin),
-                    onCompleted: (String pin) {
-                      print(pin.length);
-                      setState(() async {
-                        if (pin.length == 6) {
-                          AlertService.showLoad(context);
-                          try {
-                            user = await getIt<AuthenticateRepository>().auth(
-                                pin: int.parse(codeController.text),
-                                code: widget.user.code!);
+                    onCompleted: (String pin) async {
+                      if (pin.length == 6) {
+                        AlertService.showLoad(context);
+                        try {
+                          user = await getIt<AuthenticateRepository>().auth(
+                              pin: int.parse(codeController.text),
+                              code: widget.user.code!);
 
-                            if (!context.mounted) return;
-                            Navigator.of(context).pop();
-                            if (user is Authentication) {
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                Routes.ucan,
-                                (route) => false,
-                              );
-                            }
-                          } catch (e) {
-                            Navigator.of(context).pop();
-                            codeController.clear();
-                            setState(() {});
-                            AlertService.showSnack(context,
-                                message: e.toString(),
-                                onPressed: () {},
-                                actionText: 'OK');
+                          if (!context.mounted) return;
+                          Navigator.of(context).pop();
+                          if (user is Authentication) {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              Routes.ucan,
+                              (route) => false,
+                            );
                           }
+                        } catch (e) {
+                          Navigator.of(context).pop();
+                          codeController.clear();
+                          setState(() {});
+                          AlertService.showSnack(context,
+                              message: e.toString(),
+                              onPressed: () {},
+                              actionText: 'OK');
                         }
-                      });
+                      }
                     }),
                 const SizedBox(height: 25),
                 RichText(

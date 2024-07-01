@@ -22,7 +22,6 @@ class _SelectCountryState extends State<SelectCountry> {
     final isSearching = searchController.text.isNotEmpty;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const Text('Choisir le pays'),
         centerTitle: true,
       ),

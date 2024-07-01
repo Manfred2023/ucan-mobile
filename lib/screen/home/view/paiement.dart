@@ -4,9 +4,7 @@
 // Last modified 6/25/24, 5:45 PM
 
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/data/account/model/paiement.dart';
 import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
@@ -19,6 +17,7 @@ import '../../../utils/dependancies.dart';
 import '../../../utils/helpers/app_date.dart';
 import '../../../utils/helpers/g.dart';
 import '../../../utils/helpers/regex_format.dart';
+import '../../shared/design_system/utils/dimens.dart';
 
 class PaiementSreen extends StatelessWidget {
   const PaiementSreen({
@@ -58,6 +57,7 @@ class _PaiementViewState extends State<PaiementView> {
   bool isLoading = true;
   List<Paiement> paiement = [];
   Motif? motif;
+  String? message;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,7 @@ class _PaiementViewState extends State<PaiementView> {
         G.loseFocus();
       },
       child: Scaffold(
+        backgroundColor: ColorsApp.onSecondary,
         appBar: AppBar(
           backgroundColor: ColorsApp.primary,
           actions: [
@@ -76,7 +77,7 @@ class _PaiementViewState extends State<PaiementView> {
                     "Mes entrées ",
                     style: TextStyle(
                         color: ColorsApp.onSecondary,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w300,
                         fontSize: 20),
                   )
                 else
@@ -84,7 +85,7 @@ class _PaiementViewState extends State<PaiementView> {
                     "Mes dépenses",
                     style: TextStyle(
                         color: ColorsApp.onSecondary,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w300,
                         fontSize: 20),
                   ),
                 IconButton(
@@ -104,16 +105,19 @@ class _PaiementViewState extends State<PaiementView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Text(
+                  const Text(
                     'Account : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                   ),
-                  Text(
-                    '55 450',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  )
+                  if (widget.object.first.amount != null)
+                    Text(
+                      RegexFormat.contentDoubleMoneyFormat(
+                          widget.object.first.amount.toStringAsFixed(2), 'fr'),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w800),
+                    )
                 ],
               ),
               const SizedBox(
@@ -257,32 +261,155 @@ class _PaiementViewState extends State<PaiementView> {
                 onTap: () async {
                   if (_formKey.currentState!.validate()) {
                     AlertService.showLoad(context);
+
                     try {
-                      await getIt<AccountRepository>().savePaiement(
-                          type: widget.object.last,
-                          date: AppDate.dateTime(selectedDto),
-                          amount: int.parse(amountController.text),
-                          motif: motif!.code!,
-                          account: widget.object.first.code!);
+                      message = await getIt<AccountRepository>()
+                          .convert(number: int.parse(amountController.text));
                       if (!context.mounted) return;
                       Navigator.of(context).pop();
-                      AlertService.showSnack(context,
-                          isSuccess: true,
-                          message: 'request_was_successfully_processed',
-                          onPressed: () {},
-                          actionText: "Okay");
-                      amountController.clear();
-                      motifController.clear();
-                      isLoading = true;
-                      reload();
-                      setState(() {});
+
+                      AlertService.showAlert(
+                          context: context,
+                          isBarrier: false,
+                          message: "",
+                          type: AlertType.modalDoubleAction,
+                          title: "Confirmer l'action" ?? '',
+                          content: Padding(
+                            padding: const EdgeInsets.all(Dimens.marginMedium),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Vous etes sur le point de ",
+                                    children: [
+                                      const TextSpan(
+                                          text: ' ',
+                                          style: TextStyle(
+                                              color: ColorsApp.secondary,
+                                              fontWeight: FontWeight.bold)),
+                                      if (widget.object.last == true)
+                                        const TextSpan(
+                                          text: "Créditer ",
+                                          style: TextStyle(
+                                              color: ColorsApp.primary,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      else
+                                        const TextSpan(
+                                          text: "Débiter",
+                                          style: TextStyle(
+                                              color: ColorsApp.primary,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      const TextSpan(
+                                          text: ' ',
+                                          style: TextStyle(
+                                              color: ColorsApp.secondary,
+                                              fontWeight: FontWeight.bold)),
+                                      const TextSpan(
+                                        text: "Votre compte d'un montant de ",
+                                        style: TextStyle(
+                                            color: ColorsApp.textColorCC),
+                                      ),
+                                      const TextSpan(
+                                          text: ' ',
+                                          style: TextStyle(
+                                              color: ColorsApp.secondary,
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                        text: RegexFormat
+                                            .contentDoubleMoneyFormat(
+                                                int.parse(amountController.text)
+                                                    .toStringAsFixed(2),
+                                                'fr'),
+                                        style: const TextStyle(
+                                            color: ColorsApp.primary,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const TextSpan(
+                                          text: ' ',
+                                          style: TextStyle(
+                                              color: ColorsApp.secondary,
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                        text: " (${message ?? ''})",
+                                        style: const TextStyle(
+                                            color: ColorsApp.primary,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const TextSpan(
+                                          text: ' ',
+                                          style: TextStyle(
+                                              color: ColorsApp.secondary,
+                                              fontWeight: FontWeight.bold)),
+                                      const TextSpan(
+                                        text: 'pour',
+                                        style: TextStyle(
+                                            color: ColorsApp.textColorCC),
+                                      ),
+                                      const TextSpan(
+                                          text: ' ',
+                                          style: TextStyle(
+                                              color: ColorsApp.secondary,
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                          text: motifController.text,
+                                          style: const TextStyle(
+                                              color: ColorsApp.primary,
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                    style: const TextStyle(
+                                      color: ColorsApp.textColorCC,
+                                      fontSize: 19,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          actionRightText: 'continuer' ?? '',
+                          onPressRight: () async {
+                            try {
+                              Navigator.of(context).pop();
+                              AlertService.showLoad(context);
+                              await getIt<AccountRepository>().savePaiement(
+                                  type: widget.object.last,
+                                  date: AppDate.dateTime(selectedDto),
+                                  amount: int.parse(amountController.text),
+                                  motif: motif!.code!,
+                                  account: widget.object.first.code!);
+                              if (!context.mounted) return;
+                              Navigator.of(context).pop();
+                              AlertService.showSnack(context,
+                                  isSuccess: true,
+                                  message: 'request_was_successfully_processed',
+                                  onPressed: () {},
+                                  actionText: "Okay");
+                              amountController.clear();
+                              motifController.clear();
+                              isLoading = true;
+                              reload();
+                              setState(() {});
+                            } catch (e) {
+                              Navigator.of(context).pop();
+                              AlertService.showSnack(context,
+                                  message: e.toString(), onPressed: () {
+                                reload();
+                                setState(() {});
+                              }, actionText: 'Ok');
+                            }
+                          },
+                          onPressLeft: () {
+                            Navigator.of(context).pop();
+                          },
+                          actionLeftText: "cancel");
                     } catch (e) {
                       Navigator.of(context).pop();
-                      AlertService.showSnack(context, message: e.toString(),
-                          onPressed: () {
-                        reload();
-                        setState(() {});
-                      }, actionText: 'Ok');
+                      AlertService.showSnack(context,
+                          message: e.toString(),
+                          onPressed: () {},
+                          actionText: "OK");
                     }
                   }
                 },
@@ -298,7 +425,7 @@ class _PaiementViewState extends State<PaiementView> {
                     style: TextStyle(
                         color: ColorsApp.onSecondary,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.w300),
                     textAlign: TextAlign.center,
                   )),
                 ),
@@ -315,7 +442,7 @@ class _PaiementViewState extends State<PaiementView> {
                 children: [
                   const Text(
                     'Historique',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontWeight: FontWeight.w300),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -337,7 +464,9 @@ class _PaiementViewState extends State<PaiementView> {
                       children: [
                         Text(
                           AppDate.dateTimeWithoutTime(_startDate, 'fr'),
-                          style: const TextStyle(color: ColorsApp.secondary),
+                          style: const TextStyle(
+                              color: ColorsApp.secondary,
+                              fontWeight: FontWeight.w300),
                         ),
                         const SizedBox(
                           width: 5,
@@ -352,7 +481,7 @@ class _PaiementViewState extends State<PaiementView> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 3),
+                    padding: EdgeInsets.symmetric(horizontal: 1),
                     child: Text('-'),
                   ),
                   TextButton(
@@ -372,7 +501,9 @@ class _PaiementViewState extends State<PaiementView> {
                       children: [
                         Text(
                           AppDate.dateTimeWithoutTime(_endDate, 'fr'),
-                          style: const TextStyle(color: ColorsApp.secondary),
+                          style: const TextStyle(
+                              color: ColorsApp.secondary,
+                              fontWeight: FontWeight.w300),
                         ),
                         const SizedBox(
                           width: 5,
@@ -384,6 +515,17 @@ class _PaiementViewState extends State<PaiementView> {
                           width: 15,
                         ),
                       ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      isLoading = true;
+                      reload();
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.refresh,
+                      color: ColorsApp.primary,
                     ),
                   ),
                 ],
@@ -399,85 +541,51 @@ class _PaiementViewState extends State<PaiementView> {
                           itemCount: paiement.length,
                           itemBuilder: (context, index) {
                             final account = paiement[index];
-                            return Slidable(
-                              endActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (_) async {
-                                      AlertService.showLoad(context);
-                                      try {
-                                        await getIt<AccountRepository>()
-                                            .deleteHistory(
-                                                token: account.code!);
-                                        if (!context.mounted) return;
-                                        Navigator.of(context).pop();
-                                      } catch (e) {
-                                        Navigator.of(context).pop();
-                                        AlertService.showSnack(context,
-                                            isSuccess: true,
-                                            message:
-                                                'request_was_successfully_processed',
-                                            onPressed: () {},
-                                            actionText: "Okay");
-                                        isLoading = true;
-                                        reload();
-                                        setState(() {});
-                                      }
-                                    },
-                                    backgroundColor: ColorsApp.onPrimary,
-                                    foregroundColor: ColorsApp.surface,
-                                    icon: TablerIcons.trash,
-                                    // label: 'Del',
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 2),
-                                child: Container(
-                                  color: account.type != true
-                                      ? ColorsApp.error.withOpacity(0.1)
-                                      : ColorsApp.greenColor.withOpacity(0.1),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              account.motif!.name ?? '',
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w300),
-                                            )
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              RegexFormat
-                                                  .contentDoubleMoneyFormat(
-                                                      account.amount!
-                                                          .toStringAsFixed(2),
-                                                      'fr'),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              AppDate.dateTime(account.date!),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w300),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 2),
+                              child: Container(
+                                color: account.type != true
+                                    ? ColorsApp.onPrimary.withOpacity(0.1)
+                                    : ColorsApp.greenColor.withOpacity(0.1),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            account.motif!.name ?? '',
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w300),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            RegexFormat
+                                                .contentDoubleMoneyFormat(
+                                                    account.amount!
+                                                        .toStringAsFixed(2),
+                                                    'fr'),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            AppDate.dateTime(account.date!),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w300),
+                                          )
+                                        ],
+                                      )
+                                    ],
                                   ),
                                 ),
                               ),
@@ -500,41 +608,16 @@ class _PaiementViewState extends State<PaiementView> {
 
   init() async {
     dateController.text = AppDate.dateTimeLetter(_endDate, 'fr');
-
-    if (widget.object.isNotEmpty &&
-        widget.object.first.code != null &&
-        widget.object.first is Account) {
-      final paiementRemote = await getIt<AccountRepository>()
-          .getPaiement(token: widget.object.first.code!);
-
-      if (paiementRemote.isNotEmpty) {
-        for (final type in paiementRemote) {
-          if (type.type == widget.object.last) {
-            paiement.add(type);
-          }
-        }
-
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-          });
-        }
-      } else {
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-          });
-        }
-      }
-    }
   }
 
   reload() async {
     if (widget.object.isNotEmpty &&
         widget.object.first.code != null &&
         widget.object.first is Account) {
-      final paiementRemote = await getIt<AccountRepository>()
-          .getPaiement(token: widget.object.first.code!);
+      final paiementRemote = await getIt<AccountRepository>().getPaiementByDate(
+          token: widget.object.first.code!,
+          start: AppDate.dateDto(_endDate),
+          end: AppDate.dateDto(_endDate));
 
       if (paiementRemote.isNotEmpty) {
         for (final type in paiementRemote) {
@@ -550,6 +633,7 @@ class _PaiementViewState extends State<PaiementView> {
         }
       } else {
         if (mounted) {
+          paiement = [];
           setState(() {
             isLoading = false;
           });

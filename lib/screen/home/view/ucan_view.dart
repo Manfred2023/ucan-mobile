@@ -33,7 +33,6 @@ class _UcanViewState extends State<UcanView> {
   bool isLoading = true;
   @override
   Widget build(BuildContext context) {
-    print(account);
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorsApp.onSecondary,
@@ -263,6 +262,7 @@ class _UcanViewState extends State<UcanView> {
     if (currentUser != null) {
       account =
           await getIt<AccountRepository>().account(token: currentUser!.code!);
+
       setState(() {
         isLoading = false;
       });

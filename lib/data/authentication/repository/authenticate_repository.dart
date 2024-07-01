@@ -27,7 +27,10 @@ class AuthenticateRepository {
         email: email,
         city: city,
         location: location);
-    return response.response!.toContact();
+
+    final contact = response.response?.toContact();
+    if (contact != null) await _authenticationDbService.save(contact);
+    return contact!;
   }
 
   Future<Contact> getContact({

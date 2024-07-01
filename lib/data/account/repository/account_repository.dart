@@ -55,10 +55,30 @@ class AccountRepository {
     return response.response!.map((e) => e.toPaiement()).toList();
   }
 
+  Future<List<Paiement>> getPaiementByDate({
+    required int token,
+    required String start,
+    required String end,
+  }) async {
+    final response = await _accountRemote.getPaiementByDate(
+      token: token,
+      start: start,
+      end: end,
+    );
+    return response.response!.map((e) => e.toPaiement()).toList();
+  }
+
   Future<Pin> deleteHistory({
     required int token,
   }) async {
     final response = await _accountRemote.deleteHistory(token: token);
     return response.toPin();
+  }
+
+  Future<String> convert({
+    required int number,
+  }) async {
+    final response = await _accountRemote.convert(number: number);
+    return response.message!;
   }
 }

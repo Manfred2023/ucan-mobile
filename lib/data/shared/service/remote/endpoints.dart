@@ -23,7 +23,9 @@ abstract class Endpoints {
   static const String saveMotif = '/motif/create/';
 
   ///payment
-  static const String paiement = '/payment/create/';
+  static const String paiement = '/payment/';
   static const String myPaiement = '/payment/history/';
+  static const String myPaiementByDate = '/payment/historyByDate/';
   static const String deletePayment = '/payment/delete/';
+  static const String convert = '/translate/';
 }

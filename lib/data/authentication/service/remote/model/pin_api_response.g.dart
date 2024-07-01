@@ -8,7 +8,7 @@ part of 'pin_api_response.dart';
 
 PinApiResponse _$PinApiResponseFromJson(Map<String, dynamic> json) =>
     PinApiResponse(
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
       type: json['type'] as String,
       response: json['response'] as String,
     );
