@@ -146,7 +146,7 @@ class AccountRemote extends BaseApiService {
     }
   }
 
-  Future<PaiementApiListResponse> getPaiementByDate({
+  Future<PaiementApiListResponse?> getPaiementByDate({
     required int? token,
     required String? start,
     required String? end,

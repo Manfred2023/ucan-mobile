@@ -619,7 +619,7 @@ class _PaiementViewState extends State<PaiementView> {
           start: AppDate.dateDto(_endDate),
           end: AppDate.dateDto(_endDate));
 
-      if (paiementRemote.isNotEmpty) {
+      if (paiementRemote!.isNotEmpty) {
         for (final type in paiementRemote) {
           if (type.type == widget.object.last) {
             paiement.add(type);

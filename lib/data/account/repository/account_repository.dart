@@ -55,7 +55,7 @@ class AccountRepository {
     return response.response!.map((e) => e.toPaiement()).toList();
   }
 
-  Future<List<Paiement>> getPaiementByDate({
+  Future<List<Paiement>?> getPaiementByDate({
     required int token,
     required String start,
     required String end,
@@ -65,7 +65,7 @@ class AccountRepository {
       start: start,
       end: end,
     );
-    return response.response!.map((e) => e.toPaiement()).toList();
+    return response!.response?.map((e) => e.toPaiement()).toList();
   }
 
   Future<Pin> deleteHistory({
