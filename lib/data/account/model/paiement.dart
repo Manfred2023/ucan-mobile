@@ -5,14 +5,13 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:ucan/data/account/model/account.dart';
-import 'package:ucan/data/account/model/motif.dart';
 
 class Paiement extends Equatable {
   final int? code;
   final bool? type;
   final DateTime? date;
   final int? amount;
-  final Motif? motif;
+  final String? motif;
   final Account? account;
 
   Paiement(

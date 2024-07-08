@@ -65,7 +65,9 @@ class AuthenticateRepository {
       pin: pin,
       contact: contact,
     );
-    return response.response!.toAuth();
+    final auth = response.response?.toAuth();
+    if (auth != null) await _authenticationDbService.saveAuth(auth);
+    return auth!;
   }
 
   Future<Authentication> auth({

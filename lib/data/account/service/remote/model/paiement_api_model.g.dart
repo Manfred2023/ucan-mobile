@@ -56,9 +56,7 @@ PaiementApiModel _$PaiementApiModelFromJson(Map<String, dynamic> json) =>
       account: json['account'] == null
           ? null
           : AccountApiModel.fromJson(json['account'] as Map<String, dynamic>),
-      motif: json['motif'] == null
-          ? null
-          : MotifApiModel.fromJson(json['motif'] as Map<String, dynamic>),
+      motif: json['motif'] as String?,
     );
 
 Map<String, dynamic> _$PaiementApiModelToJson(PaiementApiModel instance) =>

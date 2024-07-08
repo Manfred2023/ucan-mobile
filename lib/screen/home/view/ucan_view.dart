@@ -256,6 +256,7 @@ class _UcanViewState extends State<UcanView> {
     } else {
       reload();
     }
+    setState(() {});
   }
 
   reload() async {

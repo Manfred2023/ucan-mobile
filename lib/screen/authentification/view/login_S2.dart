@@ -51,6 +51,7 @@ class _LoginStepTwoViewState extends State<LoginStepTwoView> {
           border: Border.all(color: Colors.transparent)));
   @override
   Widget build(BuildContext context) {
+    ;
     return GestureDetector(
       onTap: () {
         G.loseFocus();

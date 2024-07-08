@@ -9,10 +9,11 @@ import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/data/account/model/paiement.dart';
 import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
 
-import '../../../app/navigation/route.dart';
 import '../../../data/account/model/account.dart';
 import '../../../data/account/model/motif.dart';
 import '../../../data/account/repository/account_repository.dart';
+import '../../../data/authentication/model/authentication.dart';
+import '../../../data/authentication/repository/authenticate_repository.dart';
 import '../../../utils/dependancies.dart';
 import '../../../utils/helpers/app_date.dart';
 import '../../../utils/helpers/g.dart';
@@ -58,6 +59,7 @@ class _PaiementViewState extends State<PaiementView> {
   List<Paiement> paiement = [];
   Motif? motif;
   String? message;
+  Authentication? currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -211,19 +213,9 @@ class _PaiementViewState extends State<PaiementView> {
                         height: 10,
                       ),
                       TextFormField(
-                        onTap: () async {
-                          motif = await Navigator.of(context)
-                              .pushNamed(Routes.selectMotif) as Motif?;
-                          setState(() {
-                            if (motif != null) {
-                              motifController.text = motif!.name!;
-                            }
-                          });
-                        },
                         controller: motifController,
                         textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
-                        readOnly: true,
+                        maxLines: 3,
                         style: const TextStyle(
                             color: ColorsApp.primary,
                             fontWeight: FontWeight.bold),
@@ -373,14 +365,16 @@ class _PaiementViewState extends State<PaiementView> {
                             try {
                               Navigator.of(context).pop();
                               AlertService.showLoad(context);
-                              await getIt<AccountRepository>().savePaiement(
-                                  type: widget.object.last,
-                                  date: AppDate.dateTime(selectedDto),
-                                  amount: int.parse(amountController.text),
-                                  motif: motif!.code!,
-                                  account: widget.object.first.code!);
+                              final result = await getIt<AccountRepository>()
+                                  .savePaiement(
+                                      type: widget.object.last,
+                                      date: AppDate.dateTime(selectedDto),
+                                      amount: int.parse(amountController.text),
+                                      motif: motifController.text,
+                                      auth: currentUser!.code!);
                               if (!context.mounted) return;
                               Navigator.of(context).pop();
+                              print(result);
                               AlertService.showSnack(context,
                                   isSuccess: true,
                                   message: 'request_was_successfully_processed',
@@ -389,13 +383,12 @@ class _PaiementViewState extends State<PaiementView> {
                               amountController.clear();
                               motifController.clear();
                               isLoading = true;
-                              reload();
+
                               setState(() {});
                             } catch (e) {
                               Navigator.of(context).pop();
                               AlertService.showSnack(context,
                                   message: e.toString(), onPressed: () {
-                                reload();
                                 setState(() {});
                               }, actionText: 'Ok');
                             }
@@ -558,7 +551,7 @@ class _PaiementViewState extends State<PaiementView> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            account.motif!.name ?? '',
+                                            account.motif!.toString() ?? '',
                                             style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w300),
@@ -608,6 +601,7 @@ class _PaiementViewState extends State<PaiementView> {
 
   init() async {
     dateController.text = AppDate.dateTimeLetter(_endDate, 'fr');
+    currentUser = await getIt<AuthenticateRepository>().getAuth();
   }
 
   reload() async {

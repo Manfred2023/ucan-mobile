@@ -152,30 +152,29 @@ class _SignupTwoViewState extends State<SignupTwoView> {
                             ),
                             //controller: codeController,
                             onCompleted: (String pin) async {
-                              print(pin.length);
-                              if (pin.length == 6) {
-                                AlertService.showLoad(context);
-                                try {
-                                  auth = await getIt<AuthenticateRepository>()
-                                      .createUser(
-                                          pin: int.parse(codeController.text),
-                                          contact: widget.contact.code!);
-                                  if (!context.mounted) return;
-                                  if (auth is Authentication) {
-                                    Navigator.of(context).pop();
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      Routes.ucan,
-                                      (route) => false,
-                                    );
-                                  }
-                                } catch (e) {
-                                  Navigator.of(context).pop();
-                                  AlertService.showSnack(context,
-                                      message: e.toString(),
-                                      onPressed: () {},
-                                      actionText: 'Okay');
+                              AlertService.showLoad(context);
+                              try {
+                                auth = await getIt<AuthenticateRepository>()
+                                    .createUser(
+                                        pin: int.parse(codeController.text),
+                                        contact: widget.contact.code!);
+                                if (!context.mounted) return;
+                                if (auth is Authentication) {
+                                  print("Voici le resultat");
+                                  print(auth);
+                                  print("Voici le resultat");
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    Routes.ucan,
+                                    (route) => false,
+                                  );
                                 }
+                              } catch (e) {
+                                Navigator.of(context).pop();
+                                AlertService.showSnack(context,
+                                    message: e.toString(),
+                                    onPressed: () {},
+                                    actionText: 'Okay');
                               }
                             },
                           ),
@@ -187,64 +186,6 @@ class _SignupTwoViewState extends State<SignupTwoView> {
               ],
             ),
           ),
-          /*bottomNavigationBar: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  InkWell(
-                    onTap: () async {
-                      print("voici ca");
-                      print(widget.contact.code!);
-                      if (codeController.length == 6) {
-                        AlertService.showLoad(context);
-                        try {
-                          auth = await getIt<AuthenticateRepository>().createUser(
-                              pin: int.parse(codeController.text),
-                              contact: widget.contact.code!);
-                          if (!context.mounted) return;
-                          if (auth is Authentication) {
-                            Navigator.of(context).pop();
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              Routes.ucan,
-                              (route) => false,
-                            );
-                          }
-                        } catch (e) {
-                          Navigator.of(context).pop();
-                          AlertService.showSnack(context,
-                              message: e.toString(),
-                              onPressed: () {},
-                              actionText: 'Okay');
-                        }
-                      }
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: ColorsApp.primary,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: const Center(
-                          child: Text(
-                        "Creer mon PIN",
-                        style: TextStyle(
-                            color: ColorsApp.onSecondary,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      )),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            ),
-          ),*/
         ),
       ),
     );

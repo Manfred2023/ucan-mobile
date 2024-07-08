@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
 
 import '../../app/navigation/route.dart';
-import '../../data/account/repository/account_repository.dart';
 import '../../data/authentication/repository/authenticate_repository.dart';
 import '../../data/shared/service/local/db.dart';
 import '../../utils/dependancies.dart';
@@ -90,12 +89,12 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
   init() async {
     await Db.instance.database;
-    await getIt<AccountRepository>().getMotifRemote();
+    // await getIt<AccountRepository>().getMotifRemote();
     //await getIt<RequirementRepository>().getCities();
     //await getIt<RequirementRepository>().getCountry();
 
     final auth = await getIt<AuthenticateRepository>().getAuth();
-
+    print(auth);
     if (auth != null) {
       Navigator.pushNamedAndRemoveUntil(
           context, Routes.loginStep2, (route) => false,

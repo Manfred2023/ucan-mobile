@@ -473,13 +473,14 @@ class _SignupOneViewState extends State<SignupOneView> {
                               .createContact(
                                   firstname: firstnameController.text.trim(),
                                   lastname: lastnameController.text.trim(),
-                                  mobile: phoneController.text,
+                                  mobile: phoneController.text.trim(),
                                   gender: _isMen,
                                   email: emailController.text.trim(),
                                   city: hidecityController.text,
                                   location: locationController.text);
                           if (!context.mounted) return;
                           Navigator.of(context).pop();
+                          print(contact);
                           if (contact is Contact) {
                             Navigator.pushNamedAndRemoveUntil(
                                 context, Routes.signup2, (route) => false,

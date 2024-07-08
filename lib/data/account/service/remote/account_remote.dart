@@ -95,8 +95,8 @@ class AccountRemote extends BaseApiService {
     required bool type,
     required String date,
     required int amount,
-    required int motif,
-    required int account,
+    required String motif,
+    required int auth,
   }) async {
     try {
       final response = await (_getDio()).post(Endpoints.paiement, data: {
@@ -104,7 +104,7 @@ class AccountRemote extends BaseApiService {
         'datetime': date,
         'amount': amount,
         'motif': motif,
-        'account': account,
+        'user': auth,
         'type': type,
       });
 

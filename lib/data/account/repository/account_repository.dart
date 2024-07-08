@@ -40,11 +40,13 @@ class AccountRepository {
     required bool type,
     required String date,
     required int amount,
-    required int motif,
-    required int account,
+    required String motif,
+    required int auth,
   }) async {
     final response = await _accountRemote.createPaiement(
-        type: type, date: date, amount: amount, motif: motif, account: account);
+        type: type, date: date, amount: amount, motif: motif, auth: auth);
+    print(response.response!.toPaiement());
+    print("ResponseApi");
     return response.response!.toPaiement();
   }
 
