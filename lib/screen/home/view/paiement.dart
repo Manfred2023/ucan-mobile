@@ -4,7 +4,6 @@
 // Last modified 6/25/24, 5:45 PM
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/data/account/model/paiement.dart';
 import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
@@ -19,6 +18,8 @@ import '../../../utils/helpers/app_date.dart';
 import '../../../utils/helpers/g.dart';
 import '../../../utils/helpers/regex_format.dart';
 import '../../shared/design_system/utils/dimens.dart';
+import '../../shared/model/text_form_model.dart';
+import '../../shared/widget/modal_bottom.dart';
 
 class PaiementSreen extends StatelessWidget {
   const PaiementSreen({
@@ -46,7 +47,6 @@ class PaiementView extends StatefulWidget {
 }
 
 class _PaiementViewState extends State<PaiementView> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController dateController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController motifController = TextEditingController();
@@ -60,6 +60,7 @@ class _PaiementViewState extends State<PaiementView> {
   Motif? motif;
   String? message;
   Authentication? currentUser;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,7 @@ class _PaiementViewState extends State<PaiementView> {
               Row(
                 children: [
                   const Text(
-                    'Account : ',
+                    'Total  : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                   ),
                   if (widget.object.first.amount != null)
@@ -122,10 +123,8 @@ class _PaiementViewState extends State<PaiementView> {
                     )
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Form(
+
+              /* Form(
                   key: _formKey,
                   child: Column(
                     children: [
@@ -365,16 +364,14 @@ class _PaiementViewState extends State<PaiementView> {
                             try {
                               Navigator.of(context).pop();
                               AlertService.showLoad(context);
-                              final result = await getIt<AccountRepository>()
-                                  .savePaiement(
-                                      type: widget.object.last,
-                                      date: AppDate.dateTime(selectedDto),
-                                      amount: int.parse(amountController.text),
-                                      motif: motifController.text,
-                                      auth: currentUser!.code!);
+                              await getIt<AccountRepository>().savePaiement(
+                                  type: widget.object.last,
+                                  date: AppDate.dateTime(selectedDto),
+                                  amount: int.parse(amountController.text),
+                                  motif: motifController.text,
+                                  auth: currentUser!.code!);
                               if (!context.mounted) return;
                               Navigator.of(context).pop();
-                              print(result);
                               AlertService.showSnack(context,
                                   isSuccess: true,
                                   message: 'request_was_successfully_processed',
@@ -383,7 +380,7 @@ class _PaiementViewState extends State<PaiementView> {
                               amountController.clear();
                               motifController.clear();
                               isLoading = true;
-
+                              reload();
                               setState(() {});
                             } catch (e) {
                               Navigator.of(context).pop();
@@ -422,22 +419,19 @@ class _PaiementViewState extends State<PaiementView> {
                     textAlign: TextAlign.center,
                   )),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(),
+              ),*/
+
               const SizedBox(
                 height: 5,
               ),
-              Row(
+              /*   Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'Historique',
                     style: TextStyle(fontWeight: FontWeight.w300),
                   ),
-                  TextButton(
+                  */ /* TextButton(
                     onPressed: () async {
                       _startDate =
                           (await _selectDate(context, 'Debut', _startDate))!;
@@ -509,7 +503,7 @@ class _PaiementViewState extends State<PaiementView> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/ /*
                   IconButton(
                     onPressed: () {
                       isLoading = true;
@@ -522,7 +516,7 @@ class _PaiementViewState extends State<PaiementView> {
                     ),
                   ),
                 ],
-              ),
+              ),*/
               const SizedBox(
                 height: 5,
               ),
@@ -588,6 +582,297 @@ class _PaiementViewState extends State<PaiementView> {
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            ModalService.showMultiTextFieldForm(
+              context,
+              textFormModels: [
+                TextFormModel(
+                  onTap: () async {
+                    final date = await _selectDateTime(context);
+                    if (date != null) {
+                      setState(() {
+                        dateController.text =
+                            AppDate.dateTimeLetter(date, 'fr');
+                        selectedDto = date;
+                      });
+                    }
+                  },
+                  readOnly: true,
+                  controller: dateController,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.datetime,
+                  // textAlign: TextAlign.justify,
+                  style: const TextStyle(
+                      color: ColorsApp.primary, fontWeight: FontWeight.bold),
+                  decoration: const InputDecoration(
+                    hintText: "Date",
+                    hintStyle: TextStyle(
+                        color: ColorsApp.primary, fontWeight: FontWeight.w100),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: ColorsApp.primary)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: ColorsApp.primary)),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(color: ColorsApp.error),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Date";
+                    }
+                    return null;
+                  },
+                  desc: '',
+                ),
+                TextFormModel(
+                  controller: amountController,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.number,
+                  // textAlign: TextAlign.justify,
+                  style: const TextStyle(
+                      color: ColorsApp.primary, fontWeight: FontWeight.bold),
+                  decoration: const InputDecoration(
+                    hintText: "amount",
+                    hintStyle: TextStyle(
+                        color: ColorsApp.primary, fontWeight: FontWeight.w100),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: ColorsApp.primary)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: ColorsApp.primary)),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(color: ColorsApp.error),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Saisir un montant";
+                    }
+                    return null;
+                  },
+                  desc: '',
+                ),
+                TextFormModel(
+                  controller: motifController,
+                  textInputAction: TextInputAction.done,
+                  style: const TextStyle(
+                      color: ColorsApp.primary, fontWeight: FontWeight.bold),
+                  decoration: const InputDecoration(
+                    hintText: "Motif",
+                    hintStyle: TextStyle(
+                        color: ColorsApp.primary, fontWeight: FontWeight.w100),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: ColorsApp.primary)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: ColorsApp.primary)),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(color: ColorsApp.error),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Veuillez choisir une raison";
+                    }
+                    return null;
+                  },
+                  desc: '',
+                ),
+              ],
+              formKey: formKey,
+              backgroundColor: ColorsApp.secondary,
+              actionRight: TextButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      AlertService.showLoad(context);
+
+                      try {
+                        message = await getIt<AccountRepository>()
+                            .convert(number: int.parse(amountController.text));
+                        if (!context.mounted) return;
+                        Navigator.of(context).pop();
+
+                        AlertService.showAlert(
+                            context: context,
+                            isBarrier: false,
+                            message: "",
+                            type: AlertType.modalDoubleAction,
+                            title: "Confirmer l'action" ?? '',
+                            content: Padding(
+                              padding:
+                                  const EdgeInsets.all(Dimens.marginMedium),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: "Vous etes sur le point de ",
+                                      children: [
+                                        const TextSpan(
+                                            text: ' ',
+                                            style: TextStyle(
+                                                color: ColorsApp.secondary,
+                                                fontWeight: FontWeight.bold)),
+                                        if (widget.object.last == true)
+                                          const TextSpan(
+                                            text: "Créditer ",
+                                            style: TextStyle(
+                                                color: ColorsApp.primary,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        else
+                                          const TextSpan(
+                                            text: "Débiter",
+                                            style: TextStyle(
+                                                color: ColorsApp.primary,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        const TextSpan(
+                                            text: ' ',
+                                            style: TextStyle(
+                                                color: ColorsApp.secondary,
+                                                fontWeight: FontWeight.bold)),
+                                        const TextSpan(
+                                          text: "Votre compte d'un montant de ",
+                                          style: TextStyle(
+                                              color: ColorsApp.textColorCC),
+                                        ),
+                                        const TextSpan(
+                                            text: ' ',
+                                            style: TextStyle(
+                                                color: ColorsApp.secondary,
+                                                fontWeight: FontWeight.bold)),
+                                        TextSpan(
+                                          text: RegexFormat
+                                              .contentDoubleMoneyFormat(
+                                                  int.parse(
+                                                          amountController.text)
+                                                      .toStringAsFixed(2),
+                                                  'fr'),
+                                          style: const TextStyle(
+                                              color: ColorsApp.primary,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const TextSpan(
+                                            text: ' ',
+                                            style: TextStyle(
+                                                color: ColorsApp.secondary,
+                                                fontWeight: FontWeight.bold)),
+                                        TextSpan(
+                                          text: " (${message ?? ''})",
+                                          style: const TextStyle(
+                                              color: ColorsApp.primary,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const TextSpan(
+                                            text: ' ',
+                                            style: TextStyle(
+                                                color: ColorsApp.secondary,
+                                                fontWeight: FontWeight.bold)),
+                                        const TextSpan(
+                                          text: 'pour',
+                                          style: TextStyle(
+                                              color: ColorsApp.textColorCC),
+                                        ),
+                                        const TextSpan(
+                                            text: ' ',
+                                            style: TextStyle(
+                                                color: ColorsApp.secondary,
+                                                fontWeight: FontWeight.bold)),
+                                        TextSpan(
+                                            text: motifController.text,
+                                            style: const TextStyle(
+                                                color: ColorsApp.primary,
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                      style: const TextStyle(
+                                        color: ColorsApp.textColorCC,
+                                        fontSize: 19,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            actionRightText: 'continuer' ?? '',
+                            onPressRight: () async {
+                              try {
+                                Navigator.of(context).pop();
+                                AlertService.showLoad(context);
+                                await getIt<AccountRepository>().savePaiement(
+                                    type: widget.object.last,
+                                    date: AppDate.dateTime(selectedDto),
+                                    amount: int.parse(amountController.text),
+                                    motif: motifController.text,
+                                    auth: currentUser!.code!);
+                                if (!context.mounted) return;
+                                Navigator.of(context).pop();
+                                AlertService.showSnack(context,
+                                    isSuccess: true,
+                                    message:
+                                        'request_was_successfully_processed',
+                                    onPressed: () {},
+                                    actionText: "Okay");
+                                amountController.clear();
+                                motifController.clear();
+                                isLoading = true;
+                                reload();
+                                setState(() {});
+                              } catch (e) {
+                                Navigator.of(context).pop();
+                                AlertService.showSnack(context,
+                                    message: e.toString(), onPressed: () {
+                                  setState(() {});
+                                }, actionText: 'Ok');
+                              }
+                            },
+                            onPressLeft: () {
+                              Navigator.of(context).pop();
+                            },
+                            actionLeftText: "cancel");
+                      } catch (e) {
+                        Navigator.of(context).pop();
+                        AlertService.showSnack(context,
+                            message: e.toString(),
+                            onPressed: () {},
+                            actionText: "OK");
+                      }
+                    }
+                  },
+                  child: Text(
+                    'Enregistrer',
+                    style: TextStyle(
+                        color: ColorsApp.primary,
+                        fontSize: 14 * Dimens.dp(context)),
+                  )),
+              actionLeft: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Annuler',
+                  style: TextStyle(
+                      color: ColorsApp.textColorCC,
+                      fontSize: 14 * Dimens.dp(context)),
+                ),
+              ),
+            ).then((value) {
+              setState(() {});
+            });
+          },
+          child: Icon(
+            Icons.add,
+            size: 30,
+          ),
+        ),
       ),
     );
   }
@@ -595,25 +880,52 @@ class _PaiementViewState extends State<PaiementView> {
   @override
   void initState() {
     init();
-    reload();
+
     super.initState();
   }
 
   init() async {
     dateController.text = AppDate.dateTimeLetter(_endDate, 'fr');
     currentUser = await getIt<AuthenticateRepository>().getAuth();
+    if (currentUser != null) if (widget.object.isNotEmpty &&
+        widget.object.first.code != null &&
+        widget.object.first is Account) {
+      final paiementRemote = await getIt<AccountRepository>().getPaiement(
+        token: currentUser!.code!,
+      );
+
+      if (paiementRemote.isNotEmpty) {
+        for (final type in paiementRemote) {
+          if (type.type == widget.object.last) {
+            paiement.add(type);
+          }
+        }
+
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      } else {
+        if (mounted) {
+          paiement = [];
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
+    }
   }
 
   reload() async {
     if (widget.object.isNotEmpty &&
         widget.object.first.code != null &&
         widget.object.first is Account) {
-      final paiementRemote = await getIt<AccountRepository>().getPaiementByDate(
-          token: widget.object.first.code!,
-          start: AppDate.dateDto(_endDate),
-          end: AppDate.dateDto(_endDate));
+      final paiementRemote = await getIt<AccountRepository>().getPaiement(
+        token: currentUser!.code!,
+      );
 
-      if (paiementRemote!.isNotEmpty) {
+      if (paiementRemote.isNotEmpty) {
         for (final type in paiementRemote) {
           if (type.type == widget.object.last) {
             paiement.add(type);

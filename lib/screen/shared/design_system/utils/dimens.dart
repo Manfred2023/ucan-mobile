@@ -61,4 +61,8 @@ class Dimens {
 
   // View-specific dimensions
   static const double articleCardHeight = 275;
+
+  static double dp(BuildContext context) {
+    return MediaQuery.sizeOf(context).width.ceil() / 424;
+  }
 }
