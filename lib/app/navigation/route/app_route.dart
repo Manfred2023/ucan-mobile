@@ -13,9 +13,10 @@ import '../../../screen/authentification/view/signup_S2.dart';
 import '../../../screen/authentification/view/welcome.dart';
 import '../../../screen/authentification/widget/select_city.dart';
 import '../../../screen/authentification/widget/select_country.dart';
-import '../../../screen/home/view/paiement.dart';
 import '../../../screen/home/view/ucan_account.dart';
+import '../../../screen/home/view/ucan_list_paiement.dart';
 import '../../../screen/home/view/ucan_notif.dart';
+import '../../../screen/home/view/ucan_paiement.dart';
 import '../../../screen/home/view/ucan_view.dart';
 import '../../../screen/home/view/widget/select_motif.dart';
 
@@ -42,12 +43,27 @@ class AppRouter {
             );
           },
         );
-      case Routes.paiement:
-        final object = routeSettings.arguments! as List<dynamic>;
+      case Routes.paiementList:
+        final type = routeSettings.arguments! as bool;
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               PaiementSreen(
-            object: object,
+            type: type,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SmartAnimateTransition(
+              animation: animation,
+              curve: Curves.easeOut, // Courbe ease-out
+              child: child,
+            );
+          },
+        );
+      case Routes.paiement:
+        final type = routeSettings.arguments! as bool;
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              UcanPaiementScreen(
+            type: type,
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SmartAnimateTransition(

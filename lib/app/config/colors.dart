@@ -20,6 +20,7 @@ class ColorsApp {
   static const textColorCcLight = Color.fromARGB(255, 230, 228, 228);
   static const greenColor = Color(0xFF00b382);
   static const greenColorDark = Color(0xFF005941);
+  static const withrow = Color(0xFFD32F2F);
 
   // Dark colors
   //static const primaryDark = Color(0xFFaf003b);
