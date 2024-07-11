@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ucan/app/config/colors.dart';
 
+import '../../../app/navigation/route.dart';
 import '../../../data/authentication/model/authentication.dart';
 import '../../../data/authentication/repository/authenticate_repository.dart';
 import '../../../utils/dependancies.dart';
@@ -42,6 +43,14 @@ class _AccountViewState extends State<AccountView> {
       backgroundColor: ColorsApp.foreground,
       appBar: AppBar(
         backgroundColor: ColorsApp.primary,
+        /* actions: [
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Enregistrer',
+                style: TextStyle(color: ColorsApp.onSecondary),
+              ))
+        ],*/
       ),
       body: Column(
         children: [
@@ -139,6 +148,8 @@ class _AccountViewState extends State<AccountView> {
                         ModalService.showTextFieldForm(context,
                                 keyboardType: TextInputType.text,
                                 textEditingController: lastnameController,
+                                textCapitalization:
+                                    TextCapitalization.characters,
                                 description:
                                     'petite description du champ de saisi',
                                 label: "Lastname", validation: (value) {
@@ -306,7 +317,7 @@ class _AccountViewState extends State<AccountView> {
                                 keyboardType: TextInputType.phone,
                                 textEditingController: phoneController,
                                 description:
-                                    'petite description du champ de saisi',
+                                    'Petite description du champ de saisie',
                                 label: "mobile", validation: (value) {
                           if (value!.isEmpty && value.trim().isEmpty) {
                             return 'mobile';
@@ -386,6 +397,11 @@ class _AccountViewState extends State<AccountView> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
+          onTap: () async {
+            await getIt<AuthenticateRepository>().disconnect();
+            Navigator.pushNamedAndRemoveUntil(
+                context, Routes.loginStep1, (route) => false);
+          },
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: 50,
@@ -394,7 +410,7 @@ class _AccountViewState extends State<AccountView> {
                 borderRadius: BorderRadius.circular(10)),
             child: const Center(
                 child: Text(
-              "Enregistrer",
+              "Se déconnecter",
               style: TextStyle(
                   color: ColorsApp.onSecondary,
                   fontSize: 20,
@@ -418,12 +434,16 @@ class _AccountViewState extends State<AccountView> {
     if (currentUser != null) {
       lastnameController.text = currentUser!.contact!.lastname!;
       firstnameController.text = currentUser!.contact!.firstname!;
-      lastnameController.text = currentUser!.contact!.lastname!;
-      lastnameController.text = currentUser!.contact!.lastname!;
-      lastnameController.text = currentUser!.contact!.lastname!;
-      lastnameController.text = currentUser!.contact!.lastname!;
-      lastnameController.text = currentUser!.contact!.lastname!;
-      lastnameController.text = currentUser!.contact!.lastname!;
+      phoneController.text = currentUser!.contact!.mobile!;
+      emailController.text = currentUser!.contact!.email!;
+      cityController.text = currentUser!.contact!.city!.name;
+      countryController.text = currentUser!.contact!.city!.country.namefr;
+      locationController.text = currentUser!.contact!.location!;
+      if (currentUser!.contact!.gender! != true) {
+        _isMen = true;
+      } else {
+        _isMen = false;
+      }
     }
 
     setState(() {});

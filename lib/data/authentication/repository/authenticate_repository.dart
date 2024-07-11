@@ -85,4 +85,8 @@ class AuthenticateRepository {
     final response = await _authenticationDbService.getAuth();
     return response?.toAuthentication();
   }
+
+  Future<void> disconnect() async {
+    await _authenticationDbService.clear();
+  }
 }

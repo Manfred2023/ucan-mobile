@@ -45,8 +45,7 @@ class AccountRepository {
   }) async {
     final response = await _accountRemote.createPaiement(
         type: type, date: date, amount: amount, motif: motif, auth: auth);
-    print(response.response!.toPaiement());
-    print("ResponseApi");
+
     return response.response!.toPaiement();
   }
 

@@ -101,6 +101,7 @@ class ModalService {
                             TextFormField(
                                 controller: textEditingController,
                                 textCapitalization: textCapitalization,
+                                readOnly: true,
                                 autofocus: true,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: keyboardType,
@@ -113,7 +114,7 @@ class ModalService {
                                         textEditingController.text.trim());
                                   }
                                 },
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: ColorsApp.primary,
                                     fontSize: 22,
                                     fontWeight: FontWeight.w700),

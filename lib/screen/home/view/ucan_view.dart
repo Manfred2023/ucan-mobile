@@ -45,16 +45,20 @@ class _UcanViewState extends State<UcanView> {
         appBar: AppBar(
           backgroundColor: ColorsApp.primary,
           actions: [
-            IconButton(
+            /*  IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.notif);
                 },
-                icon: const Icon(Icons.notifications)),
+                icon: const Icon(Icons.notifications)),*/
             IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.account);
                 },
-                icon: SvgPicture.asset('assets/icons/user.svg')),
+                icon: SvgPicture.asset(
+                  'assets/icons/user.svg',
+                  color: ColorsApp.onSecondary,
+                  height: 50,
+                )),
           ],
         ),
         body: RefreshIndicator(
@@ -189,10 +193,15 @@ class _UcanViewState extends State<UcanView> {
                                         children: [
                                           Expanded(
                                               child: InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                  Routes.paiementList,
-                                                  arguments: false);
+                                            onTap: () async {
+                                              await Navigator.of(context)
+                                                  .pushNamed(
+                                                      Routes.paiementList,
+                                                      arguments: false);
+                                              if (!context.mounted) return;
+                                              isLoading = true;
+                                              reload();
+                                              setState(() {});
                                             },
                                             child: Container(
                                                 height: MediaQuery.of(context)
@@ -212,10 +221,15 @@ class _UcanViewState extends State<UcanView> {
                                           )),
                                           Expanded(
                                               child: InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                  Routes.paiementList,
-                                                  arguments: true);
+                                            onTap: () async {
+                                              await Navigator.of(context)
+                                                  .pushNamed(
+                                                      Routes.paiementList,
+                                                      arguments: true);
+                                              if (!context.mounted) return;
+                                              isLoading = true;
+                                              reload();
+                                              setState(() {});
                                             },
                                             child: Container(
                                                 height: MediaQuery.of(context)
