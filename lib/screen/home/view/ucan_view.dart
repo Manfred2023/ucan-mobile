@@ -297,9 +297,7 @@ class _UcanViewState extends State<UcanView> {
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 2),
                                 child: Container(
-                                  color: account.type != true
-                                      ? ColorsApp.onPrimary.withOpacity(0.1)
-                                      : ColorsApp.greenColor.withOpacity(0.1),
+                                  color: ColorsApp.onSecondary,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
@@ -314,7 +312,7 @@ class _UcanViewState extends State<UcanView> {
                                               account.motif!.toString() ?? '',
                                               style: const TextStyle(
                                                   fontSize: 16,
-                                                  fontWeight: FontWeight.w300),
+                                                  fontWeight: FontWeight.bold),
                                             )
                                           ],
                                         ),
@@ -328,8 +326,11 @@ class _UcanViewState extends State<UcanView> {
                                                       account.amount!
                                                           .toStringAsFixed(2),
                                                       'fr'),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: account.type == true
+                                                      ? ColorsApp.greenColor
+                                                      : ColorsApp.secondary),
                                             ),
                                             Text(
                                               AppDate.dateTimeWithDay(

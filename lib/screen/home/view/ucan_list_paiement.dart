@@ -135,7 +135,7 @@ class _PaiementViewState extends State<PaiementView> {
                     ? Column(
                         children: [
                           for (int i = 0; i < 4; i++)
-                            Column(
+                            const Column(
                               children: [
                                 CardShimmer(
                                   color: ColorsApp.textColor,
