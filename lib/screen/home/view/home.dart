@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ucan/screen/home/view/ucan_view.dart';
 
 import 'cubit/home_cubit.dart';
+import 'dashboard.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

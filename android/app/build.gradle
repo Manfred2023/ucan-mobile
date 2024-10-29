@@ -79,4 +79,6 @@ dependencies {
     // Add the dependency for the App Check library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-appcheck")
+
+    implementation 'com.yandex.android:maps.mobile:4.6.1-full'
 }

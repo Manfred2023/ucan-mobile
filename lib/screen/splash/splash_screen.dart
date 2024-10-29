@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ucan/app/config/colors.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../app/navigation/route.dart';
 import '../../data/authentication/repository/authenticate_repository.dart';
@@ -80,11 +83,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   void initState() {
     super.initState();
     init();
-
-    /* timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
-      Navigator.pushNamedAndRemoveUntil(
-          context, Routes.welcome, (route) => false);
-    });*/
+    getDeviceDetails();
   }
 
   init() async {
@@ -104,6 +103,41 @@ class _SplashScreenViewState extends State<SplashScreenView> {
           context, Routes.welcome, (route) => false);
     }
   }
+
+  Future<void> getDeviceDetails() async {
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      var uuid = Uuid();
+      String uniqueID = uuid.v6();
+
+      print('System: Android');
+      print('Appareil: ${androidInfo.model}');
+      print('Version: ${androidInfo.version.release}');
+      print('Numéro de série: ${androidInfo.id}');
+    } else {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+      print('System: Iphone');
+      print('Appareil: ${iosDeviceInfo.model}');
+      print('Fabricant: Apple');
+      print('Numéro de série: ${iosDeviceInfo.utsname.release}');
+    }
+  }
+
+  /* getDeviceInfo() async {
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      print('Running on ${androidInfo.model}');
+      print('Running on ${androidInfo.version.release}');
+    } else {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      IosDeviceInfo androidInfo = await deviceInfo.iosInfo;
+      print('Running on ${androidInfo.model}');
+      print('Running on ${androidInfo.model}');
+    }
+  }*/
 
   @override
   void dispose() {

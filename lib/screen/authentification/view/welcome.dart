@@ -29,12 +29,13 @@ class _WelcomeViewState extends State<WelcomeView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Text(''),
             Padding(
               padding: const EdgeInsets.all(25),
               child: SvgPicture.asset(
                 'assets/svg/ucanWhite.svg',
-                width: 40,
-                height: 40,
+                width: 100,
+                height: 100,
               ),
             ),
             Container(
@@ -50,8 +51,8 @@ class _WelcomeViewState extends State<WelcomeView> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                  const Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       textAlign: TextAlign.center,
                       "Maîtrisez vos dépenses et devenez maître de votre épargne.",
@@ -76,7 +77,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                             width: MediaQuery.of(context).size.width,
                             height: 50,
                             decoration: BoxDecoration(
-                                color: ColorsApp.onPrimary,
+                                color: ColorsApp.primary,
                                 borderRadius: BorderRadius.circular(10)),
                             child: const Center(
                                 child: Text(
@@ -97,7 +98,10 @@ class _WelcomeViewState extends State<WelcomeView> {
                           children: [
                             const Text(
                               "Tu as déjà un compte ? ",
-                              style: TextStyle(color: ColorsApp.secondary),
+                              style: TextStyle(
+                                color: ColorsApp.secondary,
+                                fontWeight: FontWeight.w200,
+                              ),
                             ),
                             const SizedBox(width: 10),
                             InkWell(
@@ -105,12 +109,13 @@ class _WelcomeViewState extends State<WelcomeView> {
                                   Navigator.of(context)
                                       .pushNamed(Routes.loginStep1);
                                 },
-                                child: const Text(
+                                child: Text(
                                   'Connecte-toi',
                                   style: TextStyle(
-                                      color: ColorsApp.onPrimary,
+                                      color: ColorsApp.primary,
+                                      fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
-                                      decorationColor: ColorsApp.onPrimary),
+                                      decorationColor: ColorsApp.primary),
                                 ))
                           ],
                         ),

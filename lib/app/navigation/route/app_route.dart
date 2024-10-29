@@ -13,11 +13,11 @@ import '../../../screen/authentification/view/signup_S2.dart';
 import '../../../screen/authentification/view/welcome.dart';
 import '../../../screen/authentification/widget/select_city.dart';
 import '../../../screen/authentification/widget/select_country.dart';
-import '../../../screen/home/view/ucan_account.dart';
+import '../../../screen/home/view/account.dart';
+import '../../../screen/home/view/dashboard.dart';
 import '../../../screen/home/view/ucan_list_paiement.dart';
 import '../../../screen/home/view/ucan_notif.dart';
 import '../../../screen/home/view/ucan_paiement.dart';
-import '../../../screen/home/view/ucan_view.dart';
 import '../../../screen/home/view/widget/select_motif.dart';
 
 class AppRouter {
