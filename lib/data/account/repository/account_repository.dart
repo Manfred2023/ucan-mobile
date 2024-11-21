@@ -1,6 +1,6 @@
 import 'package:ucan/data/account/model/account.dart';
 import 'package:ucan/data/account/model/motif.dart';
-import 'package:ucan/data/account/model/paiement.dart';
+import 'package:ucan/data/account/model/spent.dart';
 import 'package:ucan/data/authentication/model/authentication.dart';
 
 import '../service/local/account_db_service.dart';
@@ -12,9 +12,9 @@ class AccountRepository {
 
   AccountRepository(this._accountRemote, this._dbService);
 
-  Future<Account?> account({required int token}) async {
-    final response = await _accountRemote.getAccount(token: token);
-    return response.response!.toAccount();
+  Future<Resume?> resume({required int token}) async {
+    final response = await _accountRemote.getResume(token: token);
+    return response.response?.toResume();
   }
 
   Future<List<Motif>?> getMotifRemote() async {
@@ -35,38 +35,12 @@ class AccountRepository {
     return response;
   }
 
-  Future<Paiement> savePaiement({
-    int? token,
-    required bool type,
+  Future<Spent?> spent({
+    required int bubget,
     required String date,
-    required int amount,
-    required String motif,
-    required int auth,
   }) async {
-    final response = await _accountRemote.createPaiement(
-        type: type, date: date, amount: amount, motif: motif, auth: auth);
-
-    return response.response!.toPaiement();
-  }
-
-  Future<List<Paiement>> getPaiement({
-    required int token,
-  }) async {
-    final response = await _accountRemote.getPaiement(token: token);
-    return response.response!.map((e) => e.toPaiement()).toList();
-  }
-
-  Future<List<Paiement>?> getPaiementByDate({
-    required int token,
-    required String start,
-    required String end,
-  }) async {
-    final response = await _accountRemote.getPaiementByDate(
-      token: token,
-      start: start,
-      end: end,
-    );
-    return response!.response?.map((e) => e.toPaiement()).toList();
+    final response = await _accountRemote.getSpent(bubget: bubget, date: date);
+    return response.response?.toSpent();
   }
 
   Future<Pin> deleteHistory({

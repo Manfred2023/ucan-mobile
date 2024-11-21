@@ -14,6 +14,8 @@ import 'model/account_api_model.dart';
 import 'model/convert_api_model.dart';
 import 'model/motif_api_model.dart';
 import 'model/paiement_api_model.dart';
+import 'model/resume_api_model.dart';
+import 'model/spent_api_model.dart';
 
 class AccountRemote extends BaseApiService {
   AccountRemote();
@@ -47,12 +49,59 @@ class AccountRemote extends BaseApiService {
     }
   }
 
+  Future<ResumeApiResponse> getResume({
+    required int? token,
+  }) async {
+    try {
+      final response = await _getDio().put(Endpoints.account, data: {
+        "token": token,
+      });
+      if (response.data['status'] == 1) {
+        return ResumeApiResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw mapToError(ex);
+    }
+  }
+
   Future<MotifApiListResponse> getMotif() async {
     try {
       final response = await (_getDio()).get(Endpoints.motif);
 
       if (response.data['status'] == 1) {
         return MotifApiListResponse.fromJson(response.data);
+      } else {
+        throw DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response(
+                requestOptions: RequestOptions(path: ''),
+                statusCode: 201,
+                data: response.data));
+      }
+    } catch (ex) {
+      throw mapToError(ex);
+    }
+  }
+
+  Future<SpentApiResponse> getSpent({
+    required int bubget,
+    required String date,
+  }) async {
+    try {
+      final response = await (_getDio()).put(Endpoints.spent, data: {
+        "budget": bubget,
+        "date": date,
+      });
+
+      if (response.data['status'] == 1) {
+        return SpentApiResponse.fromJson(response.data);
       } else {
         throw DioError(
             requestOptions: RequestOptions(path: ''),

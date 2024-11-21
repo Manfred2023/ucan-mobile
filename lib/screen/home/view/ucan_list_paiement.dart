@@ -1,3 +1,4 @@
+/*
 // Created by Manfred MOUKATE on 6/25/24, 5:45 PM
 // Email moukatemanfred@gmail.com
 // Copyright (c) 2024. All rights reserved.
@@ -323,3 +324,4 @@ class _PaiementViewState extends State<PaiementView> {
     return null;
   }
 }
+*/

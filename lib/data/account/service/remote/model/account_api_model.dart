@@ -1,58 +1,110 @@
-// Created by Manfred MOUKATE on 6/25/24, 3:50 PM
-// Email moukatemanfred@gmail.com
-// Copyright (c) 2024. All rights reserved.
-// Last modified 6/25/24, 3:50 PM
-import 'package:json_annotation/json_annotation.dart';
-import 'package:ucan/data/account/model/account.dart';
+import 'dart:convert';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../model/account.dart';
+import '../../../model/subaccount.dart';
 
 part 'account_api_model.g.dart';
 
+AccountApiResponse accountApiResponseFromJson(String str) =>
+    AccountApiResponse.fromJson(json.decode(str));
+
+String accountApiResponseToJson(AccountApiResponse data) =>
+    json.encode(data.toJson());
+
 @JsonSerializable()
 class AccountApiResponse {
-  @JsonKey(name: "status")
-  final int? status;
-  @JsonKey(name: "type")
-  final String? type;
-  @JsonKey(name: "response")
-  final AccountApiModel? response;
+  final int status;
+  final String type;
+  final AccountApiModel response;
 
   AccountApiResponse({
-    this.status,
-    this.type,
-    this.response,
+    required this.status,
+    required this.type,
+    required this.response,
   });
 
   factory AccountApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$AccountApiResponseFromJson(json);
+      AccountApiResponse(
+        status: json["status"],
+        type: json["type"],
+        response: AccountApiModel.fromJson(json["response"]),
+      );
 
-  Map<String, dynamic> toJson() => _$AccountApiResponseToJson(this);
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "type": type,
+        "response": response.toJson(),
+      };
 }
 
 @JsonSerializable()
 class AccountApiModel {
-  @JsonKey(name: "token")
-  final int? token;
-  @JsonKey(name: "amount")
-  final int? amount;
-  @JsonKey(name: "user")
-  final int? user;
+  final int token;
+  final String user;
+  final int amount;
+  final List<SubAccountApiModel> other;
 
   AccountApiModel({
-    this.token,
-    this.amount,
-    this.user,
+    required this.token,
+    required this.user,
+    required this.amount,
+    required this.other,
   });
 
   factory AccountApiModel.fromJson(Map<String, dynamic> json) =>
-      _$AccountApiModelFromJson(json);
+      AccountApiModel(
+        token: json["token"],
+        user: json["user"],
+        amount: json["amount"],
+        other: List<SubAccountApiModel>.from(
+            json["other"].map((x) => SubAccountApiModel.fromJson(x))),
+      );
 
-  Map<String, dynamic> toJson() => _$AccountApiModelToJson(this);
+  Map<String, dynamic> toJson() => {
+        "token": token,
+        "user": user,
+        "amount": amount,
+        "other": List<dynamic>.from(other.map((x) => x.toJson())),
+      };
 
   Account toAccount() {
     return Account(
       code: token,
       amount: amount,
       user: user,
+      subAccount: other.map((e) => e.toSubAccount()).toList(),
     );
+  }
+}
+
+@JsonSerializable()
+class SubAccountApiModel {
+  final int token;
+  final int amount;
+  final String name;
+
+  SubAccountApiModel({
+    required this.token,
+    required this.amount,
+    required this.name,
+  });
+
+  factory SubAccountApiModel.fromJson(Map<String, dynamic> json) =>
+      SubAccountApiModel(
+        token: json["token"],
+        amount: json["amount"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "token": token,
+        "amount": amount,
+        "name": name,
+      };
+
+  SubAccount toSubAccount() {
+    return SubAccount(code: token, amount: amount, name: name);
   }
 }

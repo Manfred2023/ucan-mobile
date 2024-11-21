@@ -4,25 +4,21 @@
 // Last modified 6/26/24, 11:47 AM
 
 import 'package:equatable/equatable.dart';
-import 'package:ucan/data/account/model/account.dart';
 
 class Paiement extends Equatable {
-  final int? code;
-  final bool? type;
-  final DateTime? date;
+  final int? token;
   final int? amount;
-  final String? motif;
-  final Account? account;
+  final String? budget;
+  final DateTime? date;
 
-  Paiement(
-      {this.code, this.type, this.date, this.amount, this.motif, this.account});
-
-  @override
-  String toString() {
-    return 'Paiement{code: $code, type: $type, date: $date, amount: $amount, motif: $motif, account: $account}';
-  }
+  Paiement({
+    this.token,
+    this.amount,
+    this.budget,
+    this.date,
+  });
 
   @override
   // TODO: implement props
-  List<Object?> get props => [code, motif, account];
+  List<Object?> get props => throw UnimplementedError();
 }

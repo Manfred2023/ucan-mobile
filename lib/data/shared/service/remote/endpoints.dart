@@ -28,4 +28,5 @@ abstract class Endpoints {
   static const String myPaiementByDate = '/payment/historyByDate/';
   static const String deletePayment = '/payment/delete/';
   static const String convert = '/translate/';
+  static const String spent = '/payment/depense/';
 }

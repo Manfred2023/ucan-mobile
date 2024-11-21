@@ -3,7 +3,6 @@
 // Copyright (c) 2024. All rights reserved.
 // Last modified 6/26/24, 11:50 AM
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ucan/data/account/model/paiement.dart';
 import 'package:ucan/data/account/service/remote/model/account_api_model.dart';
 
 part 'paiement_api_model.g.dart';
@@ -84,15 +83,4 @@ class PaiementApiModel {
       _$PaiementApiModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaiementApiModelToJson(this);
-
-  Paiement toPaiement() {
-    return Paiement(
-      code: token,
-      type: type,
-      date: datetime,
-      amount: amount,
-      account: account!.toAccount(),
-      motif: motif!,
-    );
-  }
 }

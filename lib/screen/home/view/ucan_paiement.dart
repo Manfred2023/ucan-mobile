@@ -1,3 +1,4 @@
+/*
 // Created by Manfred MOUKATE on 7/10/24, 3:56 PM
 // Email moukatemanfred@gmail.com
 // Copyright (c) 2024. All rights reserved.
@@ -440,3 +441,4 @@ class _UcanPaiementViewState extends State<UcanPaiementView> {
     return null;
   }
 }
+*/

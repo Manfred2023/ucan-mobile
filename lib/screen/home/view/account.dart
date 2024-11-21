@@ -43,14 +43,11 @@ class _AccountViewState extends State<AccountView> {
       backgroundColor: ColorsApp.foreground,
       appBar: AppBar(
         backgroundColor: ColorsApp.primary,
-        /* actions: [
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                'Enregistrer',
-                style: TextStyle(color: ColorsApp.onSecondary),
-              ))
-        ],*/
+        title: Text(
+          'Mes informations personnelles',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
+        actions: [],
       ),
       body: Column(
         children: [

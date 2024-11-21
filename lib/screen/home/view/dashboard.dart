@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:ucan/app/config/colors.dart';
-import 'package:ucan/app/navigation/route.dart';
 import 'package:ucan/data/account/model/account.dart';
 import 'package:ucan/data/authentication/model/authentication.dart';
-import 'package:ucan/screen/shared/design_system/utils/alert_service.dart';
+import 'package:ucan/utils/helpers/app_date.dart';
 
+import '../../../data/account/model/budget.dart';
 import '../../../data/account/model/paiement.dart';
+import '../../../data/account/model/subaccount.dart';
 import '../../../data/account/repository/account_repository.dart';
 import '../../../data/authentication/repository/authenticate_repository.dart';
 import '../../../utils/dependancies.dart';
-import '../../../utils/helpers/app_date.dart';
 import '../../../utils/helpers/regex_format.dart';
 import '../../shared/widget/card_shimmer.dart';
 
@@ -32,35 +32,21 @@ class UcanView extends StatefulWidget {
 }
 
 class _UcanViewState extends State<UcanView> {
+  DateTime _startDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
   Authentication? currentUser;
   Account? account;
+  Resume? resume;
+
+  List<Budget>? budget = [];
   bool amount = false;
   bool isLoading = true;
   List<Paiement> paiement = [];
+  List<SubAccount> subAccount = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorsApp.onSecondary,
-        appBar: AppBar(
-          backgroundColor: ColorsApp.primary,
-          actions: [
-            /*  IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.notif);
-                },
-                icon: const Icon(Icons.notifications)),*/
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.account);
-                },
-                icon: SvgPicture.asset(
-                  'assets/icons/user.svg',
-                  color: ColorsApp.onSecondary,
-                  height: 50,
-                )),
-          ],
-        ),
         body: RefreshIndicator(
           onRefresh: () async {
             isLoading = true;
@@ -68,43 +54,62 @@ class _UcanViewState extends State<UcanView> {
             setState(() {});
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                if (currentUser != null)
-                  Row(
-                    children: [
-                      const Text(
-                        "Bienvenue, ",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      if (currentUser!.contact?.firstname != null)
-                        Text(
-                          currentUser!.contact!.firstname ?? '',
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w300),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/svg/armchair.svg",
+                      height: 50,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            if (currentUser != null)
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  if (currentUser?.contact?.firstname != null)
+                                    Text(
+                                      currentUser?.contact?.firstname ?? '',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    currentUser?.contact!.lastname ?? '',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                            const Text(
+                              'Bienvenue',
+                              style: TextStyle(fontWeight: FontWeight.w200),
+                            ),
+                          ],
                         ),
-                      const SizedBox(
-                        width: 3,
                       ),
-                      Text(
-                        currentUser!.contact!.lastname ?? '',
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w300),
-                      ),
-                    ],
-                  ),
+                    )
+                  ],
+                ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 isLoading
                     ? const CardShimmer(
                         color: ColorsApp.textColor,
-                        height: 150,
+                        height: 65,
                       )
                     : Container(
                         width: MediaQuery.of(context).size.width,
@@ -114,240 +119,265 @@ class _UcanViewState extends State<UcanView> {
                             Radius.circular(10),
                           ),
                         ),
-                        child: Column(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          TablerIcons.eye_off,
-                                          color:
-                                              ColorsApp.primary.withOpacity(0),
-                                        )),
-                                    !amount
-                                        ? const Text(
-                                            '******',
-                                            style: TextStyle(
-                                                color: ColorsApp.secondary,
-                                                fontSize: 50,
-                                                fontWeight: FontWeight.w100),
-                                          )
-                                        : Flexible(
-                                            child: Text(
-                                              RegexFormat
-                                                  .contentDoubleMoneyFormat(
-                                                      account!.amount!
-                                                          .toStringAsFixed(2),
-                                                      'fr'),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Solde total disponible',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w400),
+                                  ),
+                                  Row(
+                                    children: [
+                                      !amount
+                                          ? const Text(
+                                              '*******',
+                                              style: TextStyle(
+                                                  color: ColorsApp.secondary,
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w600),
+                                            )
+                                          : Text(
+                                              '${RegexFormat.contentDoubleMoneyFormat(resume!.user!.amount!.toStringAsFixed(2), 'fr')} XAF',
                                               style: const TextStyle(
                                                   color: ColorsApp.secondary,
-                                                  fontSize: 45,
-                                                  fontWeight: FontWeight.w100),
+                                                  fontSize: 19,
+                                                  fontWeight: FontWeight.w700),
                                             ),
-                                          ),
-                                    IconButton(
-                                        onPressed: () {
-                                          if (amount) {
-                                            setState(() {
-                                              amount = false;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              amount = true;
-                                            });
-                                          }
-                                        },
-                                        icon: amount
-                                            ? const Icon(
-                                                TablerIcons.eye,
-                                                color: ColorsApp.primary,
-                                              )
-                                            : const Icon(
-                                                TablerIcons.eye_off,
-                                                color: ColorsApp.primary,
-                                              )),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                        color: ColorsApp.primary,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                              child: InkWell(
-                                            onTap: () async {
-                                              await Navigator.of(context)
-                                                  .pushNamed(
-                                                      Routes.paiementList,
-                                                      arguments: false);
-                                              if (!context.mounted) return;
-                                              isLoading = true;
-                                              reload();
-                                              setState(() {});
-                                            },
-                                            child: Container(
-                                                height: MediaQuery.of(context)
-                                                    .size
-                                                    .height,
-                                                color: ColorsApp.withrow,
-                                                child: const Center(
-                                                    child: Text(
-                                                  'Dépense',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 16,
-                                                      color: ColorsApp
-                                                          .onSecondary),
-                                                ))),
-                                          )),
-                                          Expanded(
-                                              child: InkWell(
-                                            onTap: () async {
-                                              await Navigator.of(context)
-                                                  .pushNamed(
-                                                      Routes.paiementList,
-                                                      arguments: true);
-                                              if (!context.mounted) return;
-                                              isLoading = true;
-                                              reload();
-                                              setState(() {});
-                                            },
-                                            child: Container(
-                                                height: MediaQuery.of(context)
-                                                    .size
-                                                    .height,
-                                                color: ColorsApp.primary,
-                                                child: const Center(
-                                                    child: Text(
-                                                  'Recharge',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 16,
-                                                      color: ColorsApp
-                                                          .onSecondary),
-                                                ))),
-                                          )),
-                                        ],
-                                      ),
-                                    ),
+                                      InkWell(
+                                          onTap: () {
+                                            if (amount) {
+                                              setState(() {
+                                                amount = false;
+                                              });
+                                            } else {
+                                              setState(() {
+                                                amount = true;
+                                              });
+                                            }
+                                          },
+                                          child: amount
+                                              ? const Icon(
+                                                  TablerIcons.eye,
+                                                  color: ColorsApp.secondary,
+                                                )
+                                              : const Icon(
+                                                  TablerIcons.eye_off,
+                                                  color: ColorsApp.secondary,
+                                                )),
+                                    ],
                                   ),
                                 ],
-                              )
-                            ]),
-                      ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Row(
-                  children: [
-                    Text(
-                      "Historique des transactions",
-                      style: TextStyle(
-                          color: ColorsApp.textColor,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 19),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                isLoading
-                    ? Column(
-                        children: [
-                          for (int i = 0; i < 4; i++)
-                            Column(
-                              children: [
-                                CardShimmer(
-                                  color: ColorsApp.textColor,
-                                  height: 65,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                )
-                              ],
-                            ),
-                        ],
-                      )
-                    : Expanded(
-                        child: ListView.builder(
-                            itemCount: paiement.length,
-                            itemBuilder: (context, index) {
-                              final account = paiement[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 2),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  isLoading = true;
+                                  reload();
+                                  setState(() {});
+                                },
                                 child: Container(
-                                  color: ColorsApp.onSecondary,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(25)),
+                                      color: ColorsApp.onSecondary),
+                                  child: const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              account.motif!.toString() ?? '',
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          ],
+                                        Icon(
+                                          TablerIcons.reload,
+                                          color: ColorsApp.primary,
+                                          size: 21,
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              RegexFormat
-                                                  .contentDoubleMoneyFormat(
-                                                      account.amount!
-                                                          .toStringAsFixed(2),
-                                                      'fr'),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: account.type == true
-                                                      ? ColorsApp.greenColor
-                                                      : ColorsApp.secondary),
-                                            ),
-                                            Text(
-                                              AppDate.dateTimeWithDay(
-                                                  account.date!, 'fr'),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w300),
-                                            )
-                                          ],
-                                        )
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'Actualiser',
+                                          style: TextStyle(
+                                              color: ColorsApp.primary,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
-                              );
-                            }),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Mes dépenses',
+                      style: TextStyle(
+                          color: ColorsApp.primary,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          TablerIcons.circle_plus_filled,
+                          color: ColorsApp.primary,
+                        ))
+                  ],
+                ),
+                isLoading
+                    ? const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 120,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: budget?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                final budgetResult = budget![index];
 
+                                return Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Container(
+                                    height: 100,
+                                    width: 180,
+                                    decoration: BoxDecoration(
+                                      color: ColorsApp.primary.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5.0),
+                                            child: Center(
+                                              child: Text(
+                                                budgetResult.name ?? '',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 21,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          FutureBuilder<String?>(
+                                            future:
+                                                getSpent(budgetResult.code!),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return Text('...');
+                                              } else if (snapshot.hasError) {
+                                                return const Text(
+                                                  'Erreur',
+                                                  style: TextStyle(
+                                                      color: Colors.red),
+                                                );
+                                              } else if (snapshot.hasData &&
+                                                  snapshot.data != null) {
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 5.0),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          '${snapshot.data}',
+                                                          style: TextStyle(
+                                                            color: ColorsApp
+                                                                .primary,
+                                                            fontSize: 19,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                        Text('|'),
+                                                        Text(
+                                                          ' ${RegexFormat.contentDoubleMoneyFormat(budgetResult.ceiling!.toStringAsFixed(2), 'fr')}',
+                                                          style:
+                                                              const TextStyle(
+                                                            color: ColorsApp
+                                                                .secondary,
+                                                            fontSize: 19,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                return Text(
+                                                  '... / ${RegexFormat.contentDoubleMoneyFormat(budgetResult.ceiling!.toStringAsFixed(2), 'fr')}',
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 16,
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Dernières opération',
+                      style: TextStyle(
+                          color: ColorsApp.primary,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Voir plus',
+                          style: TextStyle(
+                              color: ColorsApp.primary,
+                              //fontSize: 19,
+                              fontWeight: FontWeight.w500),
+                        )),
+                  ],
+                ),
               ],
             ),
           ),
@@ -359,39 +389,71 @@ class _UcanViewState extends State<UcanView> {
   @override
   void initState() {
     init();
-
     super.initState();
   }
 
   Future<void> init() async {
     currentUser = await getIt<AuthenticateRepository>().getAuth();
-    setState(() {});
-    reload();
-    setState(() {});
+    resume = await getIt<AccountRepository>().resume(token: currentUser!.code!);
+    if (resume != null) {
+      setState(() {
+        isLoading = false;
+        budget = resume?.budget;
+      });
+    }
   }
 
-  reload() async {
-    if (currentUser != null) {
-      try {
-        account =
-            await getIt<AccountRepository>().account(token: currentUser!.code!);
-        paiement = await getIt<AccountRepository>().getPaiement(
-          token: currentUser!.code!,
-        );
-        if (paiement.isNotEmpty) {
-          paiement.sort((a, b) => b.date!.compareTo(a.date!));
-        }
-
-        setState(() {
-          isLoading = false;
-        });
-      } catch (e) {
-        AlertService.showSnack(context,
-            message: e.toString(), onPressed: () {}, actionText: "OK");
-        setState(() {
-          isLoading = false;
-        });
-      }
+  Future<String?> getSpent(int code) async {
+    final spent = await getIt<AccountRepository>()
+        .spent(bubget: code, date: AppDate.dateDto(_startDate));
+    if (spent != null) {
+      return spent.total.toString();
     }
+    return null;
+  }
+
+  reload() async {}
+
+  String formatBankNumber(int input) {
+    String inputStr = input.toString().padLeft(6, '0');
+
+    // Découper l'entrée en trois parties de deux chiffres
+    String part1 = inputStr.substring(0, 2);
+    String part2 = inputStr.substring(2, 4);
+    String part3 = inputStr.substring(4, 6);
+
+    // Convertir chaque paire en un format bancaire
+    String formattedPart1 = '${part1[0]}000';
+    String formattedPart2 = '${part2}00';
+    String formattedPart3 = '${part3[0]}${part3[1]}80';
+
+    // Combiner les parties avec des espaces
+    return '$formattedPart1 $formattedPart2 $formattedPart3';
+  }
+
+  String generateVisaCode(String inputCode) {
+    // Vérifier que le code d'entrée n'est pas trop long
+    if (inputCode.length > 16) {
+      return 'Erreur : le code d\'entrée est trop long';
+    }
+
+    // Commencer par '4' pour indiquer une carte Visa
+    String visaCode = '4' + inputCode;
+
+    // Ajouter des zéros à la fin pour atteindre 16 chiffres si nécessaire
+    while (visaCode.length < 16) {
+      visaCode += '0';
+    }
+
+    // Limiter la longueur à 16 caractères
+    visaCode = visaCode.substring(0, 16);
+
+    return visaCode;
+  }
+
+  void main() {
+    String inputCode = '154353';
+    String visaCode = generateVisaCode(inputCode);
+    print('Code Visa généré : $visaCode');
   }
 }

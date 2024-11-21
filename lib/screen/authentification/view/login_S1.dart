@@ -95,6 +95,9 @@ class _LoginStepOneViewState extends State<LoginStepOneView> {
                               textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.phone,
                               // textAlign: TextAlign.justify,
+                              onEditingComplete: () {
+                                CheckUser();
+                              },
                               style: const TextStyle(
                                   color: ColorsApp.primary,
                                   fontWeight: FontWeight.bold),
@@ -248,61 +251,6 @@ class _LoginStepOneViewState extends State<LoginStepOneView> {
                             Column(
                               children: [
                                 const SizedBox(height: 15),
-                                /* InkWell(
-                                      onTap: () async {
-                                        final credential = await SignInWithApple
-                                            .getAppleIDCredential(
-                                          scopes: [
-                                            AppleIDAuthorizationScopes.email,
-                                            AppleIDAuthorizationScopes.fullName,
-                                          ],
-                                        );
-                                      },
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                color: Colors.black26,
-                                                offset: Offset(0, 0),
-                                                blurRadius: 2.0)
-                                          ],
-                                          color: ColorsApp.onSecondary,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 25),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                SvgPicture.asset(
-                                                  'assets/icons/apple.svg',
-                                                  height: 25,
-                                                  width: 25,
-                                                ),
-                                                const Text(
-                                                  "Continuer avec Apple",
-                                                  style: TextStyle(
-                                                    color: ColorsApp.primary,
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                const Text(''),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),*/
                               ],
                             ),
                           const SizedBox(height: 15),
@@ -425,4 +373,35 @@ class _LoginStepOneViewState extends State<LoginStepOneView> {
   }
 
   Future<void> init() async {}
+
+  Future<void> CheckUser() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        AlertService.showLoad(context);
+        contact = await getIt<AuthenticateRepository>().getContact(
+          mobile: int.parse(emailController.text.trim()),
+        );
+        if (!context.mounted) return;
+        //Navigator.of(context).pop();
+        if (contact is Contact) {
+          user = await getIt<AuthenticateRepository>()
+              .getUser(token: contact!.code!);
+          if (!context.mounted) return;
+          if (user is Authentication) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, Routes.loginStep2, (route) => false,
+                arguments: user);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, Routes.signup2, (route) => false,
+                arguments: contact);
+          }
+        }
+      } catch (e) {
+        Navigator.of(context).pop();
+        AlertService.showSnack(context,
+            message: e.toString(), onPressed: () {}, actionText: "OK");
+      }
+    }
+  }
 }
