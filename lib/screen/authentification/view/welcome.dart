@@ -29,7 +29,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(''),
+            const Text(''),
             Padding(
               padding: const EdgeInsets.all(25),
               child: SvgPicture.asset(
@@ -52,7 +52,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                     height: 20,
                   ),
                   const Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       textAlign: TextAlign.center,
                       "Maîtrisez vos dépenses et devenez maître de votre épargne.",
@@ -109,7 +109,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                                   Navigator.of(context)
                                       .pushNamed(Routes.loginStep1);
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Connecte-toi',
                                   style: TextStyle(
                                       color: ColorsApp.primary,
@@ -118,9 +118,6 @@ class _WelcomeViewState extends State<WelcomeView> {
                                       decorationColor: ColorsApp.primary),
                                 ))
                           ],
-                        ),
-                        const SizedBox(
-                          height: 20,
                         ),
                       ],
                     ),

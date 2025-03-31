@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ucan/app/config/colors.dart';
 import 'package:ucan/app/config/constant.dart';
@@ -7,6 +6,8 @@ import 'package:ucan/app/navigation/route.dart';
 import 'package:ucan/app/navigation/route/app_route.dart';
 import 'package:ucan/screen/shared/animate/smart_animate_page_transitions_builder.dart';
 import 'package:ucan/utils/helpers/g.dart';
+
+import 'l10n/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

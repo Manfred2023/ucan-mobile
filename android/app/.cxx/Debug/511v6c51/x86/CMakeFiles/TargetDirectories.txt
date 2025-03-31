@@ -1,0 +1,2 @@
+/Users/woupo/Documents/app2024/ucan/android/app/.cxx/Debug/511v6c51/x86/CMakeFiles/rebuild_cache.dir
+/Users/woupo/Documents/app2024/ucan/android/app/.cxx/Debug/511v6c51/x86/CMakeFiles/edit_cache.dir

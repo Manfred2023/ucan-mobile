@@ -5,3 +5,4 @@ preferred-supported-locales:
   - fr
 use-deferred-loading: true
 output-class: AppLocalizations
+synthetic-package: false

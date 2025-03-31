@@ -353,35 +353,11 @@
     "description": "An error prevents the operation from proceeding correctly (DECODER NOT FOUND)."
   },
   "changeDecoderNotChange": "Decoder {numDecoder} is not available for change",
-  "@changeDecoderNotChange": {
-    "description": "Decoder 87788774474455 is not available for change",
-    "placeholders": {
-      "numDecoder": {
-        "type": "String",
-        "example": "87788774474455"
-      }
-    }
-  },
+
   "decoderNoExist": "Decoder {numDecoder} does not exist in this platform, you can import it",
-  "@decoderNoExist": {
-    "description": "Decoder 87788774474455 is not available for change",
-    "placeholders": {
-      "numDecoder": {
-        "type": "String",
-        "example": "87788774474455"
-      }
-    }
-  },
+
   "expiredSince": "EXPIRED SINCE  {numDecoder} DAY(S)",
-  "@expiredSince": {
-    "description": "Decoder 87788774474455 is not available for change",
-    "placeholders": {
-      "numDecoder": {
-        "type": "String",
-        "example": "87788774474455"
-      }
-    }
-  },
+
   "numberSubcriberCGA": "CGA Subscriber ID",
   "@numberSubcriberCGA": {
     "description": "CGA Subscriber ID"
@@ -430,10 +406,7 @@
   "@includeOption": {
     "description": "Include option(s)"
   },
-  "firstName": "First Name(s)",
-  "@firstName": {
-    "description": "Last Name(s)"
-  },
+
   "lastName": "First Name(s)",
   "@lastName": {
     "description": "First Name(s)"
@@ -467,42 +440,13 @@
     "description": "Information on re-subscription "
   },
   "operationAnnuler": "You have cancelled your operation on decoder {numDecoder}. {solde} CFA and  {equipement} have been returned to your main and equipments accounts respectively",
-  "@operationAnnuler": {
-    "description": "Decoder 87788774474455 is not available for change",
-    "placeholders": {
-      "numDecoder": {
-        "type": "String",
-        "example": "87788774474455"
-      },
-      "solde": {
-        "type": "String",
-        "example": "87788774474455"
-      },
-      "equipement": {
-        "type": "String",
-        "example": "87788774474455"
-      }
-    }
-  },
+
   "helloWorld": "Hello World!",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "welcome": "Welcome {firstName}",
-  "@welcome": {
-    "description": "Initial welcome message",
-    "placeholders": {
-      "firstName": {}
-    }
-  },
-  "newMessages": "{newMessages, plural, =0 {No new messages} =1 {One new message} other {{newMessages} new messages}}",
-  "@newMessages": {
-    "type": "text",
-    "description": "Number of new messages in inbox.",
-    "placeholders": {
-      "newMessages": {}
-    }
-  },
+
+
   "articlesTitle": "Your content digest",
   "@articlesTitle": {
     "description": "Articles screen title"
@@ -516,25 +460,9 @@
     "description": "No articles found alert text"
   },
   "contentCardOrganizationsLabel": "{count, plural, =0{Unknown organizations} =1{Organization: {organizations}} other{Organizations: {organizations}}}",
-  "@contentCardOrganizationsLabel": {
-    "description": "Comma-separated list of organization names.",
-    "placeholders": {
-      "count": {},
-      "organizations": {
-        "type": "String",
-        "example": "AmeriCares, Ford Foundation"
-      }
-    }
-  },
+
   "savedNewsArticlesPageTitle": "All saved news articles ({count})",
-  "@savedNewsArticlesPageTitle": {
-    "placeholders": {
-      "count": {
-        "type": "int",
-        "format": "compact"
-      }
-    }
-  },
+
   "dialogAppUpdateTitle": "Update Available",
   "@dialogAppUpdateTitle": {},
   "dialogAppUpdateDescription": "A new version of fluttertemplate is available. Please update now.",
